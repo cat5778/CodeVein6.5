@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99. Etc">
+      <UniqueIdentifier>{b7c117b5-9441-415c-8eda-0df470ffd295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="99. Etc\소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="99. Etc\헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{a68329a8-8dff-48ef-bed4-e7851535b54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct">
+      <UniqueIdentifier>{c7717da8-b0ac-408d-88b8-e5739b25cfeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\00. Logo">
+      <UniqueIdentifier>{4fe7535f-001a-4de2-9613-2fda789f22e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo">
+      <UniqueIdentifier>{74374b70-4b27-4a4c-95de-c5bc8b9819a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\01. Stage">
+      <UniqueIdentifier>{874545bd-8998-431e-813e-7b3cf33ca6e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage">
+      <UniqueIdentifier>{73ac88b3-5341-40b4-9f66-652a835a320a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\00. Logo\00. BackGround">
+      <UniqueIdentifier>{ed5bb778-6c8c-4313-874e-cf5a5725ea97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\00. Logo\01. TestPlayer">
+      <UniqueIdentifier>{9a3c42f2-b268-404a-95b6-1e8a2f89316d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\00. Logo\02. TestMonster">
+      <UniqueIdentifier>{083052e8-987b-48ab-aa0f-b2ef9cc9a605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\00. Terrain">
+      <UniqueIdentifier>{39acbbe8-fed7-467d-a6a1-8ce9c2b6a52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\01. Player">
+      <UniqueIdentifier>{76a36e56-7d32-4123-9c22-bc2f9f841440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public">
+      <UniqueIdentifier>{296ec397-87b7-41dd-b404-e4eb6b303fc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\00. StaticCamera">
+      <UniqueIdentifier>{27dc9c3d-8c00-4a6b-a024-c6260ea4975a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\01. DynamicCamera">
+      <UniqueIdentifier>{0367bbd1-a428-42ef-a2ea-87ebf6e2ec30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\02. SkyBox">
+      <UniqueIdentifier>{f4ca0eb2-3865-4a50-bdda-82a36c7e6a12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\03. Monster">
+      <UniqueIdentifier>{c0399339-e3fe-4e47-9b0b-c75dbba6bd82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\04. Stone">
+      <UniqueIdentifier>{d9855a1f-7760-4635-97a0-d642b8331b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\05. Sword">
+      <UniqueIdentifier>{218cca05-7925-42d9-aaa3-cc2249ab3c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.Manager">
+      <UniqueIdentifier>{29399895-2bc0-444e-bf8d-b57b3e8cae2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\02 StaticObject">
+      <UniqueIdentifier>{2d805841-3269-4960-884d-8c6f7bc5ded2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\06. Shield">
+      <UniqueIdentifier>{79a75905-f53d-4da7-97b8-630c16a01d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. MainApp">
+      <UniqueIdentifier>{f9d345e0-8d22-4f7d-9d05-d2309dc3c7ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\03.ThirdPersonCamera">
+      <UniqueIdentifier>{f1ca5794-deff-49dd-83be-c0a2f1b1a2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.Manager\00. KeyMgr">
+      <UniqueIdentifier>{13f5eb41-2a40-4f0b-8a6d-af3fa1e9c24b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.Manager\01. Timer">
+      <UniqueIdentifier>{79242ec8-59dc-44a2-bea7-ab56f6188fd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\04. SphereCollider">
+      <UniqueIdentifier>{2235b4e3-cdc0-4f1b-8acd-1b13ff4b2c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\10. Monster">
+      <UniqueIdentifier>{1af4b300-e64b-43ca-9f2f-d5d2a2667914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\10. Monster\RussianHat">
+      <UniqueIdentifier>{1e4866c7-257c-4a9a-924a-1ecdc1358d84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. Field">
+      <UniqueIdentifier>{e49e4e6d-1e90-447e-bf12-9e19b06ca0eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Public">
+      <UniqueIdentifier>{3b2e8765-c206-4e51-9baa-4e89dd7ee517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Public\00. Loading">
+      <UniqueIdentifier>{c257f3c1-f6d7-4d7c-813a-b17a060ed831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.Manager\02. ColliderMgr">
+      <UniqueIdentifier>{6effc66a-e7bd-4258-860e-b631e4c92420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.Manager\03. SoundMgr">
+      <UniqueIdentifier>{29ba2134-4c09-436e-8297-f84f25b8afc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\10. Monster\RedDevil">
+      <UniqueIdentifier>{4ceddb11-d554-4570-ba56-03819651c0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\09. Effect">
+      <UniqueIdentifier>{ab92ecc8-6f4f-4843-bb0e-b0412f6e6f0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\10. Monster\CocoonnDevil">
+      <UniqueIdentifier>{3405ab91-6083-4fc3-bb71-193e6e7b41f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\11. Projectile">
+      <UniqueIdentifier>{8171d40c-5412-48f5-8947-21b9205699e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\07 Halberd">
+      <UniqueIdentifier>{5cced16a-d385-455b-9703-74f07014465a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\13. NPC">
+      <UniqueIdentifier>{9786b1d8-5d77-471c-9b9a-062f10604303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\01. Stage\12. SkySphere">
+      <UniqueIdentifier>{5cfd7684-e98b-49f1-a58c-0aabf2d4977b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI">
+      <UniqueIdentifier>{1158929c-936e-418b-b803-c580f22f52bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\00. Gauge">
+      <UniqueIdentifier>{9b838668-f78d-4833-b667-365cd898975f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\01. Image">
+      <UniqueIdentifier>{99f6ef12-03de-472d-b503-c0ad6eb809ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI">
+      <UniqueIdentifier>{0898c444-e21a-4126-8a84-2c34b0318659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\LockOn">
+      <UniqueIdentifier>{00557c36-699d-4114-bfa1-86978bcf909f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Button">
+      <UniqueIdentifier>{6574cd52-d659-4767-af14-46b1e46017d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\02. Icon">
+      <UniqueIdentifier>{633e1919-80f4-4c0c-bd2a-77c428642b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Shop">
+      <UniqueIdentifier>{368a48b0-9c5a-4cb3-8343-6019da641cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Icon">
+      <UniqueIdentifier>{8de4a603-87ca-4674-b5fe-a7e54fa41972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Number">
+      <UniqueIdentifier>{127f0500-f168-4d5c-9d3a-1adcbee2ef64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Inventory">
+      <UniqueIdentifier>{5678125d-fb32-44e2-9c55-2d04744cd582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Portal">
+      <UniqueIdentifier>{b5b7c834-9855-4575-9a16-8154af500ebf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>99. Etc\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99. Etc\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>99. Etc\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\MainApp.h">
+      <Filter>01. Scene\00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Logo.h">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\BackGround.h">
+      <Filter>02. GameObejct\00. Logo\00. BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TestPlayer.h">
+      <Filter>02. GameObejct\00. Logo\01. TestPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TestMonster.h">
+      <Filter>02. GameObejct\00. Logo\02. TestMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Stage.h">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Terrain.h">
+      <Filter>02. GameObejct\01. Stage\00. Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Player.h">
+      <Filter>02. GameObejct\01. Stage\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Loading.h">
+      <Filter>01. Scene\03. Public\00. Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicCamera.h">
+      <Filter>02. GameObejct\02. Public\01. DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaticCamera.h">
+      <Filter>02. GameObejct\02. Public\00. StaticCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkyBox.h">
+      <Filter>02. GameObejct\01. Stage\02. SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Monster.h">
+      <Filter>02. GameObejct\01. Stage\03. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Stone.h">
+      <Filter>02. GameObejct\01. Stage\04. Stone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Sword.h">
+      <Filter>02. GameObejct\01. Stage\05. Sword</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\StaticObject.h">
+      <Filter>02. GameObejct\02. Public\02 StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Effect.h">
+      <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ThirdPersonCamera.h">
+      <Filter>02. GameObejct\02. Public\03.ThirdPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\KeyMgr.h">
+      <Filter>10.Manager\00. KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\TimerManager.h">
+      <Filter>99. Etc\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DynamicObject.h">
+      <Filter>02. GameObejct\01. Stage\10. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RussianHat.h">
+      <Filter>02. GameObejct\01. Stage\10. Monster\RussianHat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shield.h">
+      <Filter>02. GameObejct\01. Stage\06. Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Field.h">
+      <Filter>01. Scene\02. Field</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ColliderManager.h">
+      <Filter>10.Manager\02. ColliderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SoundMgr.h">
+      <Filter>10.Manager\03. SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\RedDevil.h">
+      <Filter>02. GameObejct\01. Stage\10. Monster\RedDevil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Halberd.h">
+      <Filter>02. GameObejct\01. Stage\07 Halberd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\CocoonDevil.h">
+      <Filter>02. GameObejct\01. Stage\10. Monster\CocoonnDevil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Projectile.h">
+      <Filter>99. Etc\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\SkySphere.h">
+      <Filter>02. GameObejct\01. Stage\12. SkySphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Davis.h">
+      <Filter>02. GameObejct\01. Stage\13. NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\UI.h">
+      <Filter>02. GameObejct\02. Public\05. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Gauge.h">
+      <Filter>02. GameObejct\02. Public\05. UI\00. Gauge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\3DUI.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Image.h">
+      <Filter>02. GameObejct\02. Public\05. UI\01. Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\LockOn.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\LockOn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\3DButton.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shop.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ShopSub.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\3DIcon.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\3DNum.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InvenSub.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Inven.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\InvenInfo.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\DisplayWeapon.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Portal.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\PortalSub.h">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Portal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99. Etc\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>99. Etc\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainApp.cpp">
+      <Filter>01. Scene\00. MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Logo.cpp">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BackGround.cpp">
+      <Filter>02. GameObejct\00. Logo\00. BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestPlayer.cpp">
+      <Filter>02. GameObejct\00. Logo\01. TestPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestMonster.cpp">
+      <Filter>02. GameObejct\00. Logo\02. TestMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage.cpp">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <Filter>02. GameObejct\01. Stage\00. Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp">
+      <Filter>02. GameObejct\01. Stage\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Loading.cpp">
+      <Filter>01. Scene\03. Public\00. Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>02. GameObejct\02. Public\01. DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. GameObejct\02. Public\00. StaticCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. GameObejct\01. Stage\02. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObejct\01. Stage\03. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stone.cpp">
+      <Filter>02. GameObejct\01. Stage\04. Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Sword.cpp">
+      <Filter>02. GameObejct\01. Stage\05. Sword</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticObject.cpp">
+      <Filter>02. GameObejct\02. Public\02 StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ThirdPersonCamera.cpp">
+      <Filter>02. GameObejct\02. Public\03.ThirdPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KeyMgr.cpp">
+      <Filter>10.Manager\00. KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TimerManager.cpp">
+      <Filter>99. Etc\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicObject.cpp">
+      <Filter>02. GameObejct\01. Stage\10. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RussianHat.cpp">
+      <Filter>02. GameObejct\01. Stage\10. Monster\RussianHat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shield.cpp">
+      <Filter>02. GameObejct\01. Stage\06. Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Field.cpp">
+      <Filter>01. Scene\02. Field</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ColliderManager.cpp">
+      <Filter>10.Manager\02. ColliderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundMgr.cpp">
+      <Filter>10.Manager\03. SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RedDevil.cpp">
+      <Filter>02. GameObejct\01. Stage\10. Monster\RedDevil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Halberd.cpp">
+      <Filter>02. GameObejct\01. Stage\07 Halberd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CocoonDevil.cpp">
+      <Filter>02. GameObejct\01. Stage\10. Monster\CocoonnDevil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Projectile.cpp">
+      <Filter>99. Etc\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkySphere.cpp">
+      <Filter>02. GameObejct\01. Stage\12. SkySphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Davis.cpp">
+      <Filter>02. GameObejct\01. Stage\13. NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Gauge.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\00. Gauge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\3DUI.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Image.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\01. Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LockOn.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\LockOn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\3DButton.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shop.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopSub.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\3DIcon.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Icon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\3DNum.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InvenSub.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Inven.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InvenInfo.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DisplayWeapon.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Portal.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PortalSub.cpp">
+      <Filter>02. GameObejct\02. Public\05. UI\3DUI\Portal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>99. Etc\리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>99. Etc\리소스 파일</Filter>
+    </Image>
+    <Image Include="Client.ico">
+      <Filter>99. Etc\리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99. Etc\소스 파일</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
