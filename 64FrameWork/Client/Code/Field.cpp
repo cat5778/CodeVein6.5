@@ -120,14 +120,14 @@ HRESULT CField::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 
 
-	//pGameObject = CRussianHat::Create(m_pGraphicDev,L"RussianHat",0,m_uiStageIdx);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
-	//
-	////Shield 
-	//pGameObject = CShield::Create(m_pGraphicDev, 0);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
+	pGameObject = CRussianHat::Create(m_pGraphicDev,L"RussianHat",0,m_uiStageIdx);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+	
+	//Shield 
+	pGameObject = CShield::Create(m_pGraphicDev, 0);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
 
 
 	pGameObject = CSkySphere::Create(m_pGraphicDev, 1);
@@ -158,10 +158,10 @@ HRESULT CField::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	default:
 		break;
 	}
-	/*
-	pGameObject = CRedDevil::Create(m_pGraphicDev, L"RedDevil", 0,_vec3(-11.4f,0.334f,7.88f),48);
+	pGameObject = CRedDevil::Create(m_pGraphicDev, L"RedDevil", 0,_vec3(29.8723f,-4.736f,47.9482f),10);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+	/*
 
 	pGameObject = CHalberd::Create(m_pGraphicDev, 0);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

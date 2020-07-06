@@ -42,9 +42,9 @@ HRESULT CRussianHat::Ready_GameObject()
 		Load_Text(L"../../Resource/Data/NavMash/BaseCompleteNav.txt");
 		break;
 	case LOAD_NOMAL2:
-		m_pTransformCom->Set_Pos(-20.2f, 1.9f, -49.f);
-		m_pNaviCom->Set_Index(111);// Base Init Idx 38 
-		Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
+		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
+		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
+		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
 		break;
 	case LOAD_NOMAL3:
 		break;
