@@ -55,6 +55,7 @@ _int CThirdPersonCamera::Update_GameObject(const _float& fTimeDelta)
 
 	Mouse_Fix();
 	Target_Renewal(fTimeDelta);
+	CameraShaking(fTimeDelta);
 	Mouse_Move(fTimeDelta);
 	Key_Input(fTimeDelta);
 	_int iExit = Engine::CCamera::Update_GameObject(fTimeDelta);
@@ -70,6 +71,12 @@ HRESULT CThirdPersonCamera::Ready_Component()
 
 	m_fVerticalAngle = 170.f;
 	return S_OK;
+}
+void CThirdPersonCamera::CameraShaking(_float fTimeDelta)
+{
+	m_fSin += fTimeDelta*100000.f;
+	m_vEye += _vec3(0.f, 1.f, 0.f)* sinf(D3DXToRadian(m_fSin))*0.06f;
+
 }
 //_vec3 Get_CamPos();
 //{
@@ -111,6 +118,9 @@ void CThirdPersonCamera::Target_Renewal(const _float& fTimeDelta)
 
 	m_matWorld = (*m_pParentBoneMatrix * *m_pParentWorldMatrix);
 	memcpy(&m_vHeadPos, &m_matWorld.m[3][0], sizeof(_vec3));
+
+
+
 	if (!m_bIsLockOn)
 	{
 		m_pMonTransform = nullptr;
@@ -183,14 +193,19 @@ void CThirdPersonCamera::Target_Renewal(const _float& fTimeDelta)
 			m_pTransformCom->m_vInfo[Engine::INFO_POS] = m_vHeadPos + vTempDir * m_fDistance;
 		}
 		else
+		{
+				
 			m_vAt = m_vHeadPos;
-
+		}
 		//_vec3 vPos =m_pTransformCom->m_vInfo[Engine::INFO_POS];
 
 	}
 
 
 	m_vEye = m_pTransformCom->m_vInfo[Engine::INFO_POS];
+
+
+
 
 	//m_pTransformCom->m_vInfo[Engine::INFO_LOOK] = m_pTransformCom->m_vInfo[Engine::INFO_POS] = m_vHeadPos + m_pTransformCom->m_vInfo[Engine::INFO_LOOK] * m_fDistance;
 	

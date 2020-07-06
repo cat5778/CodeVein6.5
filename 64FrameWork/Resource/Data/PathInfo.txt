@@ -478,12 +478,6 @@ StaticMesh
 SM_LawnL2.X
 SM_LawnL2
 ..\..\Resource\Mesh\StaticMesh\Shop\Terrain\SM_LawnL2\
-Map3
-Snow
-StaticMesh
-Map3.X
-Map3
-..\..\Resource\Mesh\StaticMesh\Snow\Map3\Map3\
 SM_SkySphere_st09a1
 Snow
 StaticMesh

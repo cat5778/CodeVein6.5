@@ -70,9 +70,6 @@
     <Filter Include="02. GameObejct\01. Stage\05. Sword">
       <UniqueIdentifier>{218cca05-7925-42d9-aaa3-cc2249ab3c90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10.Manager">
-      <UniqueIdentifier>{29399895-2bc0-444e-bf8d-b57b3e8cae2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObejct\02. Public\02 StaticObject">
       <UniqueIdentifier>{2d805841-3269-4960-884d-8c6f7bc5ded2}</UniqueIdentifier>
     </Filter>
@@ -84,12 +81,6 @@
     </Filter>
     <Filter Include="02. GameObejct\02. Public\03.ThirdPersonCamera">
       <UniqueIdentifier>{f1ca5794-deff-49dd-83be-c0a2f1b1a2a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10.Manager\00. KeyMgr">
-      <UniqueIdentifier>{13f5eb41-2a40-4f0b-8a6d-af3fa1e9c24b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10.Manager\01. Timer">
-      <UniqueIdentifier>{79242ec8-59dc-44a2-bea7-ab56f6188fd7}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObejct\02. Public\04. SphereCollider">
       <UniqueIdentifier>{2235b4e3-cdc0-4f1b-8acd-1b13ff4b2c7c}</UniqueIdentifier>
@@ -108,12 +99,6 @@
     </Filter>
     <Filter Include="01. Scene\03. Public\00. Loading">
       <UniqueIdentifier>{c257f3c1-f6d7-4d7c-813a-b17a060ed831}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10.Manager\02. ColliderMgr">
-      <UniqueIdentifier>{6effc66a-e7bd-4258-860e-b631e4c92420}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="10.Manager\03. SoundMgr">
-      <UniqueIdentifier>{29ba2134-4c09-436e-8297-f84f25b8afc8}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObejct\01. Stage\10. Monster\RedDevil">
       <UniqueIdentifier>{4ceddb11-d554-4570-ba56-03819651c0ff}</UniqueIdentifier>
@@ -171,6 +156,21 @@
     </Filter>
     <Filter Include="02. GameObejct\02. Public\05. UI\3DUI\Portal">
       <UniqueIdentifier>{b5b7c834-9855-4575-9a16-8154af500ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\10.Manager">
+      <UniqueIdentifier>{29399895-2bc0-444e-bf8d-b57b3e8cae2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\10.Manager\00. KeyMgr">
+      <UniqueIdentifier>{13f5eb41-2a40-4f0b-8a6d-af3fa1e9c24b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\10.Manager\01. Timer">
+      <UniqueIdentifier>{79242ec8-59dc-44a2-bea7-ab56f6188fd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\10.Manager\02. ColliderMgr">
+      <UniqueIdentifier>{6effc66a-e7bd-4258-860e-b631e4c92420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\10.Manager\03. SoundMgr">
+      <UniqueIdentifier>{29ba2134-4c09-436e-8297-f84f25b8afc8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
       <Filter>02. GameObejct\02. Public\03.ThirdPersonCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\KeyMgr.h">
-      <Filter>10.Manager\00. KeyMgr</Filter>
+      <Filter>02. GameObejct\10.Manager\00. KeyMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\TimerManager.h">
       <Filter>99. Etc\헤더 파일</Filter>
@@ -256,10 +256,10 @@
       <Filter>01. Scene\02. Field</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\ColliderManager.h">
-      <Filter>10.Manager\02. ColliderMgr</Filter>
+      <Filter>02. GameObejct\10.Manager\02. ColliderMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\SoundMgr.h">
-      <Filter>10.Manager\03. SoundMgr</Filter>
+      <Filter>02. GameObejct\10.Manager\03. SoundMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\RedDevil.h">
       <Filter>02. GameObejct\01. Stage\10. Monster\RedDevil</Filter>
@@ -390,7 +390,7 @@
       <Filter>02. GameObejct\02. Public\03.ThirdPersonCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\KeyMgr.cpp">
-      <Filter>10.Manager\00. KeyMgr</Filter>
+      <Filter>02. GameObejct\10.Manager\00. KeyMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TimerManager.cpp">
       <Filter>99. Etc\소스 파일</Filter>
@@ -408,10 +408,10 @@
       <Filter>01. Scene\02. Field</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ColliderManager.cpp">
-      <Filter>10.Manager\02. ColliderMgr</Filter>
+      <Filter>02. GameObejct\10.Manager\02. ColliderMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SoundMgr.cpp">
-      <Filter>10.Manager\03. SoundMgr</Filter>
+      <Filter>02. GameObejct\10.Manager\03. SoundMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\RedDevil.cpp">
       <Filter>02. GameObejct\01. Stage\10. Monster\RedDevil</Filter>

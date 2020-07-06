@@ -37,7 +37,7 @@ public:
 	const Engine::CTransform*		Get_MonTransform() { return m_pMonTransform; }
 	_vec3							Get_Look() {return m_vAt-m_vEye; }
 	_vec3							Get_CamPos() { return m_vEye; }
-
+	void							CameraShaking(_float fTimeDelta);
 
 private:
 	void							Key_Input(const _float& fTimeDelta);
@@ -65,6 +65,9 @@ private:
 	_vec3					m_vInitPos;
 	_float					m_LockOnDistance = 0.f;
 	CLockOn*				m_pLockOn;
+
+
+	_float					m_fSin = 0.f;
 
 
 public:
