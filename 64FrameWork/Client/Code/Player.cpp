@@ -45,12 +45,15 @@ HRESULT CPlayer::Ready_GameObject(void)
 		Load_Text(L"../../Resource/Data/NavMash/BaseCompleteNav.txt");
 		break;
 	case LOAD_NOMAL2:
-		//m_pTransformCom->Set_Pos(-14.7f, 2.16f, -20.2f); //Boss
-		//m_pNaviCom->Set_Index(70);// Base Init Idx 38 
-		//Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
-		m_pTransformCom->Set_Pos(50.f, -4.75f, 58.f); //New Map StartPos 
-		m_pNaviCom->Set_Index(1);// Base Init Idx 38 
+
+		//m_pTransformCom->Set_Pos(50.f, -4.75f, 58.f); //New Map StartPos 
+		//m_pNaviCom->Set_Index(1);// Base Init Idx 38 
+		//Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+
+		m_pTransformCom->Set_Pos(0.069f,6.208f,-56.f); //New Map StartPos 
+		m_pNaviCom->Set_Index(134);// Base Init Idx 38 
 		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+
 
 		//m_pTransformCom->Set_Pos(-85.f, 1.3f, 0.01f);Start
 		//m_pNaviCom->Set_Index(0);// Base Init Idx 38 
@@ -184,7 +187,6 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 
 	PlayerUI();
-	
 	UpdateGague(fTimeDelta);
 
 	m_pColliderGroupCom->Set_ColliderEnable(Engine::COLOPT_ATTACK, false);
@@ -453,10 +455,11 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 			else
 			{
+
 				m_eCurState = OBJ_ATTACK;
 				m_pMeshCom->Set_AnimationSet(34);
 				m_fCurSP -= 10.f;
-
+				//m_pCam->Set_ShakeTime(2.f);
 				m_uiCombo = 1;
 			}
 		}
@@ -1373,7 +1376,9 @@ void CPlayer::Collision_Check(_float fTimeDelta)
 
 			if (pTargetCollCom->IsColl(Engine::COLOPT_HURT, Engine::STATE_ENTER))
 			{
-				cout << "공격 발생 " << endl;
+				//cout << "공격 발생 " << endl;
+
+				m_pCam->Shake(0.2f,25.f);
 				pMonster->HurtMon(m_fDamage, false);
 
 			}		
@@ -1425,6 +1430,7 @@ void CPlayer::Collision_Check(_float fTimeDelta)
 					if (pColl->IsColl())
 					{
 						Hurt(vPos, pColl->Get_WorldPos(), 12.f);
+						m_pCam->Shake(0.3f,5.f);
 
 
 					}

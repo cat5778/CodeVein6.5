@@ -34,7 +34,7 @@ HRESULT CRedDevil::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fCurHp = m_fMaxHp =30.f;
+	m_fCurHp = m_fMaxHp =300.f;
 	m_fAttackRange = 4.f;
 	Set_TransformData();
 
@@ -65,7 +65,8 @@ HRESULT CRedDevil::Ready_GameObject()
 	//}
 	//else
 	{
-		Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
+		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+
 		m_pTransformCom->Set_Pos(m_vRespawn.x, m_vRespawn.y, m_vRespawn.z);
 		m_pNaviCom->Set_Index(m_uiCellIdx);// Base Init Idx 38 
 	}

@@ -55,11 +55,9 @@ _int CThirdPersonCamera::Update_GameObject(const _float& fTimeDelta)
 
 	Mouse_Fix();
 	Target_Renewal(fTimeDelta);
-	CameraShaking(fTimeDelta);
 	Mouse_Move(fTimeDelta);
 	Key_Input(fTimeDelta);
 	_int iExit = Engine::CCamera::Update_GameObject(fTimeDelta);
-
 	return iExit;
 }
 
@@ -72,11 +70,14 @@ HRESULT CThirdPersonCamera::Ready_Component()
 	m_fVerticalAngle = 170.f;
 	return S_OK;
 }
-void CThirdPersonCamera::CameraShaking(_float fTimeDelta)
+void CThirdPersonCamera::Set_ShakeTime(_float fShakeTime)
 {
-	m_fSin += fTimeDelta*100000.f;
-	m_vEye += _vec3(0.f, 1.f, 0.f)* sinf(D3DXToRadian(m_fSin))*0.06f;
-
+	m_fShakeTime = fShakeTime;
+}
+void CThirdPersonCamera::Shake(_float fShakeTime, _float fPower)
+{
+	m_fShakeTime = fShakeTime;
+	m_fShakePower = fPower;
 }
 //_vec3 Get_CamPos();
 //{
@@ -118,9 +119,6 @@ void CThirdPersonCamera::Target_Renewal(const _float& fTimeDelta)
 
 	m_matWorld = (*m_pParentBoneMatrix * *m_pParentWorldMatrix);
 	memcpy(&m_vHeadPos, &m_matWorld.m[3][0], sizeof(_vec3));
-
-
-
 	if (!m_bIsLockOn)
 	{
 		m_pMonTransform = nullptr;
@@ -194,18 +192,19 @@ void CThirdPersonCamera::Target_Renewal(const _float& fTimeDelta)
 		}
 		else
 		{
-				
+
 			m_vAt = m_vHeadPos;
 		}
+
+
+
 		//_vec3 vPos =m_pTransformCom->m_vInfo[Engine::INFO_POS];
 
 	}
 
 
 	m_vEye = m_pTransformCom->m_vInfo[Engine::INFO_POS];
-
-
-
+	CameraShaking(fTimeDelta, m_fShakePower);
 
 	//m_pTransformCom->m_vInfo[Engine::INFO_LOOK] = m_pTransformCom->m_vInfo[Engine::INFO_POS] = m_vHeadPos + m_pTransformCom->m_vInfo[Engine::INFO_LOOK] * m_fDistance;
 	
@@ -290,6 +289,31 @@ float CThirdPersonCamera::Get_Angle(const D3DXVECTOR3 & a, const D3DXVECTOR3 & b
 	float fDgree = (a.x * b.z - a.z * b.x > 0.0f) ? fRadian : -fRadian;
 
 	return fDgree;
+}
+
+void CThirdPersonCamera::CameraShaking(_float fTimeDelta, _float fPower)
+{
+	if (0.f < m_fShakeTime)
+	{
+		_vec3 vRandPos = { (_float)(rand()%2),1.f,0.f };
+		D3DXVec3Normalize(&vRandPos, &vRandPos);
+		m_vEye += vRandPos*(sinf(D3DXToRadian(m_fSinf))*0.1f);
+	}
+
+
+	if (0.f<m_fShakeTime)
+	{
+		m_fShakeTime -= fTimeDelta;
+		m_fSinf += fTimeDelta*400.f*fPower;
+
+	}
+	else
+	{
+		m_fShakeTime = 0.f;
+		m_fSinf = 0.f;
+		//m_vHeadPos= m_vOldHeadPos;s
+	}
+
 }
 
 void CThirdPersonCamera::LockOn(_bool bIsLockOn)

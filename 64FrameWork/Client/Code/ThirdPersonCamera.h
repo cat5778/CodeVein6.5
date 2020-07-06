@@ -37,7 +37,9 @@ public:
 	const Engine::CTransform*		Get_MonTransform() { return m_pMonTransform; }
 	_vec3							Get_Look() {return m_vAt-m_vEye; }
 	_vec3							Get_CamPos() { return m_vEye; }
-	void							CameraShaking(_float fTimeDelta);
+	void							Set_ShakeTime(_float fShakeTime);
+	void							Shake(_float fShkeTime, _float fPower = 5.f);
+
 
 private:
 	void							Key_Input(const _float& fTimeDelta);
@@ -46,13 +48,12 @@ private:
 	void							Lerp_Cam(_float fTimeDelta);
 	void							Mouse_Fix(void);
 	_float							Get_Angle(const D3DXVECTOR3& a, const D3DXVECTOR3& b);
-
+	void							CameraShaking(_float fTimeDelta, _float fPower);
 
 private:
 	_bool					m_bIsLockOn = false;
 	Engine::CTransform*		m_pTargetInfo = nullptr;
 	Engine::CTransform*		m_pMonTransform = nullptr;
-
 	Engine::CTransform*		m_pTransformCom = nullptr;
 	_bool					m_bIsFix = false;	
 	_float					m_fDistance = 1.5f;
@@ -62,14 +63,13 @@ private:
 	const	_matrix*		m_pParentWorldMatrix = nullptr;
 	_matrix					m_matWorld;
 	_vec3					m_vHeadPos;
+	_vec3					m_vOldHeadPos;
 	_vec3					m_vInitPos;
 	_float					m_LockOnDistance = 0.f;
 	CLockOn*				m_pLockOn;
-
-
-	_float					m_fSin = 0.f;
-
-
+	_float					m_fShakeTime = 0.f;
+	_float					m_fShakePower = 0.f;
+	_float					m_fSinf = 0.f;
 public:
 	static CThirdPersonCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 												const _vec3* pEye,
