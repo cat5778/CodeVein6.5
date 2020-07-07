@@ -79,10 +79,6 @@ void CThirdPersonCamera::Shake(_float fShakeTime, _float fPower)
 	m_fShakeTime = fShakeTime;
 	m_fShakePower = fPower;
 }
-//_vec3 Get_CamPos();
-//{
-//	return m_
-//}
 void CThirdPersonCamera::Key_Input(const _float& fTimeDelta)
 {
 

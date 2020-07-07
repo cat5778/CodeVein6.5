@@ -60,6 +60,10 @@ _int CProjectile::Update_GameObject(const _float & fTimeDelta)
 	if(m_bIsColl)
 		return S_OK;
 
+	if (m_fTime >= 10.f)
+		m_bEnable = false;
+	else
+		m_fTime += fTimeDelta;
 	m_pTransformCom->Move_Pos(&(m_vDir*m_fSpeed*fTimeDelta));
 	CGameObject::Update_GameObject(fTimeDelta);
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);

@@ -212,6 +212,8 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\Code\Shader_Base.hpp" />
     <ClInclude Include="..\Code\Shader_Blend.hpp" />
     <ClInclude Include="..\Code\Shader_Effect.hpp" />
+    <ClInclude Include="..\Code\Shader_Fire.hpp" />
+    <ClInclude Include="..\Code\Shader_IceBreath.hpp" />
     <ClInclude Include="..\Code\Shader_Light.hpp" />
     <ClInclude Include="..\Code\Shader_LockOn.hpp" />
     <ClInclude Include="..\Code\Shader_Mesh.hpp" />

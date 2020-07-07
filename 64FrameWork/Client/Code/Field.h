@@ -43,6 +43,7 @@ private:
 
 
 private:
+	D3DLIGHT9							m_tLightInfo[9];
 	_matrix								m_matView, m_matProj;
 	_ulong								m_dwRenderCnt = 0;
 	_tchar								m_szFPS[256];

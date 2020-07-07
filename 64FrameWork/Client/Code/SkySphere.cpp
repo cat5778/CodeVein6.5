@@ -17,6 +17,9 @@ CSkySphere::~CSkySphere(void)
 
 HRESULT CSkySphere::Ready_GameObject()
 {
+	
+	
+	
 	Ready_Stage();
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);

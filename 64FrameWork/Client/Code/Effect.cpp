@@ -3,10 +3,10 @@
 
 #include "Export_Function.h"
 
-CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
+CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos)
+	: Engine::CGameObject(pGraphicDev), m_vPos(vPos),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName)
 {
-
+	m_wstrMaskTexName = L"FireMask2";
 }
 
 CEffect::~CEffect(void)
@@ -17,10 +17,17 @@ CEffect::~CEffect(void)
 HRESULT CEffect::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	//m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.001f;
-	//m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.001f;
-	//m_vScale.z = 0.0000001f;
-	//m_pTransformCom->Set_Pos(0.f, 0.f, 0.f);
+	m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.001f;
+	m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.001f;
+	m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.001f;
+	m_pTransformCom->Set_Pos(&m_vPos);
+	m_fScale[0] = m_vScale.x;
+	m_fScale[1] = m_vScale.y;
+	m_fScale[2] = m_vScale.z;
+	m_fFrameMax = 31;
+	for (int i = 0; i < 3; i++)
+		m_fScollTime[i] = 0.f;
+
 	//m_pTransformCom->Set_Scale(m_pTextureCom->Get_ImageInfo().Width*0.001f,
 	//	m_pTextureCom->Get_ImageInfo().Height*0.001f,
 	//	0.0000001f);
@@ -39,6 +46,8 @@ HRESULT CEffect::LateReady_GameObject(void)
 
 _int CEffect::Update_GameObject(const _float& fTimeDelta)
 {
+	
+	m_fScollTime[0]+= fTimeDelta;
 	m_fFrameCnt += m_fFrameMax * fTimeDelta;
 
 	if (m_fFrameCnt >= m_fFrameMax)
@@ -106,16 +115,24 @@ HRESULT CEffect::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_DYNAMIC].emplace(L"Com_Transform", pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, L"Texture_HPGauge"));
+	pComponent = m_pTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrTexName.c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
+
+	pComponent = m_pAlphaTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrAlphaTexName.c_str()));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_AlphaTexture", pComponent);
+
+	pComponent = m_pMaskTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrMaskTexName.c_str()));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_MaskTexture", pComponent);
 
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	pComponent->AddRef();
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
 	
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone_Prototype(L"Shader_Effect"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone_Prototype(L"Shader_Fire"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	
@@ -136,15 +153,26 @@ HRESULT CEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 
+	pEffect->SetFloatArray("scrollSpeeds", m_fScollTime, 3);
+	pEffect->SetFloatArray("scales", m_fScale, 3);
+	pEffect->SetFloat("frameTime", m_fFameTime);
+
+	//pEffect->SetVector("scales", &m_vScale);
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
+	m_pAlphaTextureCom->Set_Texture(pEffect, "g_DepthAlphaTexture", 0);
+	m_pMaskTextureCom->Set_Texture(pEffect, "g_DepthMaskTexture", _uint(m_fFrameCnt));
+	
 	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
+	//Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthAlphaTexture");
+	////pEffect->SetTexture("g_DepthAlphaTexture", m_pAlphaTextureCom->Get_Texture());
+
 
 	return S_OK;
 }
 
-CEffect* CEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CEffect* CEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos)
 {
-	CEffect*	pInstance = new CEffect(pGraphicDev);
+	CEffect*	pInstance = new CEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, vPos);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 		Engine::Safe_Release(pInstance);

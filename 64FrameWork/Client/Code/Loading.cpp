@@ -414,7 +414,36 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Number/%d.tga",11),
 		E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"Fire",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Texture/T_FX_TC5Fire01.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"FireMask",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Texture/TC_Alpha/T_FX_GEZInk01.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"Fire2",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/T_FX_ExternalFlamesBurst/T_FX_ExternalFlamesBurst%d.png",32),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"FireMask2",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/T_FX_ExternalFlamesBurst_Alpha/T_FX_ExternalFlamesBurst_Alpha%d.png", 32),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"FireAlpha",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Texture/TC_Alpha/T_FX_TC5CloudFull09.tga"),
+		E_FAIL);
 
 
 
@@ -462,40 +491,52 @@ _bool CLoading::Loading_Dynamic()
 	}
 
 	lstrcpy(m_szLoading[DYNAMIC], L"Monster Loading .............................");
+	if (LOAD_MODE== 5)
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"CocoonDevil",
+			Engine::TYPE_DYNAMIC,
+			L"../../Resource/Mesh/DynamicMesh/CocoonDevil/",
+			L"CocoonDevil.X"),
+			E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		RESOURCE_STAGE,
-		L"RussianHat",
-		Engine::TYPE_DYNAMIC,
-		L"../../Resource/Mesh/DynamicMesh/RussianHat/",
-		L"RussianHat.X"),
-		E_FAIL);
+	}
+	else
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"RussianHat",
+			Engine::TYPE_DYNAMIC,
+			L"../../Resource/Mesh/DynamicMesh/RussianHat/",
+			L"RussianHat.X"),
+			E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		RESOURCE_STAGE,
-		L"RedDevil",
-		Engine::TYPE_DYNAMIC,
-		L"../../Resource/Mesh/DynamicMesh/RedDevil/",
-		L"RedDevil.X"),
-		E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"RedDevil",
+			Engine::TYPE_DYNAMIC,
+			L"../../Resource/Mesh/DynamicMesh/RedDevil/",
+			L"RedDevil.X"),
+			E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		RESOURCE_STAGE,
-		L"CocoonDevil",
-		Engine::TYPE_DYNAMIC,
-		L"../../Resource/Mesh/DynamicMesh/CocoonDevil/",
-		L"CocoonDevil.X"),
-		E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"CocoonDevil",
+			Engine::TYPE_DYNAMIC,
+			L"../../Resource/Mesh/DynamicMesh/CocoonDevil/",
+			L"CocoonDevil.X"),
+			E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
-		RESOURCE_STAGE,
-		L"Davis",
-		Engine::TYPE_DYNAMIC,
-		L"../../Resource/Mesh/DynamicMesh/Davis/",
-		L"Davis.X"),
-		E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"Davis",
+			Engine::TYPE_DYNAMIC,
+			L"../../Resource/Mesh/DynamicMesh/Davis/",
+			L"Davis.X"),
+			E_FAIL);
 
-
+	}
 	lstrcpy(m_szLoading[DYNAMIC], L"Character Loading Complete > ,< ");
 	m_uiLoadingCheck[DYNAMIC] = 1;
 

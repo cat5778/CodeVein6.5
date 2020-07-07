@@ -4,6 +4,7 @@
 #include "MainApp.h"
 #include "Image.h"
 #include "Export_Function.h"
+#include "Field.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -44,6 +45,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80)
 		{
 			Engine::CScene*		pScene = CStage::Create(m_pGraphicDev);
+			//Engine::CScene*		pScene = CField::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
 
 			FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);

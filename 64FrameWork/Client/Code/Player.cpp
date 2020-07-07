@@ -50,8 +50,12 @@ HRESULT CPlayer::Ready_GameObject(void)
 		//m_pNaviCom->Set_Index(1);// Base Init Idx 38 
 		//Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
 
-		m_pTransformCom->Set_Pos(0.069f,6.208f,-56.f); //New Map StartPos 
-		m_pNaviCom->Set_Index(134);// Base Init Idx 38 
+		//m_pTransformCom->Set_Pos(0.069f,6.208f,-56.f); //New Map Boss Front
+		//m_pNaviCom->Set_Index(134);// //New Map Boss Front
+
+
+		m_pTransformCom->Set_Pos(-5.75f, 3.5f, -20.3f); //New Map CocoonFront
+		m_pNaviCom->Set_Index(86);// New Map CocoonFront
 		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
 
 
@@ -67,9 +71,9 @@ HRESULT CPlayer::Ready_GameObject(void)
 	case LOAD_MONSTER:
 		break;
 	case LOAD_BATTLE:
-		m_pTransformCom->Set_Pos(-14.7f, 2.16f, -20.2f); //Boss
-		m_pNaviCom->Set_Index(70);// Base Init Idx 38 
-		Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
+		m_pTransformCom->Set_Pos(-5.75f, 3.5f, -20.3f); //New Map CocoonFront
+		m_pNaviCom->Set_Index(86);// New Map CocoonFront
+		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
 
 		//m_pTransformCom->Set_Pos(-8.f, 0.8f, -2.6f);
 		//m_pNaviCom->Set_Index(18);// Base Init Idx 38 
@@ -159,15 +163,17 @@ HRESULT CPlayer::LateReady_GameObject(void)
 	pGameObject = m_pSword[0] = CSword::Create(m_pGraphicDev, L"SM_NormalGreatSwordA_ba01", 0);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_SwordA", pGameObject), E_FAIL);
+	if (LOAD_MODE != 5)
+	{
 
-	pGameObject = m_pSword[1]=CSword::Create(m_pGraphicDev, L"SM_NormalGreatSwordB_ba01", 0);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_SwordB", pGameObject), E_FAIL);
+		pGameObject = m_pSword[1] = CSword::Create(m_pGraphicDev, L"SM_NormalGreatSwordB_ba01", 0);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_SwordB", pGameObject), E_FAIL);
 
-	pGameObject = m_pSword[2] = CSword::Create(m_pGraphicDev, L"SK_NormalHalberdB", 0);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Halberd", pGameObject), E_FAIL);
-
+		pGameObject = m_pSword[2] = CSword::Create(m_pGraphicDev, L"SK_NormalHalberdB", 0);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Halberd", pGameObject), E_FAIL);
+	}
 
 	for( int i=0; i>3 ; i++)
 		m_pSword[i]->Set_Enable(false);

@@ -231,9 +231,6 @@
     <ClInclude Include="..\Code\StaticObject.h">
       <Filter>02. GameObejct\02. Public\02 StaticObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Effect.h">
-      <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\ThirdPersonCamera.h">
       <Filter>02. GameObejct\02. Public\03.ThirdPersonCamera</Filter>
     </ClInclude>
@@ -327,6 +324,9 @@
     <ClInclude Include="..\Code\PortalSub.h">
       <Filter>02. GameObejct\02. Public\05. UI\3DUI\Portal</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Effect.h">
+      <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -382,9 +382,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
       <Filter>02. GameObejct\02. Public\02 StaticObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Effect.cpp">
-      <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ThirdPersonCamera.cpp">
       <Filter>02. GameObejct\02. Public\03.ThirdPersonCamera</Filter>
@@ -478,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PortalSub.cpp">
       <Filter>02. GameObejct\02. Public\05. UI\3DUI\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

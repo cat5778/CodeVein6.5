@@ -167,10 +167,18 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkySphere", pGameObject), E_FAIL);
 
 
-	pGameObject = CDavis::Create(m_pGraphicDev, L"Davis", 0,_vec3(3.6598f,0.2853f,3.7742f),41);
+	//pGameObject = CDavis::Create(m_pGraphicDev, L"Davis", 0,_vec3(3.6598f,0.2853f,3.7742f),41);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+
+
+	pGameObject = CCocoonDevil::Create(m_pGraphicDev, L"CocoonDevil", 0, _vec3(-12.4343f, 3.2f, -10.6f), 77);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
 
+	pGameObject = CEffect::Create(m_pGraphicDev,L"Fire2",L"FireAlpha",_vec3(-0.44f,3.65f,-20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
 
 
 
@@ -229,7 +237,6 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 		Load_Text(L"../../Resource/Data/SnowMap.txt");
 		break;
 	case LOAD_NOMAL3:
-		Load_Text(L"../../Resource/Data/Base.txt");
 		break;
 	case LOAD_PLAYER:
 		break;
@@ -299,12 +306,23 @@ HRESULT CStage::Ready_LightInfo(void)
 		ZeroMemory(&m_tLightInfo[i], sizeof(D3DLIGHT9));
 
 	//ÅÂ¾ç
-	m_tLightInfo[0].Type = D3DLIGHT_POINT;
+	if (LOAD_MODE == 5)
+	{
+		m_tLightInfo[0].Type = D3DLIGHT_DIRECTIONAL;
+		m_tLightInfo[0].Range = 3000.f;
+		m_tLightInfo[0].Direction = _vec3{ 3.f,-1.f, 0.f };
+	}
+	else
+	{
+		m_tLightInfo[0].Type = D3DLIGHT_POINT;
+		m_tLightInfo[0].Range = 1100.f;
+	}
 	m_tLightInfo[0].Diffuse = D3DXCOLOR(1.f, 0.8f, 0.6f, 0.4f);
 	//m_tLightInfo[0].Diffuse = D3DXCOLOR(0.8f, 0.8f, 1.0f, 0.35f);// ´«¸Ê
 	//m_tLightInfo[0].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//m_tLightInfo[0].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.7f, 1.f);
-	m_tLightInfo[0].Range = 1100.f;
+	
+
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[0], 0), E_FAIL);
 
 

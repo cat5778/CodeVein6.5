@@ -38,16 +38,17 @@ HRESULT CInvenInfo::LateReady_GameObject(void)
 	pGameObject = m_pWeapon[0] = CDisplayWeapon::Create(m_pGraphicDev, L"SM_NormalGreatSwordA_ba01", 0);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Display_SwordA", pGameObject), E_FAIL);
+	if (LOAD_MODE != 5)
+	{
+		pGameObject = m_pWeapon[1] = CDisplayWeapon::Create(m_pGraphicDev, L"SM_NormalGreatSwordB_ba01", 0);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Display_SwordB", pGameObject), E_FAIL);
 
-	pGameObject = m_pWeapon[1] = CDisplayWeapon::Create(m_pGraphicDev, L"SM_NormalGreatSwordB_ba01", 0);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Display_SwordB", pGameObject), E_FAIL);
+		pGameObject = m_pWeapon[2] = CDisplayWeapon::Create(m_pGraphicDev, L"SK_NormalHalberdB", 0);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Display_Halberd", pGameObject), E_FAIL);
 
-	pGameObject = m_pWeapon[2] = CDisplayWeapon::Create(m_pGraphicDev, L"SK_NormalHalberdB", 0);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Display_Halberd", pGameObject), E_FAIL);
-
-
+	}
 	m_pInven = dynamic_cast<CInven*> (Engine::Get_GameObject(L"UI", L"InvenUI"));
 	return S_OK;
 }

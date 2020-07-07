@@ -52,7 +52,7 @@ private:
 	const	_matrix*		m_pParentWorldMatrix = nullptr;
 	_bool					m_bIsColl = false;
 	_float					m_fSpeed = 3.5f;
-
+	_float					m_fTime = 0.f;
 #ifdef _DEBUG
 	_matrix					m_matSphereWorld;		//
 #endif // _DEBUG

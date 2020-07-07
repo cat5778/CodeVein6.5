@@ -18,7 +18,7 @@ public:
 	IDirect3DBaseTexture9*	Get_Texture(const _uint& iIndex = 0);
 	const int&				GetVecSize() const;
 	void					Set_Texture(LPD3DXEFFECT& pEffect, const char* pShaderName, const _uint& iIndex = 0);
-
+	_uint					Get_ImageCnt();
 public:
 	HRESULT			Ready_Texture(const _tchar* pPath, TEXTURETYPE eType, const _uint& iCnt = 1);
 	void			Render_Texture(const _uint& iIndex = 0);
@@ -26,7 +26,7 @@ public:
 private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
 	vector<D3DXIMAGE_INFO>				m_vecImageInfo;
-
+	_uint								m_uiImgCnt;
 public:
 	static CTexture*		Create(LPDIRECT3DDEVICE9 pGraphicDev, 
 									const _tchar* pPath, 

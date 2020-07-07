@@ -66,10 +66,16 @@ void CTexture::Set_Texture(LPD3DXEFFECT & pEffect, const char * pShaderName, con
 
 }
 
+_uint CTexture::Get_ImageCnt()
+{
+	return m_uiImgCnt;
+}
+
 HRESULT Engine::CTexture::Ready_Texture(const _tchar* pPath, 
 										TEXTURETYPE eType, 
 										const _uint& iCnt /*= 1*/)
 {
+	m_uiImgCnt = iCnt;
 	m_vecTexture.reserve(iCnt);
 	m_vecImageInfo.reserve(iCnt);
 
@@ -77,7 +83,6 @@ HRESULT Engine::CTexture::Ready_Texture(const _tchar* pPath,
 	ZeroMemory(&tImgInfo, sizeof(D3DXIMAGE_INFO));
 
 	IDirect3DBaseTexture9*		pTexture = nullptr;
-
 	for (_uint i = 0; i < iCnt; ++i)
 	{
 		TCHAR		szFileName[256] = L"";

@@ -162,6 +162,12 @@
     <ClInclude Include="..\Code\Shader_LockOn.hpp">
       <Filter>09. Shader\Defferdhpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Shader_Fire.hpp">
+      <Filter>09. Shader\Defferdhpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Shader_IceBreath.hpp">
+      <Filter>09. Shader\Defferdhpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">
