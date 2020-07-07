@@ -190,6 +190,7 @@ call CopyUtility.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Reference\Header\Shader_Distortion.hpp" />
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\Code\Calculator.h" />
     <ClInclude Include="..\Code\Camera.h" />

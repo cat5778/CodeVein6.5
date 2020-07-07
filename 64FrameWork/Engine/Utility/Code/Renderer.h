@@ -40,7 +40,7 @@ private:
 	void		Render_Defferd(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_LightAcc(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Blend(LPDIRECT3DDEVICE9& pGraphicDev);
-
+	void		Render_Distortion(LPDIRECT3DDEVICE9& pGraphicDev);
 
 private:
 	list<CGameObject*>		m_RenderGroup[RENDER_END];

@@ -14,7 +14,7 @@
 #include "UI.h"
 #include "Gauge.h"
 #include "Effect.h"
-
+#include "DistotionEffect.h"
 //#include "SoundMgr.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -176,11 +176,14 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
 
-	pGameObject = CEffect::Create(m_pGraphicDev,L"Fire2",L"FireAlpha",_vec3(-0.44f,3.65f,-20.f));
+	//pGameObject = CEffect::Create(m_pGraphicDev,L"Fire2",L"FireAlpha",_vec3(-0.44f,3.65f,-20.f));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
+
+
+	pGameObject = CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", _vec3(-0.44f, 3.65f, -20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
-
-
 
 	//if (LOAD_MODE == LOAD_NOMAL2)
 	//{

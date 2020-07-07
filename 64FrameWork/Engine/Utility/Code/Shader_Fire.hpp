@@ -109,7 +109,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 
 	Out.vColor.a = vAlpha2.r;
-	Out.vColor.a = (Out.vColor.a/** vAlpha.a*/)* saturate(vViewZ - In.vProjPos.w);
+	Out.vColor.a = (Out.vColor.a* vAlpha.a)* saturate(vViewZ - In.vProjPos.w);
 
 	return Out;
 }

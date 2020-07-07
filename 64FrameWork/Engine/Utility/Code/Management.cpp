@@ -23,24 +23,25 @@ HRESULT CManagement::Ready_Management(LPDIRECT3DDEVICE9 & pGraphicDev)
 	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Light", ViewPort.Width, ViewPort.Height, D3DFMT_A16B16G16R16F, D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Specular", ViewPort.Width, ViewPort.Height, D3DFMT_A16B16G16R16F, D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Depth", ViewPort.Width, ViewPort.Height, D3DFMT_A32B32G32R32F, D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Effect", ViewPort.Width, ViewPort.Height, D3DFMT_A32B32G32R32F, D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Distortion", ViewPort.Width, ViewPort.Height, D3DFMT_A32B32G32R32F, D3DXCOLOR(0.f, 0.f, 0.f, 1.f)), E_FAIL);
+
 
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Albedo", 0.f, 0.f, 200.f, 200.f), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Normal", 0.f, 200.f, 200.f, 200.f), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Light", 200.f, 0.f, 200.f, 200.f), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Specular", 200.f, 200.f, 200.f, 200.f), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Effect", 0.f, 600.f, 200.f, 200.f), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Distortion", 0.f,600.f, 200.f, 200.f), E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Albedo"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Normal"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Depth"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Effect"), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Light"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), E_FAIL);
 
+	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Distortion", L"Target_Distortion"), E_FAIL);
 
 	CShader*		pShader = nullptr;
 
@@ -75,6 +76,10 @@ HRESULT CManagement::Ready_Management(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_IceBreath.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Shader_IceBreath", pShader), E_FAIL);
+
+	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Distortion.hpp");
+	NULL_CHECK_RETURN(pShader, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Shader_Distortion", pShader), E_FAIL);
 
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_UI.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);

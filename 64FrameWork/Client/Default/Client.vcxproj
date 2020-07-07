@@ -182,6 +182,7 @@
     <ClInclude Include="..\Code\ColliderManager.h" />
     <ClInclude Include="..\Code\Davis.h" />
     <ClInclude Include="..\Code\DisplayWeapon.h" />
+    <ClInclude Include="..\Code\DistotionEffect.h" />
     <ClInclude Include="..\Code\DynamicCamera.h" />
     <ClInclude Include="..\Code\DynamicObject.h" />
     <ClInclude Include="..\Code\Effect.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="..\Code\ColliderManager.cpp" />
     <ClCompile Include="..\Code\Davis.cpp" />
     <ClCompile Include="..\Code\DisplayWeapon.cpp" />
+    <ClCompile Include="..\Code\DistotionEffect.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />

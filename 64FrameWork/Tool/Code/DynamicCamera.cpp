@@ -253,7 +253,7 @@ void CDynamicCamera::Picking_Mesh()
 	D3DXVec3TransformCoord(&tRay.vPos, &tRay.vPos, &matView);
 	D3DXVec3TransformNormal(&tRay.vDir, &tRay.vDir, &matView);
 
-	FLOAT fMinDist=INT_MAX;
+	FLOAT fMinDist=(_float)INT_MAX;
 	_matrix PickWorldMat;
 	RAY tPickRay;
 
@@ -376,7 +376,7 @@ void CDynamicCamera::Pickint_Nav()
 	D3DXVec3TransformCoord(&tRay.vPos, &tRay.vPos, &matView);
 	D3DXVec3TransformNormal(&tRay.vDir, &tRay.vDir, &matView);
 
-	FLOAT fMinDist = INT_MAX;
+	FLOAT fMinDist = (_float)INT_MAX;
 	_matrix PickWorldMat;
 	RAY tPickRay;
 	m_ppCellVec = &dynamic_cast<Engine::CNaviMesh*>(Engine::Get_Layer(L"GameLogic")->Get_GameObject(L"Player")->Get_Component(L"Com_Navi", Engine::ID_STATIC))->Get_CellVec();

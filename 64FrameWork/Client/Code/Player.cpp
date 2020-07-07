@@ -165,7 +165,6 @@ HRESULT CPlayer::LateReady_GameObject(void)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_SwordA", pGameObject), E_FAIL);
 	if (LOAD_MODE != 5)
 	{
-
 		pGameObject = m_pSword[1] = CSword::Create(m_pGraphicDev, L"SM_NormalGreatSwordB_ba01", 0);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_SwordB", pGameObject), E_FAIL);
@@ -177,6 +176,7 @@ HRESULT CPlayer::LateReady_GameObject(void)
 
 	for( int i=0; i>3 ; i++)
 		m_pSword[i]->Set_Enable(false);
+
 	//m_pHalberd->Set_Enable(false);
 	//m_pHalberd->Set_EquipObject(L"Player");
 	/*
@@ -551,7 +551,6 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	const D3DLIGHT9*		pLight = Engine::Get_LightInfo(0);
 	NULL_CHECK_RETURN(pLight, S_OK);
-
 	pEffect->SetVector("g_vLightDir", &_vec4(pLight->Direction, 0.f));
 	pEffect->SetVector("g_vLightDiffuse", (_vec4*)&pLight->Diffuse);
 	pEffect->SetVector("g_vLightSpecular", (_vec4*)&pLight->Specular);

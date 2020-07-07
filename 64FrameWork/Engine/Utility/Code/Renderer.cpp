@@ -118,14 +118,17 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	Render_Defferd(pGraphicDev);
 	Render_LightAcc(pGraphicDev);
-
+	
+	
 	Render_Blend(pGraphicDev);
 
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
+	Render_Distortion(pGraphicDev);
 
 	if (m_bIsDebugMode)
 	{
+		Engine::Render_DebugBuffer(L"MRT_Distortion");
 		Engine::Render_DebugBuffer(L"MRT_Defferd");
 		Engine::Render_DebugBuffer(L"MRT_LightAcc");
 	}
@@ -260,6 +263,17 @@ void CRenderer::Render_Blend(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	Safe_Release(pEffect);
 	Safe_Release(pShader);
+}
+
+void CRenderer::Render_Distortion(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	Engine::Begin_MRT(L"MRT_Distortion");
+
+	for (auto& iter : m_RenderGroup[RENDER_DISTORTION])
+		iter->Render_GameObject();
+
+	Engine::End_MRT(L"MRT_Distortion");
+
 }
 
 void CRenderer::Render_LightAcc(LPDIRECT3DDEVICE9 & pGraphicDev)

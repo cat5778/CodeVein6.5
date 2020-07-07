@@ -172,6 +172,9 @@
     <Filter Include="02. GameObejct\10.Manager\03. SoundMgr">
       <UniqueIdentifier>{29ba2134-4c09-436e-8297-f84f25b8afc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObejct\01. Stage\09. Effect\Distotion">
+      <UniqueIdentifier>{567cb5bd-50a8-46d5-a314-70aea2ecbd7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -327,6 +330,9 @@
     <ClInclude Include="..\Code\Effect.h">
       <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\DistotionEffect.h">
+      <Filter>02. GameObejct\01. Stage\09. Effect\Distotion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -478,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>02. GameObejct\01. Stage\09. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DistotionEffect.cpp">
+      <Filter>02. GameObejct\01. Stage\09. Effect\Distotion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
