@@ -175,6 +175,9 @@
     <Filter Include="02. GameObejct\01. Stage\09. Effect\Distotion">
       <UniqueIdentifier>{567cb5bd-50a8-46d5-a314-70aea2ecbd7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObejct\01. Stage\10. Monster\RussianHat\Hone">
+      <UniqueIdentifier>{6c56f7bd-5b79-4208-b950-5ea4fd92b7bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -333,6 +336,9 @@
     <ClInclude Include="..\Code\DistotionEffect.h">
       <Filter>02. GameObejct\01. Stage\09. Effect\Distotion</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\RussianHatHont.h">
+      <Filter>02. GameObejct\01. Stage\10. Monster\RussianHat\Hone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -487,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DistotionEffect.cpp">
       <Filter>02. GameObejct\01. Stage\09. Effect\Distotion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RussianHatHont.cpp">
+      <Filter>02. GameObejct\01. Stage\10. Monster\RussianHat\Hone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

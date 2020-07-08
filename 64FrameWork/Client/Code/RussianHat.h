@@ -82,6 +82,8 @@ private:
 	_bool						m_bIsPhase2 = false;
 	_uint						m_uiFist=0;
 	CGauge*						m_pHPGauge=nullptr;
+	_bool						m_bIsSpawnHone = false;
+	_uint						m_uiHoneIdx = 0;
 private:
 	virtual void			Free(void) override;
 };

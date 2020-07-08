@@ -205,6 +205,7 @@
     <ClInclude Include="..\Code\Projectile.h" />
     <ClInclude Include="..\Code\RedDevil.h" />
     <ClInclude Include="..\Code\RussianHat.h" />
+    <ClInclude Include="..\Code\RussianHatHont.h" />
     <ClInclude Include="..\Code\Shield.h" />
     <ClInclude Include="..\Code\Shop.h" />
     <ClInclude Include="..\Code\ShopSub.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="..\Code\Projectile.cpp" />
     <ClCompile Include="..\Code\RedDevil.cpp" />
     <ClCompile Include="..\Code\RussianHat.cpp" />
+    <ClCompile Include="..\Code\RussianHatHont.cpp" />
     <ClCompile Include="..\Code\Shield.cpp" />
     <ClCompile Include="..\Code\Shop.cpp" />
     <ClCompile Include="..\Code\ShopSub.cpp" />

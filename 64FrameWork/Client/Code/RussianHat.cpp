@@ -4,6 +4,7 @@
 #include "ColliderManager.h"
 #include "Shield.h"
 #include "Gauge.h"
+#include "RussianHatHont.h"
 CRussianHat::CRussianHat(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrName,_uint uiIdx, _uint uiStageIdx )
 	: CDynamicObject(pGraphicDev,wstrName,uiIdx, uiStageIdx)
 {
@@ -26,7 +27,7 @@ HRESULT CRussianHat::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fCurHp = m_fMaxHp = 200.f;
+	m_fCurHp = m_fMaxHp = 100.f;
 	m_fAttackRange = 4.f;
 	Set_TransformData();
 
@@ -54,10 +55,13 @@ HRESULT CRussianHat::Ready_GameObject()
 	case LOAD_MONSTER:
 		break;
 	case LOAD_BATTLE:
-		//눈맵 플레이어바로앞
-		m_pTransformCom->Set_Pos(-12.32f, 2.73f, -25.3241f);
-		m_pNaviCom->Set_Index(76);// Base Init Idx 38 
-		Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
+		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
+		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
+		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+		////눈맵 플레이어바로앞
+		//m_pTransformCom->Set_Pos(-12.32f, 2.73f, -25.3241f);
+		//m_pNaviCom->Set_Index(76);// Base Init Idx 38 
+		//Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
 
 
 		break;
@@ -102,16 +106,27 @@ HRESULT CRussianHat::LateReady_GameObject()
 
 _int CRussianHat::Update_GameObject(const _float & fTimeDelta)
 {
+	
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
+	{
+		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
+		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
+
+	}
+
 	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM1))
 	//{
 	//	m_uiAni++;
 	//	cout << m_uiAni << endl;
 	//}
-		//StateMachine();
-		//Pattern(fTimeDelta);
+	//	StateMachine();
+	//	Pattern(fTimeDelta);
 	//m_pColliderGroupCom->Set_ColliderEnable(Engine::COLOPT_ATTACK, true);
 	//cout << "보스 체력= " << m_fCurHp << endl;
 	//cout << m_eCurState << endl;
+
+
+
 	srand((unsigned int)time(NULL));
 	if (m_fCurHp > 0.f)
 	{
@@ -574,7 +589,8 @@ void CRussianHat::Chaing_Target(_float fTimeDelta)
 
 void CRussianHat::Phase1(_float fTimeDelta)
 {
-
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM2))
+		m_eCurState = RUSSIAN_ATTACK_HORN1;
 	if (m_fDistance >= m_fAttackRange)
 	{
 		if (m_fDistance >= 7.f)
@@ -887,11 +903,14 @@ void CRussianHat::HoneAttack1(_float fTimeDelta)
 {
 	if (m_eCurState == RUSSIAN_ATTACK_HORN1)
 	{
+
 		if (Get_AniRatio() >= 0.8f)
 		{
 			m_fAnimSpeed = 1.0f;
 			if (!m_bIsPhase2)
 			{
+				m_bIsSpawnHone = false;
+
 				if (m_uiPattern & 1)
 					m_eCurState = RUSSIAN_ATTACK3;
 				else
@@ -900,18 +919,35 @@ void CRussianHat::HoneAttack1(_float fTimeDelta)
 			else
 			{
 				m_eCurState = RUSSIAN_BATTLE_IDLE;
-
+				m_bIsSpawnHone = false;
 			}
 		}
 		else
 		{
 			RotateToTarget(fTimeDelta, 0.f, 0.1f);
 			if (Get_AniRatio() <= 0.4f)
-				m_fAnimSpeed = 2.0f;
+				m_fAnimSpeed = 2.5f;
 
+			if (Get_AniRatio() > 0.5f)
+			{
+				if (!m_bIsSpawnHone)
+				{
+					_float fDgree = Get_Angle(Get_Look(), _vec3(0.f, 0.f, 1.f));
+					fDgree += 180.f;
+					_vec3 vHonePos = Get_Pos() + (Get_Look()*5.f);
+					Engine::CGameObject* pGameObject = CRussainHatHone::Create(m_pGraphicDev, vHonePos, D3DXToRadian(fDgree));
+					Engine::CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
+					wstring wstrInstName = L"Hone_" + to_wstring(m_uiHoneIdx);
+					pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
+					m_uiHoneIdx++;
+					m_bIsSpawnHone = true;
+				}
+			}
 			if (Get_AniRatio() >= 0.4f)
-				m_fAnimSpeed = 3.0f;
-
+			{
+				m_fAnimSpeed = 4.f;
+				
+			}
 		}
 
 

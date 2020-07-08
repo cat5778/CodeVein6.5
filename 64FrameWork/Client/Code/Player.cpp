@@ -46,17 +46,17 @@ HRESULT CPlayer::Ready_GameObject(void)
 		break;
 	case LOAD_NOMAL2:
 
-		//m_pTransformCom->Set_Pos(50.f, -4.75f, 58.f); //New Map StartPos 
-		//m_pNaviCom->Set_Index(1);// Base Init Idx 38 
-		//Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+		m_pTransformCom->Set_Pos(50.f, -4.75f, 58.f); //New Map StartPos 
+		m_pNaviCom->Set_Index(1);// Base Init Idx 38 
+		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
 
 		//m_pTransformCom->Set_Pos(0.069f,6.208f,-56.f); //New Map Boss Front
 		//m_pNaviCom->Set_Index(134);// //New Map Boss Front
 
 
-		m_pTransformCom->Set_Pos(-5.75f, 3.5f, -20.3f); //New Map CocoonFront
-		m_pNaviCom->Set_Index(86);// New Map CocoonFront
-		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+		//m_pTransformCom->Set_Pos(-5.75f, 3.5f, -20.3f); //New Map CocoonFront
+		//m_pNaviCom->Set_Index(86);// New Map CocoonFront
+		//Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
 
 
 		//m_pTransformCom->Set_Pos(-85.f, 1.3f, 0.01f);Start
@@ -229,9 +229,9 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 
 
-	_vec3 vPos = *m_pTransformCom->Get_Info(Engine::INFO_POS);
-	cout << "X=" << vPos.x << "y=" << vPos.y << "Z=" << vPos.z << endl;
-	cout << "Cur Cell " << m_pNaviCom->Get_CurIndex() << endl;
+	//_vec3 vPos = *m_pTransformCom->Get_Info(Engine::INFO_POS);
+	//cout << "X=" << vPos.x << "y=" << vPos.y << "Z=" << vPos.z << endl;
+	//cout << "Cur Cell " << m_pNaviCom->Get_CurIndex() << endl;
 	//Guard_H(fTimeDelta);
 
 
@@ -1383,7 +1383,7 @@ void CPlayer::Collision_Check(_float fTimeDelta)
 			{
 				//cout << "공격 발생 " << endl;
 
-				m_pCam->Shake(0.2f,25.f);
+				m_pCam->Shake(0.25f,40.f);
 				pMonster->HurtMon(m_fDamage, false);
 
 			}		

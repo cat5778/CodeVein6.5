@@ -200,11 +200,31 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 			RESOURCE_STAGE,
+			L"RussianHone",
+			Engine::TYPE_STATIC,
+			L"../../Resource/Mesh/StaticMesh/Public/Weapon/RussianKetsugi/",
+			L"RussianKetsugi.X"),
+			E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"RussianSword",
+			Engine::TYPE_STATIC,
+			L"../../Resource/Mesh/StaticMesh/Public/Weapon/RussianSword/",
+			L"RussianSword.X"),
+			E_FAIL);
+
+
+
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
 			L"SM_NormalGreatSwordA_ba01",
 			Engine::TYPE_STATIC,
 			L"../../Resource/Mesh/StaticMesh/Base/Weapon/SM_NormalGreatSwordA_ba01/",
 			L"SM_NormalGreatSwordA_ba01.X"),
 			E_FAIL);
+
+
 
 		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 			RESOURCE_STAGE,
@@ -500,7 +520,14 @@ _bool CLoading::Loading_Dynamic()
 			L"../../Resource/Mesh/DynamicMesh/CocoonDevil/",
 			L"CocoonDevil.X"),
 			E_FAIL);
-
+		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
+			RESOURCE_STAGE,
+			L"RussianHat",
+			Engine::TYPE_DYNAMIC,
+			L"../../Resource/Mesh/DynamicMesh/RussianHat/",
+			L"RussianHat.X"),
+			E_FAIL);
+				
 	}
 	else
 	{

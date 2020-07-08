@@ -15,6 +15,7 @@
 #include "Gauge.h"
 #include "Effect.h"
 #include "DistotionEffect.h"
+#include "RussianHatHont.h"
 //#include "SoundMgr.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -152,8 +153,8 @@ void CStage::Free(void)
 
 HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 {
+
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	//pLayer->set_LayerName(pLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 	Engine::CGameObject*		pGameObject = nullptr;
 
@@ -166,15 +167,26 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkySphere", pGameObject), E_FAIL);
 
+	if (LOAD_MODE != 5)
+	{
+		pGameObject = CDavis::Create(m_pGraphicDev, L"Davis", 0, _vec3(3.6598f, 0.2853f, 3.7742f), 41);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+	}
 
-	//pGameObject = CDavis::Create(m_pGraphicDev, L"Davis", 0,_vec3(3.6598f,0.2853f,3.7742f),41);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
-
-
-	pGameObject = CCocoonDevil::Create(m_pGraphicDev, L"CocoonDevil", 0, _vec3(-12.4343f, 3.2f, -10.6f), 77);
+	pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+
+	pGameObject = CShield::Create(m_pGraphicDev, 0);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
+
+
+
+	//pGameObject = CCocoonDevil::Create(m_pGraphicDev, L"CocoonDevil", 0, _vec3(-12.4343f, 3.2f, -10.6f), 77);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
 
 	//pGameObject = CEffect::Create(m_pGraphicDev,L"Fire2",L"FireAlpha",_vec3(-0.44f,3.65f,-20.f));
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
