@@ -69,6 +69,10 @@ HRESULT CManagement::Ready_Management(LPDIRECT3DDEVICE9 & pGraphicDev)
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Shader_Effect", pShader), E_FAIL);
 
+	//pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Dissolve.hpp");
+	//NULL_CHECK_RETURN(pShader, E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Shader_Dissolve", pShader), E_FAIL);
+
 	pShader = CShader::Create(pGraphicDev, L"../../Reference/Header/Shader_Fire.hpp");
 	NULL_CHECK_RETURN(pShader, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Shader_Fire", pShader), E_FAIL);

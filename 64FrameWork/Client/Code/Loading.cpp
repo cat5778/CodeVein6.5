@@ -310,6 +310,7 @@ _bool CLoading::Loading_Basic()
 											Engine::TEX_NORMAL,
 											L"../../Resource/Texture/Gauge/StaminaGauge.tga"),
 											E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		RESOURCE_STAGE,
 		L"LockOnSite",
@@ -463,6 +464,12 @@ _bool CLoading::Loading_Basic()
 		L"FireAlpha",
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Effect/Texture/TC_Alpha/T_FX_TC5CloudFull09.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"T_FX_ExternalRGBNoise01",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Texture/T_FX_ExternalRGBNoise01.tga"),
 		E_FAIL);
 
 

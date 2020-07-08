@@ -189,6 +189,7 @@
     <ClInclude Include="..\Code\Field.h" />
     <ClInclude Include="..\Code\Gauge.h" />
     <ClInclude Include="..\Code\Halberd.h" />
+    <ClInclude Include="..\Code\IceSword.h" />
     <ClInclude Include="..\Code\Image.h" />
     <ClInclude Include="..\Code\Inven.h" />
     <ClInclude Include="..\Code\InvenInfo.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="..\Code\Field.cpp" />
     <ClCompile Include="..\Code\Gauge.cpp" />
     <ClCompile Include="..\Code\Halberd.cpp" />
+    <ClCompile Include="..\Code\IceSword.cpp" />
     <ClCompile Include="..\Code\Image.cpp" />
     <ClCompile Include="..\Code\Inven.cpp" />
     <ClCompile Include="..\Code\InvenInfo.cpp" />

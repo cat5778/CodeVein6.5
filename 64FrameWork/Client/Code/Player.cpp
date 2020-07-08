@@ -71,9 +71,13 @@ HRESULT CPlayer::Ready_GameObject(void)
 	case LOAD_MONSTER:
 		break;
 	case LOAD_BATTLE:
-		m_pTransformCom->Set_Pos(-5.75f, 3.5f, -20.3f); //New Map CocoonFront
-		m_pNaviCom->Set_Index(86);// New Map CocoonFront
 		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+
+		//m_pTransformCom->Set_Pos(-5.75f, 3.5f, -20.3f); //New Map CocoonFront
+		//m_pNaviCom->Set_Index(86);// New Map CocoonFront
+
+		m_pTransformCom->Set_Pos(0.069f, 6.208f, -56.f); //New Map Boss Front
+		m_pNaviCom->Set_Index(134);// //New Map Boss Front
 
 		//m_pTransformCom->Set_Pos(-8.f, 0.8f, -2.6f);
 		//m_pNaviCom->Set_Index(18);// Base Init Idx 38 

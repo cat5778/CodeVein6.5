@@ -60,14 +60,13 @@ HRESULT CRussainHatHone::LateReady_GameObject()
 
 _int CRussainHatHone::Update_GameObject(const _float & fTimeDelta)
 {
-
+	if (m_fTime >= 1.f)
+		Dissolve(fTimeDelta);
 	if (m_bIsColl)
-	{
 		return S_OK;
-
-	}
 	else
 	{
+		m_fTime += fTimeDelta;
 		if (m_fScale < 50.f)
 			m_fScale += fTimeDelta*800.f;
 		else
@@ -218,17 +217,16 @@ _bool CRussainHatHone::Is_Coll()
 		{
 			dynamic_cast<CPlayer*>(Engine::Get_GameObject(L"GameLogic", L"Player"))
 				->Hurt(*m_pTargetTransformCom->Get_Info(Engine::INFO_POS), *m_pTransformCom->Get_Info(Engine::INFO_POS), 10.f);
-			return true;
 		}
 
 		
-		return m_bIsColl = false;
 	}
-	else
-	{
-		return m_bIsColl = false;
+	return true;
+}
 
-	}
+void CRussainHatHone::Dissolve(_float fTimeDelta)
+{
+	m_bEnable = false;
 }
 
 HRESULT CRussainHatHone::Add_Component(void)

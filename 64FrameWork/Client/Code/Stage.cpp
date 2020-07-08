@@ -15,7 +15,6 @@
 #include "Gauge.h"
 #include "Effect.h"
 #include "DistotionEffect.h"
-#include "RussianHatHont.h"
 //#include "SoundMgr.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -181,6 +180,7 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	pGameObject = CShield::Create(m_pGraphicDev, 0);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
+
 
 
 

@@ -4,8 +4,10 @@
 #include "DynamicObject.h"
 BEGIN(Engine)
 class CNaviMesh;
+class CTexture;
 END
 class CGauge;
+class CIceSword;
 class CRussianHat : public CDynamicObject
 {
 public:
@@ -59,11 +61,10 @@ private://Pattern
 	void					BoostAttack_E(_float fTimeDelta);
 
 	void					FistAttack_N(_float fTimeDelta);
-
+	void					IceBlade(_float fTimeDelta);
 	void					BoostJump_S(_float fTimeDelta);
 	void					BoostJump_L(_float fTimeDelta);
 	void					BoostJump_E(_float fTimeDelta);
-
 
 
 	//패턴 추가할것 원거리 마법 ,얼음검 휘두르기 
@@ -75,6 +76,9 @@ public:
 	static CRussianHat*	Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrName, _uint uiIdx ,  TRANSFORM_INFO tInfo, _uint uiStageIdx = 0);
 
 private:
+	Engine::CTexture*			m_pNoiseTextureCom = nullptr;
+
+	_float						m_fDSTime = 0.f;
 	_bool						m_bIsStart = false;
 	_float						m_fJump=0.f;
 	RUSSIANTSTATE				m_eCurState;
@@ -84,6 +88,7 @@ private:
 	CGauge*						m_pHPGauge=nullptr;
 	_bool						m_bIsSpawnHone = false;
 	_uint						m_uiHoneIdx = 0;
+	CIceSword*					m_pSword = nullptr;
 private:
 	virtual void			Free(void) override;
 };
