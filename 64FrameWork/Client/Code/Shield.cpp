@@ -59,9 +59,16 @@ _int CShield::Update_GameObject(const _float& fTimeDelta)
 	}
 	else
 	{
-		D3DXVec3TransformNormal(&m_vThrow, &_vec3(0.f, -0.25f, 1.f), &m_MatOldWorld);
-		m_fAccThrow += fTimeDelta;
-		m_vThrow *= m_fAccThrow;
+		
+		if (m_fDissolveTime <= 3.5)
+			m_fDissolveTime += fTimeDelta;
+		else
+			m_bEnable = false;
+		m_uiPass = 2;
+		D3DXVec3TransformNormal(&m_vThrow, &_vec3(0.f, 0.f, -1.f), &m_MatOldWorld);
+		m_vThrow *= 600.f;
+		
+
 		m_vOldPos+= m_vThrow;
 		m_pTransformCom->Set_Pos(&m_vOldPos);
 
@@ -98,7 +105,7 @@ void CShield::Render_GameObject(void)
 	_uint	iPassMax = 0;
 	SetUp_ConstantTable(pEffect);
 	pEffect->Begin(&iPassMax, 0);
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(m_uiPass);
 	m_pMeshCom->Render_Meshes(pEffect);
 	pEffect->EndPass();
 
@@ -148,7 +155,7 @@ HRESULT CShield::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetVector("g_vCamPos", &vCamPos);
 	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
-
+	pEffect->SetFloat("g_fTime", m_fDissolveTime);
 	return E_NOTIMPL;
 }
 

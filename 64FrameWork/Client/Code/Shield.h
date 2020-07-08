@@ -49,7 +49,8 @@ private:
 	Engine::CShader*		m_pShaderCom = nullptr;
 	Engine::CNaviMesh*		m_pNaviCom = nullptr;
 
-
+	_uint					m_uiPass = 0;
+	_float					m_fDissolveTime = 1.7f;
 	_vec3					m_vThrow = { INIT_VEC3 };
 	_float					m_fAccThrow = 4.f;
 	_uint					m_iFlag = 0;

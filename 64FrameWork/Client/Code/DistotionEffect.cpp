@@ -166,8 +166,8 @@ HRESULT CDistortionEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 
 
 	
-	Engine::SetUp_OnShader(pEffect, L"Target_Distortion", "_pTex_Orig");
-	//Engine::SetUp_OnShader(pEffect, L"Target_Depth", "_pTex_Orig");
+	//Engine::SetUp_OnShader(pEffect, L"Target_Distortion", "_pTex_Orig");
+	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_BaseTexture");
 
 
 	return S_OK;

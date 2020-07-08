@@ -81,11 +81,14 @@ private:
 
 	void				PlayerUI();
 
+	void				UsePortal(_float fTimeDelta);
 	void				UpdateGague(_float fTimeDelta);
 	void				AddItem_Inventory(wstring wstrName);
 	void				DeleteItem_Inventory(wstring wstrName);
 	void				EnhanceItem_Inventory(wstring wstrName);
 private:
+	Engine::CTexture*		m_pNoiseTextureCom = nullptr;
+
 	_uint					m_uiStageSet;
 	Engine::CTransform*		m_pCameraTransformCom = nullptr;
 	Engine::CTransform*		m_pTransformCom = nullptr;
@@ -140,11 +143,15 @@ private:
 	CPortal*				m_pPortal = nullptr;
 	CPortalSub*				m_pPortalSub = nullptr;
 
+	_uint					m_uiPass = 0;
+	_float					m_fDissolveTime = 1.7f;
 	//weapon
 	CSword*					m_pSword[3] = { nullptr,nullptr,nullptr };
 
 	_bool					m_bIsShop = false;
 	vector<pair<wstring, _uint>>		m_InventoryVec;
+
+
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev, _uint uiIdx=0, _uint uiStageIdx = 0);

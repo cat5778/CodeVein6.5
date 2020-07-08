@@ -24,8 +24,8 @@ HRESULT CMainApp::Ready_MainApp(void)
 	m_pSoundMgr->Initialize();
 
 
-	//CSoundMgr::GetInstance()->PlayBGM(L"Code.mp3");
-	//CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 1.f);
+	CSoundMgr::GetInstance()->PlayBGM(L"Code.mp3");
+	CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 1.f);
 
 	return S_OK;
 }

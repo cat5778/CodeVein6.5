@@ -121,7 +121,7 @@ PS_OUT PS_DS(PS_IN In)
 
 	vector vDiffuse = tex2D(DissolveSampler, In.vTexUV);
 
-	float multi1 = ((vDiffuse.r * sin(g_fTime)) * 2.6f); // 1.f
+	float multi1 = ((vDiffuse.b * sin(g_fTime)) * 2.6f); // 1.f
 	float multi2 = vDiffuse.g * sin(g_fTime);
 	float b = saturate(pow(abs(multi1 + multi2), 20.f));
 	float c = pow(abs(multi1 + multi2), 100.f);
@@ -205,7 +205,7 @@ technique Default_Device
 		alphafunc = greater;
 		alpharef = 0xc0;
 		//cullmode = none;
-		
+
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}

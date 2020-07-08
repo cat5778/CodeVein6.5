@@ -178,6 +178,7 @@
     <ClInclude Include="..\Code\3DNum.h" />
     <ClInclude Include="..\Code\3DUI.h" />
     <ClInclude Include="..\Code\BackGround.h" />
+    <ClInclude Include="..\Code\BoostEffect.h" />
     <ClInclude Include="..\Code\CocoonDevil.h" />
     <ClInclude Include="..\Code\ColliderManager.h" />
     <ClInclude Include="..\Code\Davis.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="..\Code\3DNum.cpp" />
     <ClCompile Include="..\Code\3DUI.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
+    <ClCompile Include="..\Code\BoostEffect.cpp" />
     <ClCompile Include="..\Code\CocoonDevil.cpp" />
     <ClCompile Include="..\Code\ColliderManager.cpp" />
     <ClCompile Include="..\Code\Davis.cpp" />

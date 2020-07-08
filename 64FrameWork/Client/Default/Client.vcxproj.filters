@@ -181,6 +181,9 @@
     <Filter Include="02. GameObejct\01. Stage\10. Monster\RussianHat\IceSword">
       <UniqueIdentifier>{d5f0092f-6996-4196-913a-ba3cbcedf2e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObejct\01. Stage\09. Effect\Boost">
+      <UniqueIdentifier>{93196c9c-0abc-4caf-9294-2d4edd9e2f03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -345,6 +348,9 @@
     <ClInclude Include="..\Code\IceSword.h">
       <Filter>02. GameObejct\01. Stage\10. Monster\RussianHat\IceSword</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\BoostEffect.h">
+      <Filter>02. GameObejct\01. Stage\09. Effect\Boost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -505,6 +511,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\IceSword.cpp">
       <Filter>02. GameObejct\01. Stage\10. Monster\RussianHat\IceSword</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BoostEffect.cpp">
+      <Filter>02. GameObejct\01. Stage\09. Effect\Boost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

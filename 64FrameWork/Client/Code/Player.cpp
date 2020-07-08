@@ -195,7 +195,13 @@ HRESULT CPlayer::LateReady_GameObject(void)
 
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_pKeyMgr->KeyDown(KEY_U))
+	{
 
+		m_pTransformCom->Set_Pos(0.069f, 6.208f, -56.f); //New Map Boss Front
+		m_pNaviCom->Set_Index(134);// //New Map Boss Front
+	}
+	UsePortal(fTimeDelta);
 	PlayerUI();
 	UpdateGague(fTimeDelta);
 
@@ -267,7 +273,7 @@ void CPlayer::Render_GameObject(void)
 
 	pEffect->Begin(&iPassMax, 0);
 
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(m_uiPass);
 
 	m_pMeshCom->Render_Meshes(pEffect);
 
@@ -288,6 +294,10 @@ _float CPlayer::Get_AniRatio()
 HRESULT CPlayer::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
+
+	pComponent = m_pNoiseTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, L"T_FX_ExternalRGBNoise01"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);// 변경
 
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Clone(RESOURCE_STAGE, L"Mesh_Player"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -579,7 +589,8 @@ HRESULT CPlayer::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetVector("g_vCamPos", &vCamPos);
 	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
-
+	pEffect->SetFloat("g_fTime", m_fDissolveTime);
+	pEffect->SetTexture("g_DissolveTexture", m_pNoiseTextureCom->Get_Texture());
 	return S_OK;
 
 }
@@ -1709,7 +1720,10 @@ void CPlayer::PlayerUI()
 			{
 				if (m_pPortalSub->Get_ItemName().find(L"이동") != wstring::npos)
 				{
-					m_bIsSceneChangeFlag = true;
+
+					m_eCurState = OBJ_CHECKPOINT_START;
+					//m_bIsSceneChangeFlag = true;
+
 				}
 
 			}
@@ -1718,6 +1732,23 @@ void CPlayer::PlayerUI()
 	}
 
 
+}
+
+void CPlayer::UsePortal(_float fTimeDelta)
+{
+	if (m_eCurState == OBJ_CHECKPOINT_START)
+	{
+		m_uiPass = 2;
+		if (m_fDissolveTime <= 3.4f)
+		{
+			m_fDissolveTime += fTimeDelta*0.33f;
+		}
+		else
+		{
+			m_fDissolveTime = 0.f;
+			m_bIsSceneChangeFlag = true;	
+		}
+	}
 }
 
 void CPlayer::UpdateGague(_float fTimeDelta)

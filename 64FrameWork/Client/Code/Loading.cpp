@@ -200,7 +200,7 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 			RESOURCE_STAGE,
-			L"RussianHone",
+			L"RussianKetsugi",
 			Engine::TYPE_STATIC,
 			L"../../Resource/Mesh/StaticMesh/Public/Weapon/RussianKetsugi/",
 			L"RussianKetsugi.X"),
@@ -447,6 +447,7 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Effect/Texture/TC_Alpha/T_FX_GEZInk01.tga"),
 		E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		RESOURCE_STAGE,
 		L"Fire2",
@@ -471,7 +472,12 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Effect/Texture/T_FX_ExternalRGBNoise01.tga"),
 		E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"T_FX_POLY",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Texture/T_FX_POLY.tga"),
+		E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

@@ -65,7 +65,7 @@ private://Pattern
 	void					BoostJump_S(_float fTimeDelta);
 	void					BoostJump_L(_float fTimeDelta);
 	void					BoostJump_E(_float fTimeDelta);
-
+	void					BoostEffect(_float fTimeDelta);
 
 	//패턴 추가할것 원거리 마법 ,얼음검 휘두르기 
 
@@ -77,8 +77,8 @@ public:
 
 private:
 	Engine::CTexture*			m_pNoiseTextureCom = nullptr;
-
-	_float						m_fDSTime = 0.f;
+	_uint						m_uiPass = 0;
+	_float						m_fDSTime = 1.7f;
 	_bool						m_bIsStart = false;
 	_float						m_fJump=0.f;
 	RUSSIANTSTATE				m_eCurState;
@@ -89,6 +89,8 @@ private:
 	_bool						m_bIsSpawnHone = false;
 	_uint						m_uiHoneIdx = 0;
 	CIceSword*					m_pSword = nullptr;
+	_float						m_fEffectRate = 0.f;
+	_uint						m_uiEffectIdx= 0.f;
 private:
 	virtual void			Free(void) override;
 };

@@ -6,6 +6,8 @@
 #include "Gauge.h"
 #include "RussianHatHont.h"
 #include "IceSword.h"
+#include "BoostEffect.h"
+
 CRussianHat::CRussianHat(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrName,_uint uiIdx, _uint uiStageIdx )
 	: CDynamicObject(pGraphicDev,wstrName,uiIdx, uiStageIdx)
 {
@@ -28,7 +30,7 @@ HRESULT CRussianHat::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fCurHp = m_fMaxHp = 100.f;
+	m_fCurHp = m_fMaxHp = 50.f;
 	m_fAttackRange = 4.f;
 	Set_TransformData();
 
@@ -113,28 +115,33 @@ HRESULT CRussianHat::LateReady_GameObject()
 
 _int CRussianHat::Update_GameObject(const _float & fTimeDelta)
 {
-	if (m_fDSTime >= 10.f)
-		m_fDSTime = 0.f;
-	m_fDSTime += fTimeDelta*0.1f;
-
-	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
+	if (m_uiPass == 2)
 	{
-		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
-		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
+		if (m_fDSTime < 3.4f)
+			m_fDSTime += fTimeDelta*0.06f;
+		else
+			m_fDSTime = 3.4f;
+	}
+	
 
-	}
-	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM2))
-	{
-		m_eCurState = RUSSIAN_ICEBLADE_N;
-	}
+	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
+	//{
+	//	m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
+	//	m_pNaviCom->Set_Index(148);// Base Init Idx 38 
+
+	//}
+	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM2))
+	//{
+	//	m_eCurState = RUSSIAN_ICEBLADE_N;
+	//}
 
 	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM1))
 	//{
 	//	m_uiAni++;
 	//	cout << m_uiAni << endl;
 	//}
-		StateMachine();
-		Pattern(fTimeDelta);
+		//StateMachine();
+		//Pattern(fTimeDelta);
 	//m_pColliderGroupCom->Set_ColliderEnable(Engine::COLOPT_ATTACK, true);
 	//cout << "보스 체력= " << m_fCurHp << endl;
 	//cout << m_eCurState << endl;
@@ -185,9 +192,9 @@ void CRussianHat::Render_GameObject(void)
 	SetUp_ConstantTable(pEffect);
 	pEffect->SetFloat("g_fTime", m_fDSTime);
 	pEffect->SetTexture("g_DissolveTexture", m_pNoiseTextureCom->Get_Texture());
-	pEffect->Begin(&iPassMax, 2);
+	pEffect->Begin(&iPassMax, 0);
 
-	pEffect->BeginPass(2);
+	pEffect->BeginPass(m_uiPass);
 
 	m_pMeshCom->Render_Meshes(pEffect);
 
@@ -198,8 +205,6 @@ void CRussianHat::Render_GameObject(void)
 	Safe_Release(pEffect);
 
 	m_pColliderGroupCom->Render_Collider();
-
-
 
 }
 
@@ -440,7 +445,7 @@ void CRussianHat::StateMachine()
 		{
 			m_pColliderGroupCom->Set_ColliderEnable(Engine::COLOPT_ATTACK, false);
 
-			m_fAnimSpeed = 3.0f;
+			m_fAnimSpeed = 2.0f;
 
 			m_pMeshCom->Set_AnimationSet(17);
 			//m_pMeshCom->Set_AnimationSet(16);
@@ -527,7 +532,7 @@ void CRussianHat::StateMachine()
 		break;
 		case RUSSIAN_DEATH_N:
 			m_pMeshCom->Set_AnimationSet(0);
-
+			m_uiPass = 2;
 			break;
 		case RUSSIAN_ICEBLADE_N:
 			m_pMeshCom->Set_AnimationSet(25);
@@ -723,6 +728,7 @@ void CRussianHat::TshieldAttack(_float fTimeDelta)
 {
 	if (m_eCurState == RUSSIAN_ATTACK1)
 	{
+
 		RotateToTarget(fTimeDelta, 0.0f, 0.1f);
 		SetColliderEnable(0.0f, 0.89f);
 
@@ -730,7 +736,8 @@ void CRussianHat::TshieldAttack(_float fTimeDelta)
 			m_eCurState = RUSSIAN_BATTLE_IDLE;
 		else
 		{
-
+			if(Get_AniRatio()<=0.3f)
+				BoostEffect(fTimeDelta);
 			MoveAni(fTimeDelta, 0.0f, 0.1f, 30.0f, Get_Look());
 			MoveAni(fTimeDelta, 0.1f, 0.2f, 10.0f, Get_Look());
 			MoveAni(fTimeDelta, 0.2f, 0.3f, 30.0f, Get_Look());
@@ -844,6 +851,7 @@ void CRussianHat::TshieldSlide_L(_float fTimeDelta)
 		}
 		else
 		{
+			BoostEffect(fTimeDelta);
 			MoveAni(fTimeDelta, 0.0f, 0.7f, 25.0f, Get_Look());
 			MoveAni(fTimeDelta, 0.7f, 0.8f, 15.0f, Get_Look());
 		}
@@ -908,6 +916,8 @@ void CRussianHat::Tshield_JumpAttack(_float fTimeDelta)
 		{
 
 			RotateToTarget(fTimeDelta, 0.f, 0.1f);
+			if(Get_AniRatio()>=0.05f&&Get_AniRatio() <= 0.5f)
+				BoostEffect(fTimeDelta);
 			MoveAni(fTimeDelta, 0.1f, 0.125f, 12.f, _vec3(0.f, 1.0f, 0.f), true);
 			MoveAni(fTimeDelta, 0.125f, 0.3f, 8.f, _vec3(0.f, 1.0f, 0.f), true);
 			MoveAni(fTimeDelta, 0.3f, 0.35f, 10.f, _vec3(0.f, -1.f, 0.f), true);
@@ -1011,12 +1021,14 @@ void CRussianHat::Idle(_float fTimeDelta)
 			if (m_uiPattern == 0)
 				m_eCurState = RUSSIAN_FIST_ATTACKBOOST1_S;
 			else if (m_uiPattern == 1)
-				m_eCurState = RUSSIAN_FIST_ATTACKNORMAL1;
+				m_eCurState = RUSSIAN_ICEBLADE_N;
 			else if (m_uiPattern == 2)
 				m_eCurState = RUSSIAN_FIST_ATTACKJUMP_S;
 			else if (m_uiPattern == 3)
+				m_eCurState = RUSSIAN_FIST_ATTACKNORMAL1;
+			else if (m_uiPattern == 4)
 				m_eCurState = RUSSIAN_ATTACK_HORN1;
-			else if (m_uiPattern >= 4)
+			else if (m_uiPattern >= 5)
 				m_uiPattern = -1;
 
 			m_uiPattern++;
@@ -1033,8 +1045,7 @@ void CRussianHat::Deformation(_float fTimeDelta)
 {
 	if (m_eCurState == RUSSIAN_DEFORMATION)
 	{
-		cout << Get_AniRatio() << endl;
-		if (Get_AniRatio() >= 0.7f)
+		if (Get_AniRatio() >= 0.25f)
 		{
 			CShield* pShield= dynamic_cast<CShield*>(Engine::Get_GameObject(L"GameLogic", L"Shield"));
 			if (pShield != nullptr)
@@ -1170,7 +1181,7 @@ void CRussianHat::BoostAttack_L(_float fTimeDelta)
 			m_eCurState = RUSSIAN_FIST_ATTACKBOOST1_A_E;
 		else
 		{
-			_float df = Get_AniRatio();
+			BoostEffect(fTimeDelta);
 			MoveAni(fTimeDelta, 0.0f,3.4f, 28.f, Get_Look());
 			MoveAni(fTimeDelta, 3.4f, 3.5f, 10.f, Get_Look());
 
@@ -1221,7 +1232,9 @@ void CRussianHat::IceBlade(_float fTimeDelta)
 	
 	if (m_eCurState == RUSSIAN_ICEBLADE_N)
 	{
-		if (Get_AniRatio() >= 0.63f)
+		m_fAttackRange = 8.0f;
+
+		if (Get_AniRatio() >= 0.58f)
 		{
 			m_pSword->Set_Equip(false);
 		}
@@ -1232,7 +1245,7 @@ void CRussianHat::IceBlade(_float fTimeDelta)
 		}
 		else
 		{
-
+			RotateToTarget(fTimeDelta, 0.f, 0.19f);
 			SetColliderEnable(0.29f, 0.47f);
 		if (Get_AniRatio() < 0.29f&&Get_AniRatio()>0.2f)
 		{
@@ -1265,7 +1278,10 @@ void CRussianHat::BoostJump_S(_float fTimeDelta)
 		}
 		else
 		{
+
 			RotateToTarget(fTimeDelta, 0.48f, 0.8f);
+			if(Get_AniRatio()>=0.48f)
+				BoostEffect(fTimeDelta);
 			MoveAni(fTimeDelta, 0.48f, 0.5f, 1.f, _vec3(0.f, 1.0f, 0.f), true);
 			MoveAni(fTimeDelta, 0.5f, 0.6f, 2.f, _vec3(0.f, 1.0f, 0.f), true);
 			MoveAni(fTimeDelta, 0.6f, 0.8f, 3.f, _vec3(0.f, 1.0f, 0.f), true);
@@ -1289,6 +1305,8 @@ void CRussianHat::BoostJump_L(_float fTimeDelta)
 		}
 		else
 		{
+			BoostEffect(fTimeDelta);
+
 			//RotateToTarget(fTimeDelta, 0.f, 0.3f);
 			MoveAni(fTimeDelta, 0.0f, 4.f, 6.f, _vec3(0.f, -1.0f, 0.f), true);
 			MoveAni(fTimeDelta, 4.f, 8.f, 12.f, _vec3(0.f, -1.0f, 0.f), true);
@@ -1329,6 +1347,31 @@ void CRussianHat::BoostJump_E(_float fTimeDelta)
 
 
 	}
+}
+
+void CRussianHat::BoostEffect(_float fTimeDelta)
+{
+
+	if (m_fEffectRate >= 0.05f)
+	{
+		Engine::CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
+		
+		wstring wstrInstName = L"FireR_" + to_wstring(m_uiEffectIdx);
+		Engine::CGameObject* pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", true);
+		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
+		
+
+		wstrInstName = L"FireL_" + to_wstring(m_uiEffectIdx);
+		 pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", false);
+		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
+
+		m_uiEffectIdx++;
+		m_fEffectRate = 0.f;
+	}
+	else
+		m_fEffectRate += fTimeDelta;
+
+
 }
 
 

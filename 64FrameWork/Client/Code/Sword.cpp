@@ -28,8 +28,17 @@ HRESULT CSword::Ready_GameObject(const _uint& iFlag)
 
 _int CSword::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_fDissolveTime <= 1.7f)
+		m_fDissolveTime += fTimeDelta;
+	else
+		m_uiPass = 0;
 
 
+	if(CKeyMgr::GetInstance()->KeyDown(KEY_NUM1))
+		m_fDissolveTime += 0.1f;
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
+		m_fDissolveTime = 0.1f;
+	cout << m_fDissolveTime << endl;
 	if (nullptr == m_pParentBoneMatrix)
 	{
 		Engine::CDynamicMesh*	pPlayerMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"Player", L"Com_Mesh", Engine::ID_STATIC));
@@ -78,7 +87,8 @@ void CSword::Render_GameObject(void)
 	_uint	iPassMax = 0;
 	SetUp_ConstantTable(pEffect);
 	pEffect->Begin(&iPassMax, 0);
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(m_uiPass);
+
 	m_pMeshCom->Render_Meshes(pEffect);
 	pEffect->EndPass();
 
@@ -128,8 +138,23 @@ HRESULT CSword::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetVector("g_vCamPos", &vCamPos);
 	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
+	pEffect->SetFloat("g_fTime", m_fDissolveTime);
+	pEffect->SetTexture("g_DissolveTexture", m_pNoiseTextureCom->Get_Texture());
 
 	return E_NOTIMPL;
+}
+
+void CSword::Set_Enable(bool bEnable)
+{
+
+	m_bEnable = bEnable;
+	if (!m_bEnable)
+	{
+		m_uiPass = 2;
+		m_fDissolveTime = 0.f;
+	}
+
+
 }
 
 
@@ -137,6 +162,9 @@ HRESULT CSword::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 HRESULT CSword::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
+	pComponent = m_pNoiseTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, L"T_FX_ExternalRGBNoise01"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);// º¯°æ
 
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(RESOURCE_STAGE, m_wstrMeshName.c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

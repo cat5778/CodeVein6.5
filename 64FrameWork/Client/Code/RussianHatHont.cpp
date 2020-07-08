@@ -242,7 +242,7 @@ HRESULT CRussainHatHone::Add_Component(void)
 	pComponent->AddRef();
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
 
-	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(RESOURCE_STAGE, L"RussianHone"));
+	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(RESOURCE_STAGE, L"RussianKetsugi"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Mesh", pComponent);
 
@@ -250,10 +250,12 @@ HRESULT CRussainHatHone::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
-#ifdef _DEBUG
 
+#ifdef _DEBUG
 	Ready_SphereMesh();
 #endif // _DEBUG
+
+
 	return S_OK;
 }
 

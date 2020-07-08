@@ -28,6 +28,15 @@ sampler SpecularSampler = sampler_state
 	mipfilter = linear;
 };
 
+texture g_DistortionTexture;
+sampler DistortionTexture = sampler_state
+{
+	texture = g_DistortionTexture;
+
+minfilter = linear;
+magfilter = linear;
+mipfilter = linear;
+};
 
 struct PS_IN
 {
@@ -46,8 +55,9 @@ PS_OUT		PS_MAIN(PS_IN In)
 	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV);
 	vector		vLight = tex2D(LightSampler, In.vTexUV);
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
+	vector		vDistortion = tex2D(DistortionTexture, In.vTexUV);
 
-	Out.vColor = vAlbedo * vLight + vSpecular;
+	Out.vColor = vAlbedo * vLight + vSpecular*vDistortion;
 
 	return Out;
 }

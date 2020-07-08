@@ -79,14 +79,12 @@ float4 _PS_Distortion(VS_OUTPUT _In) : COLOR
 	float2 Trans = _In.uv + g_frameTime;
 	float4 Noise = tex2D(Samp_Texture_Distortion, Trans);
 	
-	
 	//오리지날씬의 UV 를 흔들어 주기 위한 계산
 	// 0.05 이 값 부분이 커질수록 UV 편차가 더욱 심해집니다.
 	float2 UV = _In.uv + Noise.xy * 0.05f;
 	
-	//
-	float4 Orig = tex2D(Samp_Texture_Orig, UV);
 	
+	float4 Orig = tex2D(Samp_Texture_Orig, UV);
 	Out = Orig;
 	
 	return Out;

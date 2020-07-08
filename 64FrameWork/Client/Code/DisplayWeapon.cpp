@@ -29,7 +29,10 @@ HRESULT CDisplayWeapon::Ready_GameObject(const _uint& iFlag)
 
 _int CDisplayWeapon::Update_GameObject(const _float& fTimeDelta)
 {
-
+	if (m_fDissolveTime <= 1.7f)
+		m_fDissolveTime += fTimeDelta;
+	else
+		m_uiPass = 0;
 	if (nullptr == m_pParentBoneMatrix)
 	{
 
@@ -73,7 +76,7 @@ void CDisplayWeapon::Render_GameObject(void)
 	_uint	iPassMax = 0;
 	SetUp_ConstantTable(pEffect);
 	pEffect->Begin(&iPassMax, 0);
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(m_uiPass);
 	m_pMeshCom->Render_Meshes(pEffect);
 	pEffect->EndPass();
 
@@ -124,6 +127,10 @@ HRESULT CDisplayWeapon::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 	pEffect->SetVector("g_vCamPos", &vCamPos);
 	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
 
+	pEffect->SetFloat("g_fTime", m_fDissolveTime);
+	pEffect->SetTexture("g_DissolveTexture", m_pNoiseTextureCom->Get_Texture());
+
+
 	return E_NOTIMPL;
 }
 
@@ -132,6 +139,10 @@ HRESULT CDisplayWeapon::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 HRESULT CDisplayWeapon::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
+	
+	pComponent = m_pNoiseTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, L"T_FX_ExternalRGBNoise01"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);// º¯°æ
 
 	pComponent = m_pMeshCom = dynamic_cast<Engine::CStaticMesh*>(Engine::Clone(RESOURCE_STAGE, m_wstrMeshName.c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -190,6 +201,16 @@ _bool CDisplayWeapon::Collision_ToObject(const _tchar* pLayerTag, const _tchar* 
 											m_pColliderCom->Get_Min(), 
 											m_pColliderCom->Get_Max(), 
 											m_pColliderCom->Get_ColliderMatrix());
+}
+
+void CDisplayWeapon::Set_Enable(bool bEnable)
+{
+	m_bEnable = bEnable;
+	if (!m_bEnable)
+	{
+		m_uiPass = 2;
+		m_fDissolveTime = 0.f;
+	}
 }
 
 CDisplayWeapon* CDisplayWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrMeshName, const _uint& iFlag)

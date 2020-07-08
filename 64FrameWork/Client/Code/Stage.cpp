@@ -15,6 +15,8 @@
 #include "Gauge.h"
 #include "Effect.h"
 #include "DistotionEffect.h"
+#include "BoostEffect.h"
+
 //#include "SoundMgr.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -172,14 +174,27 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
 	}
+	else
+	{
+		pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
 
-	pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+		pGameObject = CShield::Create(m_pGraphicDev, 0);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
 
-	pGameObject = CShield::Create(m_pGraphicDev, 0);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
+
+
+		pGameObject = CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DSFire", pGameObject), E_FAIL);
+
+		pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha",true);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
+
+	}
 
 
 
@@ -193,9 +208,6 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
 
 
-	pGameObject = CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", _vec3(-0.44f, 3.65f, -20.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
 
 	//if (LOAD_MODE == LOAD_NOMAL2)
 	//{

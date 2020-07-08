@@ -44,6 +44,7 @@ private:
 private:
 	void				CheckInventory();
 private:
+
 	vector<pair<wstring, _uint>>*	m_InvenVec;
 	C3DIcon*						m_pIcon[3] = { nullptr,nullptr,nullptr };
 	CInvenInfo*						m_pInfoUI = nullptr;
