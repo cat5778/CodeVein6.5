@@ -34,8 +34,8 @@ private:
 private:
 	Engine::CRcTex*			m_pBufferCom = nullptr;
 	Engine::CTexture*		m_pTextureCom = nullptr;
-	Engine::CTexture*		m_pAlphaTextureCom = nullptr;
-	Engine::CTexture*		m_pMaskTextureCom = nullptr;
+	//Engine::CTexture*		m_pAlphaTextureCom = nullptr;
+	//Engine::CTexture*		m_pMaskTextureCom = nullptr;
 	Engine::CTransform*		m_pTransformCom = nullptr;
 	Engine::CTransform*		m_pTargetTransformCom = nullptr;
 	Engine::CRenderer*		m_pRendererCom = nullptr;

@@ -287,7 +287,7 @@ _bool CLoading::Loading_Basic()
 	FAILED_CHECK_RETURN(Engine::Ready_Buffer(m_pGraphicDev,
 											RESOURCE_STATIC,
 											L"Buffer_InRcTex",
-											Engine::BUFFER_INRCTEX),
+											Engine::BUFFER_RCTEX),
 											E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,

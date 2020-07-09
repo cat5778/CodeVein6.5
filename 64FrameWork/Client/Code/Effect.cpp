@@ -56,9 +56,10 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::CGameObject::Update_GameObject(fTimeDelta);
 
+
 	_matrix	matWorld, matView, matBill;
 
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	matWorld = *m_pTransformCom->Get_WorldMatrixPointer();
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMatrixIdentity(&matBill);

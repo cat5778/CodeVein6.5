@@ -76,8 +76,6 @@ HRESULT Engine::CVIBuffer::Ready_Buffer(void)
 															NULL),
 															E_FAIL);
 
-	
-
 	return S_OK;
 }
 
@@ -91,9 +89,9 @@ void Engine::CVIBuffer::Render_Buffer(void)
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
 
 	//m_pGraphicDev->DrawPrimitive(D3DPT_TRIANGLELIST, 0, m_dwTriCnt);	// 3인자 : 삼각형의 개수
-
-
 }
+
+
 
 void Engine::CVIBuffer::Free(void)
 {

@@ -56,6 +56,9 @@ private:
 	_float								m_fTest2 =1.f;
 	_float								m_fTest3= 1.f;
 	CPlayer*							m_pPlayer = nullptr;
+
+	Engine::CGameObject*				m_PTestGO = nullptr;
+	_bool								m_bTest = false;
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

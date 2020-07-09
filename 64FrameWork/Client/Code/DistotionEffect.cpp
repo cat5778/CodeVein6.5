@@ -90,7 +90,7 @@ void CDistortionEffect::Render_GameObject(void)
 
 	SetUp_ConstantTable(pEffect);
 
-	pEffect->Begin(&iPassMax, 0);
+	pEffect->Begin(NULL, 0);
 
 	pEffect->BeginPass(0);
 
@@ -119,20 +119,20 @@ HRESULT CDistortionEffect::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);
 
-	pComponent = m_pAlphaTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrAlphaTexName.c_str()));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_AlphaTexture", pComponent);
+	//pComponent = m_pAlphaTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrAlphaTexName.c_str()));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_AlphaTexture", pComponent);
 
-	pComponent = m_pMaskTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrMaskTexName.c_str()));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_MaskTexture", pComponent);
+	//pComponent = m_pMaskTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, m_wstrMaskTexName.c_str()));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_MaskTexture", pComponent);
 
 	pComponent = m_pRendererCom = Engine::Get_Renderer();
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	pComponent->AddRef();
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Renderer", pComponent);
 	
-	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone_Prototype(L"Shader_Distortion"));
+	pComponent = m_pShaderCom = dynamic_cast<Engine::CShader*>(Engine::Clone_Prototype(L"Shader_Effect"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 	
@@ -153,21 +153,24 @@ HRESULT CDistortionEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 
+	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
+	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
+
+	//pEffect->SetFloat("g_frameTime", m_fFameTime);
 	//pEffect->SetFloatArray("scrollSpeeds", m_fScollTime, 3);
 	//pEffect->SetFloatArray("scales", m_fScale, 3);e
-	pEffect->SetFloat("g_frameTime", m_fFameTime);
 
 	//pEffect->SetVector("scales", &m_vScale);
-	//m_pTextureCom->Set_Texture(pEffect, "g_DepthAlphaTexture", _uint(m_fFrameCnt));
 	//m_pAlphaTextureCom->Set_Texture(pEffect, "g_DepthAlphaTexture", 0);
-	m_pTextureCom->Set_Texture(pEffect, "_pTex_Orig", _uint(m_fFrameCnt));
-	m_pMaskTextureCom->Set_Texture(pEffect, "g_AlphaTexture", _uint(m_fFrameCnt));
-	m_pAlphaTextureCom->Set_Texture(pEffect, "_pTex_Distortion", 0);
+
+	//m_pTextureCom->Set_Texture(pEffect, "_pTex_Orig", _uint(m_fFrameCnt));
+	//m_pMaskTextureCom->Set_Texture(pEffect, "g_AlphaTexture", _uint(m_fFrameCnt));
+	//m_pAlphaTextureCom->Set_Texture(pEffect, "_pTex_Distortion", 0);
 
 
 	
 	//Engine::SetUp_OnShader(pEffect, L"Target_Distortion", "_pTex_Orig");
-	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_BaseTexture");
+	//Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_BaseTexture");
 
 
 	return S_OK;

@@ -1,8 +1,9 @@
 #include "Shader_Base.hpp"
 
-texture			g_DepthTexture;
 float			g_fAlphaRatio;
 float			g_fTime;
+
+texture			g_DepthTexture;
 sampler DepthSampler = sampler_state
 {
 	texture = g_DepthTexture;
@@ -70,6 +71,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 	float	vViewZ = tex2D(DepthSampler, vDepthUV).y * 1000.f;
 
 	Out.vColor.a = Out.vColor.a * saturate(vViewZ - In.vProjPos.w);
+		//Out.vColor.a = (Out.vColor.x + Out.vColor.y + Out.vColor.z) / 3.f * Out.vColor.a;
 
 	return Out;
 }
@@ -135,22 +137,19 @@ technique Default_Device
 	pass
 	{
 		alphablendenable = true;
-		srcblend = srcalpha;	
+		srcblend = srcalpha;
 		destblend = invsrcalpha;
-
+		cullmode = none;
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}
-
 	pass NotIncludeAlpha
 	{
-	alpharef = 0xc0;
-	cullmode = none;
-
+		alpharef = 0xc0;
+		cullmode = none;
 		alphablendenable = true;
 		srcblend = srcalpha;
 		destblend = invsrcalpha;
-
 		zwriteEnable = false;
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 InsertAlpha();

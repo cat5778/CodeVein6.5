@@ -41,10 +41,10 @@ HRESULT CStage::Ready_Scene(void)
 	//CSoundMgr::GetInstance()->PlayBGM(L"Adam Levine - Lost Stars Lyrics.mp3");
 	//CSoundMgr::GetInstance()->SetVolume(CSoundMgr::BGM, 0.5f);
 	//쉐이더적용후추가 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 	
 	return S_OK;
 }
@@ -66,6 +66,17 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	m_fSin += fTimeDelta * 1000.f;
 	Engine::Get_Light(1)->Range = 8.f + sinf(D3DXToRadian(m_fSin))*-0.4f;
+
+
+
+
+	
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_LEFT))
+	{
+		m_PTestGO->Set_Enable(m_bTest);
+		m_bTest = !m_bTest;
+	}
+
 
 	//m_fNeonSin += fTimeDelta * 10000.f;
 	//Engine::Get_Light(6)->Range = 0.5f + sinf(D3DXToRadian(m_fNeonSin))*-0.15f;
@@ -176,23 +187,23 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	}
 	else
 	{
-		pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+		//pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
 
-		pGameObject = CShield::Create(m_pGraphicDev, 0);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
+		//pGameObject = CShield::Create(m_pGraphicDev, 0);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
 
 
 
-		pGameObject = CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f));
+		pGameObject = m_PTestGO= CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DSFire", pGameObject), E_FAIL);
 
-		pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha",true);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
+		//pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha",true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
 
 	}
 

@@ -22,21 +22,12 @@ texture g_SpecularTexture;
 sampler SpecularSampler = sampler_state
 {
 	texture = g_SpecularTexture;
-	
+
 	minfilter = linear;
 	magfilter = linear;
 	mipfilter = linear;
 };
 
-texture g_DistortionTexture;
-sampler DistortionTexture = sampler_state
-{
-	texture = g_DistortionTexture;
-
-minfilter = linear;
-magfilter = linear;
-mipfilter = linear;
-};
 
 struct PS_IN
 {
@@ -55,9 +46,8 @@ PS_OUT		PS_MAIN(PS_IN In)
 	vector		vAlbedo = tex2D(AlbedoSampler, In.vTexUV);
 	vector		vLight = tex2D(LightSampler, In.vTexUV);
 	vector		vSpecular = tex2D(SpecularSampler, In.vTexUV);
-	vector		vDistortion = tex2D(DistortionTexture, In.vTexUV);
 
-	Out.vColor = vAlbedo * vLight + vSpecular*vDistortion;
+	Out.vColor = vAlbedo * vLight + vSpecular;
 
 	return Out;
 }
@@ -67,13 +57,13 @@ technique Default_Device
 	pass	Blend
 	{
 		zwriteEnable = false;
-
-		//alphablendenable = true;
-		//srcblend = srcalpha;
-		//destblend = invsrcalpha;
-
-		//vertexshader = NULL;
-		pixelshader = compile ps_3_0 PS_MAIN();
+	
+	alphablendenable = true;
+	srcblend = srcalpha;
+	destblend = invsrcalpha;
+	
+	vertexshader = NULL;
+	pixelshader = compile ps_3_0 PS_MAIN();
 	}
 
 };

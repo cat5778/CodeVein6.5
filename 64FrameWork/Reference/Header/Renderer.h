@@ -18,6 +18,7 @@ public:
 
 public:
 	HRESULT		Ready_Renderer(LPDIRECT3DDEVICE9& pGraphicDev);
+	HRESULT		Ready_Renderer(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DVERTEXBUFFER9* _vb, LPDIRECT3DINDEXBUFFER9* _ib);
 
 	void		Add_RenderGroup(RENDERID eGroup, CGameObject* pGameObject);
 	void		Render_GameObject(void);
@@ -39,8 +40,11 @@ private:
 
 	void		Render_Defferd(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_LightAcc(LPDIRECT3DDEVICE9& pGraphicDev);
-	void		Render_Blend(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Blend	(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Distortion(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Final(LPDIRECT3DDEVICE9& pGraphicDev);
+
+
 
 private:
 	list<CGameObject*>		m_RenderGroup[RENDER_END];
@@ -49,7 +53,16 @@ private:
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 	LPDIRECT3DINDEXBUFFER9		m_pIB;
 
+	//LPDIRECT3DVERTEXBUFFER9		m_pVB2=nullptr;
+	//LPDIRECT3DINDEXBUFFER9		m_pIB2=nullptr;
+
+
 	_bool						m_bIsDebugMode = false;
+
+
+	LPDIRECT3DSURFACE9			m_pTargetSurface = nullptr;
+	LPDIRECT3DSURFACE9			m_pOldTargetSurface = nullptr;
+
 
 
 private:

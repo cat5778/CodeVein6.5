@@ -32,6 +32,7 @@ HRESULT CBoostEffect::Ready_GameObject(void)
 }
 
 HRESULT CBoostEffect::LateReady_GameObject(void)
+
 {
 	//m_pTargetTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(L"GameLogic", L"RussianHat_0", L"Com_Transform", Engine::ID_DYNAMIC));
 	//_vec3 vTargetPos = *m_pTargetTransformCom->Get_Info(Engine::INFO_POS);
@@ -108,7 +109,7 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::CGameObject::Compute_ViewZ(&m_pTransformCom->m_vInfo[Engine::INFO_POS]);
 
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+	m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
 
 	return 0;
 }
@@ -122,11 +123,11 @@ void CBoostEffect::Render_GameObject(void)
 
 	_uint	iPassMax = 0;
 
-	SetUp_ConstantTable(pEffect);
+	//SetUp_ConstantTable(pEffect);
 
 	pEffect->Begin(&iPassMax, 0);
 
-	pEffect->BeginPass(1);
+	pEffect->BeginPass(0);
 
 	m_pBufferCom->Render_Buffer();
 
