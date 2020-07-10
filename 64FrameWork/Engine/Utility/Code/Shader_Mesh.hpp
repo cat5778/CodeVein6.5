@@ -33,6 +33,7 @@ struct VS_OUT
 	vector		vBinormal : BINORMAL;
 	float2		vTexUV : TEXCOORD0;
 	vector		vProjPos : TEXCOORD1;
+	vector		vWorldPos : TEXCOORD2;
 };
 
 // 버텍스 쉐이더 함수
@@ -54,7 +55,7 @@ VS_OUT		VS_MAIN(VS_IN In)
 	Out.vBinormal = normalize(mul(vector(In.vBinormal.xyz, 0.f), g_matWorld));
 	Out.vTexUV = In.vTexUV;
 	Out.vProjPos = Out.vPosition;
-
+	Out.vWorldPos = mul(vector(In.vPosition.xyz, 1.f), g_matWorld);
 	return Out;
 }
 
@@ -65,6 +66,8 @@ struct PS_IN // 픽셀 쉐이더 구조체에서 POSITION이란 Semantic은 사용할 수 없다.
 	vector			vNormal : NORMAL;
 	vector			vTangent : TANGENT;
 	vector			vBinormal : BINORMAL;
+	vector			vWorldPos : TEXCOORD2;
+
 };
 
 struct PS_OUT
@@ -72,6 +75,8 @@ struct PS_OUT
 	vector			vColor : COLOR0;
 	vector			vNormal : COLOR1;
 	vector			vDepth : COLOR2;
+	vector			vWorldPos : COLOR3;
+
 };
 
 PS_OUT		PS_MAIN(PS_IN In)
@@ -89,7 +94,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 		In.vProjPos.w * 0.001f,			// 뷰스페이스 상태의 z값을 텍스쳐의 uv로 변환
 		0.f,
 		0.f);
-
+	Out.vWorldPos = In.vWorldPos;
 	return Out;
 }
 
@@ -204,7 +209,7 @@ technique Default_Device
 		alphatestenable = true;
 		alphafunc = greater;
 		alpharef = 0xc0;
-		//cullmode = none;
+		cullmode = none;
 
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();

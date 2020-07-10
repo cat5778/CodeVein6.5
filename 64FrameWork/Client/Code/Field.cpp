@@ -24,15 +24,15 @@ CField::~CField(void)
 HRESULT CField::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::CScene::Ready_Scene(), E_FAIL);
-	//FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_UI_Layer(L"UI"), E_FAIL);
 
 	//쉐이더적용후추가 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	//m_pGraphicDev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 	//
 
 	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -252,64 +252,93 @@ HRESULT CField::Ready_LightInfo(void)
 		ZeroMemory(&m_tLightInfo[i], sizeof(D3DLIGHT9));
 
 	//태양
-	m_tLightInfo[0].Type = D3DLIGHT_POINT;
-	m_tLightInfo[0].Diffuse = D3DXCOLOR(1.f, 0.8f, 0.6f, 0.4f);
+	if (LOAD_MODE == 5)
+	{
+		m_tLightInfo[0].Type = D3DLIGHT_DIRECTIONAL;
+		m_tLightInfo[0].Range = 2000.f;
+		m_tLightInfo[0].Direction = _vec3{ 3.f,-1.f, 0.f };
+	}
+	else
+	{
+		m_tLightInfo[0].Type = D3DLIGHT_POINT;
+		m_tLightInfo[0].Range = 1100.f;
+	}
+	m_tLightInfo[0].Diffuse = D3DXCOLOR(0.3, 0.24f, 0.18f, 0.0f);
 	//m_tLightInfo[0].Diffuse = D3DXCOLOR(0.8f, 0.8f, 1.0f, 0.35f);// 눈맵
 	//m_tLightInfo[0].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//m_tLightInfo[0].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.7f, 1.f);
-	m_tLightInfo[0].Range = 1100.f;
+	m_tLightInfo[2].Attenuation0 = 0.f;
+	m_tLightInfo[2].Attenuation1 = 1.f;
+	m_tLightInfo[2].Attenuation2 = 0.f;
+
+
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[0], 0), E_FAIL);
 
 
-	////포탈 
-	//m_tLightInfo[1].Type = D3DLIGHT_POINT;
-	//m_tLightInfo[1].Diffuse = D3DXCOLOR(0.5f, 0.85f, 1.f, 1.f);
-	////m_tLightInfo[1].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	////m_tLightInfo[1].Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//m_tLightInfo[1].Range = 10.f;
-	//m_tLightInfo[1].Position = _vec3(19.3f, 1.f, -2.f);
+	//포탈 
+	m_tLightInfo[1].Type = D3DLIGHT_POINT;
+	m_tLightInfo[1].Diffuse = D3DXCOLOR(0.15f, 0.255f, .3f, 0.f);
+	//m_tLightInfo[1].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	//m_tLightInfo[1].Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	m_tLightInfo[1].Range = 9.f;
+	m_tLightInfo[1].Position = _vec3(20.f, 1.f, 0.66f);
+	m_tLightInfo[1].Attenuation0 = 0.f;
+	m_tLightInfo[1].Attenuation1 = 1.f;
+	m_tLightInfo[1].Attenuation2 = 0.f;
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[1], 1), E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[1], 1), E_FAIL);
+	//바 조명
+	m_tLightInfo[2].Type = D3DLIGHT_POINT;
+	m_tLightInfo[2].Diffuse = D3DXCOLOR(0.45f, 0.27f, 0.36f, 0.f);
+	//m_tLightInfo[2].Specular = D3DXCOLOR(1.f, 0.5f, 0.5f, 1.f);
+	//m_tLightInfo[2].Ambient = D3DXCOLOR(1.f, 0.6f, 0.6f, 1.f);
+	m_tLightInfo[2].Range = 8.8f;
+	m_tLightInfo[2].Position = _vec3(13.9f, 0.4f, -6.f);
+	m_tLightInfo[2].Attenuation0 = 0.f;
+	m_tLightInfo[2].Attenuation1 = 1.f;
+	m_tLightInfo[2].Attenuation2 = 0.f;
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[2], 2), E_FAIL);
 
-	////바 조명
-	//m_tLightInfo[2].Type = D3DLIGHT_POINT;
-	//m_tLightInfo[2].Diffuse = D3DXCOLOR(1.f, 0.6f, 0.8f, 1.f);
-	////m_tLightInfo[2].Specular = D3DXCOLOR(1.f, 0.5f, 0.5f, 1.f);
-	////m_tLightInfo[2].Ambient = D3DXCOLOR(1.f, 0.6f, 0.6f, 1.f);
-	//m_tLightInfo[2].Range = 5.f;
-	//m_tLightInfo[2].Position = _vec3(10.f, 0.4f, -5.8f);
-	//m_tLightInfo[2].Attenuation0 = 0.f;
-	//m_tLightInfo[2].Attenuation1 = 1.f;
-	//m_tLightInfo[2].Attenuation2 = 0.f;
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[2], 2), E_FAIL);
+	//NPC
+	m_tLightInfo[3].Type = D3DLIGHT_POINT;
+	m_tLightInfo[3].Diffuse = D3DXCOLOR(0.28f, 0.24f, 0.21f, 0.f);
+	//m_tLightInfo[3].Specular = D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
+	//m_tLightInfo[3].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
+	m_tLightInfo[3].Range = 7.f;
+	m_tLightInfo[3].Position = _vec3(3.6598f, 2.5f, 3.7742f);
 
-	////NPC
-	//m_tLightInfo[3].Type = D3DLIGHT_POINT;
-	//m_tLightInfo[3].Diffuse = D3DXCOLOR(0.95f, 0.8f, 0.7f, 1.f);
-	////m_tLightInfo[3].Specular = D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
-	////m_tLightInfo[3].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
-	//m_tLightInfo[3].Range = 7.f;
-	//m_tLightInfo[3].Position = _vec3(3.6598f, 2.5f, 3.7742f);
-	////m_tLightInfo[3].Position = _vec3(7.f, 2.5f, 4.2f);
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[3], 3), E_FAIL);
+	//m_tLightInfo[3].Position = _vec3(7.f, 2.5f, 4.2f);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[3], 3), E_FAIL);
 
-	////쇼케이스
-	//m_tLightInfo[4].Type = D3DLIGHT_POINT;
-	//m_tLightInfo[4].Diffuse = D3DXCOLOR(0.95f, 0.8f, 0.7f, 1.f);
-	////m_tLightInfo[4].Specular = D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
-	////m_tLightInfo[4].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
-	//m_tLightInfo[4].Range = 7.f;
-	//m_tLightInfo[4].Position = _vec3(10.414f, 0.5f, 4.79f);
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[4], 4), E_FAIL);
+	//쇼케이스
+	m_tLightInfo[4].Type = D3DLIGHT_POINT;
+	m_tLightInfo[4].Diffuse = D3DXCOLOR(0.28f, 0.24f, 0.21f, 0.f);
+	//m_tLightInfo[4].Specular = D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
+	//m_tLightInfo[4].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
+	m_tLightInfo[4].Range = 7.f;
+	m_tLightInfo[4].Position = _vec3(12.727f, 0.5f, 4.45f);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[4], 4), E_FAIL);
 
-	////당구장
-	//m_tLightInfo[5].Type = D3DLIGHT_POINT;
-	//m_tLightInfo[5].Diffuse = D3DXCOLOR(0.95f, 0.8f, 0.6f, 1.f);
-	////m_tLightInfo[5].Specular	= D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
-	////m_tLightInfo[5].Ambient		= D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
-	//m_tLightInfo[5].Range = 10.f;
-	//m_tLightInfo[5].Position = _vec3(-10.213, 2.f, 2.58f);
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[5], 5), E_FAIL);
+	//당구장
+	m_tLightInfo[5].Type = D3DLIGHT_POINT;
+	m_tLightInfo[5].Diffuse = D3DXCOLOR(0.28f, 0.24f, 0.18f, 0.f);
+	//m_tLightInfo[5].Specular	= D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
+	//m_tLightInfo[5].Ambient		= D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
+	m_tLightInfo[5].Range = 10.f;
+	m_tLightInfo[5].Position = _vec3(-10.213, 2.f, 2.58f);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[5], 5), E_FAIL);
+
+	////네온
+	m_tLightInfo[6].Type = D3DLIGHT_POINT;
+	m_tLightInfo[6].Diffuse = D3DXCOLOR(0.95f, 0.5f, 0.95f, 1.f);
+	m_tLightInfo[6].Specular = D3DXCOLOR(1.f, 0.6f, 1.f, 1.f);
+	m_tLightInfo[6].Ambient = D3DXCOLOR(1.f, 0.5f, 1.f, 1.f);
+	m_tLightInfo[6].Range = 0.335f;
+	m_tLightInfo[6].Position = _vec3(6.55f, 0.6f, 3.5);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[6], 6), E_FAIL);
+
+
+
 
 	return S_OK;
 }

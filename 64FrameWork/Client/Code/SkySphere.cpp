@@ -17,9 +17,6 @@ CSkySphere::~CSkySphere(void)
 
 HRESULT CSkySphere::Ready_GameObject()
 {
-	
-	
-	
 	Ready_Stage();
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -30,21 +27,35 @@ HRESULT CSkySphere::Ready_GameObject()
 
 	if (m_uiStageIdx == 1)
 	{
-		Engine::Get_Light(0)->Position = _vec3(0.f, -400.f, 0.f);
-		Engine::Get_Light(0)->Range = 1000.f;
-		Engine::Get_Light(0)->Diffuse = D3DXCOLOR(0.8f, 0.8f, 1.0f, 0.35f);
+		Engine::Get_Light(0)->Position = _vec3(0.f, -650.f, 0.f);
+		Engine::Get_Light(0)->Range = 2000.f;
+		Engine::Get_Light(0)->Diffuse = D3DXCOLOR(0.06f, 0.06f, 0.0875f, 0.12f);
 
-		Engine::Get_Light(1)->Position = _vec3(0.f, 400.f, 0.f);
+		Engine::Get_Light(1)->Position = _vec3(0.f, 600.f, 0.f);
 		Engine::Get_Light(1)->Range = 1000.f;
-		Engine::Get_Light(1)->Diffuse = D3DXCOLOR(0.8f, 0.8f, 1.0f, 0.35f);
+		Engine::Get_Light(1)->Diffuse = D3DXCOLOR(0.06f, 0.06f, 0.0875f, 0.12f);
+
+		Engine::Get_Light(2)->Diffuse = D3DXCOLOR(0.06f, 0.06f, 0.0875f, 0.12f);
 
 
-		for (int i = 2; i < 4; i++)
+		for (int i = 3; i < 7; i++)
 		{
 			Engine::Get_Light(i)->Position = _vec3(INIT_VEC3);
 			Engine::Get_Light(i)->Range = 0.f;
 			Engine::Get_Light(i)->Diffuse = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
 		}
+	}
+
+	_matrix matLightX, matLightY, matLightZ, matLight;
+	//D3DXMatrixRotationX(&matLightX, D3DXToRadian(23.5f));
+	D3DXMatrixRotationY(&matLightY, D3DXToRadian(m_fRot));
+	matLight =/*matLightX**/matLightY;
+	_vec3 vLightPos = { 4.f, 1.f, 0.f };
+	D3DXVec3TransformNormal(&vLightPos, &vLightPos, &matLight);
+	_vec3 vPos = vLightPos*m_fLength;
+	if (m_uiStageIdx == 0)
+	{
+		Engine::Get_Light(0)->Position = vLightPos*228.f;
 	}
 	return S_OK;
 }
@@ -56,51 +67,42 @@ _int CSkySphere::Update_GameObject(const _float& fTimeDelta)
 		m_fRot = 0.f;
 	else
 		m_fRot+=1.f;
+	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 	m_pTransformCom->Rotation(Engine::ROT_Y, D3DXToRadian(1.f)); //나중에 라이팅 태양처럼  같이옮겨주기 
-	
 	//태양
-	_matrix matLightX, matLightY, matLightZ, matLight;
-	//D3DXMatrixRotationX(&matLightX, D3DXToRadian(23.5f));
-	D3DXMatrixRotationY(&matLightY, D3DXToRadian(m_fRot));
-	matLight =/*matLightX**/matLightY;
-	_vec3 vLightPos = { 4.f, 1.f, 0.f };
-	D3DXVec3TransformNormal(&vLightPos, &vLightPos, &matLight);
-	_vec3 vPos = vLightPos*m_fLength;
-	if(m_uiStageIdx==0)
+	if (m_uiStageIdx == 0)
+	{
+		_matrix matLightX, matLightY, matLightZ, matLight;
+		//D3DXMatrixRotationX(&matLightX, D3DXToRadian(23.5f));
+		D3DXMatrixRotationY(&matLightY, D3DXToRadian(m_fRot));
+		matLight =/*matLightX**/matLightY;
+		_vec3 vLightPos = { 4.f, 1.f, 0.f };
+		D3DXVec3TransformNormal(&vLightPos, &vLightPos, &matLight);
+		_vec3 vPos = vLightPos*m_fLength;
 		Engine::Get_Light(0)->Position = vLightPos*228.f;
+	}
 	else if (m_uiStageIdx == 1)
 	{
-		if (CKeyMgr::GetInstance()->KeyPressing(KEY_K))
-			m_fLength++;
-		
+		_matrix	matCamWorld;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+		D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
+
+		Engine::Get_Light(2)->Range = 30.f;
+		Engine::Get_Light(2)->Position = _vec3(matCamWorld._41, matCamWorld._42 + 15.f, matCamWorld._43);
+
+
+		Test(fTimeDelta);
+
 
 			//cout << m_fLength << endl;
 	}
+
+
 	_matrix	matCamWorld;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
-
 	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
+
 	m_pTransformCom->Set_Pos(matCamWorld._41, matCamWorld._42 + 3.f, matCamWorld._43);
-
-
-
-	//if (CKeyMgr::GetInstance()->KeyPressing(KEY_F))
-	//{
-	//	m_fScale += 0.01f;
-	//	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
-
-	//}
-	//if (CKeyMgr::GetInstance()->KeyPressing(KEY_G))
-	//{
-	//	m_fScale -= 0.01f;
-	//	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
-	//}
-
-	//cout << m_fScale << endl;
-	//_vec3 vPos =*m_pTargetTransformCom->Get_Info(Engine::INFO_POS);
-
-	//m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-	//_matrix mat=	m_pTransformCom->m_matWorld;
 
 	Engine::CGameObject::Update_GameObject(fTimeDelta);
 	//RENDER_PRIORITY
@@ -192,7 +194,7 @@ void CSkySphere::Ready_Stage()
 		m_wstrMeshName = L"SM_Sky_ba01";
 		break;
 	case 1:
-		m_fScale = 0.04f;
+		m_fScale = 0.05f;
 		m_wstrMeshName = L"SM_SkySphere_st09a1";
 
 		break;
@@ -228,6 +230,55 @@ HRESULT CSkySphere::Add_Component(void)
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
 	return S_OK;
+}
+
+void CSkySphere::Test(_float fDeltaTime)
+{
+	_matrix	matCamWorld;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
+
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_LEFT))
+	{
+		m_fLighrPower -= 0.1f;
+		cout << "m_fLighrPower= " << m_fLighrPower << endl;
+
+	}
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_RIGHT))
+	{
+		m_fLighrPower += 0.1f;
+		cout << "m_fLighrPower= " << m_fLighrPower << endl;
+	}
+	Engine::Get_Light(2)->Diffuse = D3DXCOLOR(0.12f*m_fLighrPower, 0.12f*m_fLighrPower, 0.165f*m_fLighrPower, 0.35f);
+
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_UP))
+	{
+		m_fLightPos += 1.f;
+		cout << "m_fLightPos= " << m_fLightPos << endl;
+	}
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_DOWN))
+	{
+		m_fLightPos -= 1.f;
+		cout << "m_fLightPos= " << m_fLightPos << endl;
+
+	}
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_J))
+	{
+		m_fLightRange -= 5.f;
+		cout << "m_fLightRange= " << m_fLightRange << endl;
+
+	}
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_K))
+	{
+		m_fLightRange += 5.f;
+		cout << "m_fScalem_fLightRange " << m_fLightRange << endl;
+
+	}
+
+
+	Engine::Get_Light(2)->Range = m_fLightRange;
+	
+	Engine::Get_Light(2)->Position = _vec3(matCamWorld._41, matCamWorld._42 + m_fLightPos, matCamWorld._43);
 }
 
 

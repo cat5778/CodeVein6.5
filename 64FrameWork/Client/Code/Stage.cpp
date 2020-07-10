@@ -68,13 +68,26 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	Engine::Get_Light(1)->Range = 8.f + sinf(D3DXToRadian(m_fSin))*-0.4f;
 
 
+	if (CKeyMgr::GetInstance()->KeyPressing(KEY_DOWN))
+	{
+		m_fTest3 += 0.1f;
+		cout << m_fTest3 << endl; 
+		//Engine::Get_Light(3)->Diffuse = D3DXCOLOR(0.84f*m_fTest3, 0.72f*m_fTest3, 0.63f*m_fTest3, 0.f);
+		//Engine::Get_Light(6)->Diffuse = D3DXCOLOR(0.95f*m_fTest3, 0.5f*m_fTest3, 0.95f*m_fTest3, 0.f);
+		Engine::Get_Light(6)->Attenuation0 = 0.f;
+		Engine::Get_Light(6)->Attenuation1 = m_fTest3;
+		Engine::Get_Light(6)->Attenuation2 = 0.f;
+		Engine::Get_Light(6)->Position = _vec3(6.55f, 0.6f, 3.5);
+		Engine::Get_Light(6)->Range= 0.335f;
 
-
-	
+	}
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_DOWN))
+	{
+	}
 	if (CKeyMgr::GetInstance()->KeyDown(KEY_LEFT))
 	{
-		m_PTestGO->Set_Enable(m_bTest);
-		m_bTest = !m_bTest;
+		//m_PTestGO->Set_Enable(m_bTest);
+		//m_bTest = !m_bTest;
 	}
 
 
@@ -187,19 +200,19 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 	}
 	else
 	{
-		//pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
-
-		//pGameObject = CShield::Create(m_pGraphicDev, 0);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
-
-
-
-		pGameObject = m_PTestGO= CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f));
+		pGameObject = CRussianHat::Create(m_pGraphicDev, L"RussianHat", 0, 1);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DSFire", pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(pGameObject->Get_InstName().c_str(), pGameObject), E_FAIL);
+
+		pGameObject = CShield::Create(m_pGraphicDev, 0);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
+
+
+
+		//pGameObject = m_PTestGO= CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f));
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DSFire", pGameObject), E_FAIL);
 
 		//pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha",true);
 		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -347,7 +360,7 @@ HRESULT CStage::Ready_LightInfo(void)
 	if (LOAD_MODE == 5)
 	{
 		m_tLightInfo[0].Type = D3DLIGHT_DIRECTIONAL;
-		m_tLightInfo[0].Range = 3000.f;
+		m_tLightInfo[0].Range = 2000.f;
 		m_tLightInfo[0].Direction = _vec3{ 3.f,-1.f, 0.f };
 	}
 	else
@@ -355,32 +368,37 @@ HRESULT CStage::Ready_LightInfo(void)
 		m_tLightInfo[0].Type = D3DLIGHT_POINT;
 		m_tLightInfo[0].Range = 1100.f;
 	}
-	m_tLightInfo[0].Diffuse = D3DXCOLOR(1.f, 0.8f, 0.6f, 0.4f);
+	m_tLightInfo[0].Diffuse = D3DXCOLOR(0.3, 0.24f, 0.18f, 0.0f);
 	//m_tLightInfo[0].Diffuse = D3DXCOLOR(0.8f, 0.8f, 1.0f, 0.35f);// ´«¸Ê
 	//m_tLightInfo[0].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//m_tLightInfo[0].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.7f, 1.f);
-	
+	m_tLightInfo[2].Attenuation0 = 0.f;
+	m_tLightInfo[2].Attenuation1 = 1.f;
+	m_tLightInfo[2].Attenuation2 = 0.f;
+
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[0], 0), E_FAIL);
 
 
 	//Æ÷Å» 
 	m_tLightInfo[1].Type = D3DLIGHT_POINT;
-	m_tLightInfo[1].Diffuse = D3DXCOLOR(0.5f, 0.85f, 1.f, 1.f);
+	m_tLightInfo[1].Diffuse = D3DXCOLOR(0.15f, 0.255f, .3f, 0.f);
 	//m_tLightInfo[1].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//m_tLightInfo[1].Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	m_tLightInfo[1].Range = 10.f;
-	m_tLightInfo[1].Position = _vec3(19.3f, 1.f, -2.f);
-
+	m_tLightInfo[1].Range = 9.f;
+	m_tLightInfo[1].Position = _vec3(20.f, 1.f ,0.66f);
+	m_tLightInfo[1].Attenuation0 = 0.f;
+	m_tLightInfo[1].Attenuation1 = 1.f;
+	m_tLightInfo[1].Attenuation2 = 0.f;
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[1], 1), E_FAIL);
 
 	//¹Ù Á¶¸í
 	m_tLightInfo[2].Type = D3DLIGHT_POINT;
-	m_tLightInfo[2].Diffuse = D3DXCOLOR(1.f, 0.6f, 0.8f, 1.f);
+	m_tLightInfo[2].Diffuse = D3DXCOLOR(0.45f, 0.27f, 0.36f, 0.f);
 	//m_tLightInfo[2].Specular = D3DXCOLOR(1.f, 0.5f, 0.5f, 1.f);
 	//m_tLightInfo[2].Ambient = D3DXCOLOR(1.f, 0.6f, 0.6f, 1.f);
-	m_tLightInfo[2].Range = 5.f;
-	m_tLightInfo[2].Position = _vec3(10.f, 0.4f, -5.8f);
+	m_tLightInfo[2].Range = 8.8f;
+	m_tLightInfo[2].Position = _vec3(13.9f, 0.4f, -6.f);
 	m_tLightInfo[2].Attenuation0 = 0.f;
 	m_tLightInfo[2].Attenuation1 = 1.f;
 	m_tLightInfo[2].Attenuation2 = 0.f;
@@ -388,26 +406,27 @@ HRESULT CStage::Ready_LightInfo(void)
 
 	//NPC
 	m_tLightInfo[3].Type = D3DLIGHT_POINT;
-	m_tLightInfo[3].Diffuse = D3DXCOLOR(0.95f, 0.8f, 0.7f, 1.f);
+	m_tLightInfo[3].Diffuse = D3DXCOLOR(0.28f, 0.24f, 0.21f, 0.f);
 	//m_tLightInfo[3].Specular = D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
 	//m_tLightInfo[3].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	m_tLightInfo[3].Range = 7.f;
 	m_tLightInfo[3].Position = _vec3(3.6598f, 2.5f, 3.7742f);
+
 	//m_tLightInfo[3].Position = _vec3(7.f, 2.5f, 4.2f);
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[3], 3), E_FAIL);
 
 	//¼îÄÉÀÌ½º
 	m_tLightInfo[4].Type = D3DLIGHT_POINT;
-	m_tLightInfo[4].Diffuse = D3DXCOLOR(0.95f, 0.8f, 0.7f, 1.f);
+	m_tLightInfo[4].Diffuse = D3DXCOLOR(0.28f, 0.24f, 0.21f, 0.f);
 	//m_tLightInfo[4].Specular = D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
 	//m_tLightInfo[4].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	m_tLightInfo[4].Range = 7.f;
-	m_tLightInfo[4].Position = _vec3(10.414f, 0.5f, 4.79f);
+	m_tLightInfo[4].Position = _vec3(12.727f, 0.5f, 4.45f);
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[4], 4), E_FAIL);
 
 	//´ç±¸Àå
 	m_tLightInfo[5].Type		= D3DLIGHT_POINT;
-	m_tLightInfo[5].Diffuse		= D3DXCOLOR(0.95f, 0.8f, 0.6f, 1.f);
+	m_tLightInfo[5].Diffuse		= D3DXCOLOR(0.28f, 0.24f, 0.18f, 0.f);
 	//m_tLightInfo[5].Specular	= D3DXCOLOR(1.f, 0.7f, 0.7f, 1.f);
 	//m_tLightInfo[5].Ambient		= D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	m_tLightInfo[5].Range		= 10.f;
@@ -415,13 +434,13 @@ HRESULT CStage::Ready_LightInfo(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[5], 5), E_FAIL);
 
 	////³×¿Â
-	//m_tLightInfo[6].Type = D3DLIGHT_POINT;
-	//m_tLightInfo[6].Diffuse = D3DXCOLOR(0.95f, 0.5f, 0.95f, 1.f);
-	//m_tLightInfo[6].Specular = D3DXCOLOR(1.f, 0.6f, 1.f, 1.f);
-	//m_tLightInfo[6].Ambient = D3DXCOLOR(1.f, 0.5f, 1.f, 1.f);
-	//m_tLightInfo[6].Range = 1.f;
-	//m_tLightInfo[6].Position = _vec3(6.6567f,0.35f, 3.2512f);
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[6], 6), E_FAIL);
+	m_tLightInfo[6].Type = D3DLIGHT_POINT;
+	m_tLightInfo[6].Diffuse = D3DXCOLOR(0.95f, 0.5f, 0.95f, 1.f);
+	m_tLightInfo[6].Specular = D3DXCOLOR(1.f, 0.6f, 1.f, 1.f);
+	m_tLightInfo[6].Ambient = D3DXCOLOR(1.f, 0.5f, 1.f, 1.f);
+	m_tLightInfo[6].Range = 0.335f;
+	m_tLightInfo[6].Position = _vec3(6.55f, 0.6f, 3.5);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[6], 6), E_FAIL);
 
 
 

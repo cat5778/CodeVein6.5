@@ -75,6 +75,7 @@ _int CDistortionEffect::Update_GameObject(const _float& fTimeDelta)
 	Engine::CGameObject::Compute_ViewZ(&m_pTransformCom->m_vInfo[Engine::INFO_POS]);
 
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
+	//m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -155,6 +156,7 @@ HRESULT CDistortionEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
 	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
+
 
 	//pEffect->SetFloat("g_frameTime", m_fFameTime);
 	//pEffect->SetFloatArray("scrollSpeeds", m_fScollTime, 3);

@@ -25,6 +25,7 @@ HRESULT CManagement::Ready_Management(LPDIRECT3DDEVICE9 & pGraphicDev)
 	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Depth", ViewPort.Width, ViewPort.Height, D3DFMT_A32B32G32R32F, D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Blend", ViewPort.Width, ViewPort.Height, D3DFMT_A16B16G16R16F, D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_Distortion", ViewPort.Width, ViewPort.Height, D3DFMT_A16B16G16R16F, D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_RenderTarget(pGraphicDev, L"Target_WorldPos", ViewPort.Width, ViewPort.Height, D3DFMT_A16B16G16R16F, D3DXCOLOR(0.f, 0.f, 0.f, 0.f)), E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Albedo", 0.f, 0.f, 200.f, 200.f), E_FAIL);
@@ -34,11 +35,13 @@ HRESULT CManagement::Ready_Management(LPDIRECT3DDEVICE9 & pGraphicDev)
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Depth", 0.f, 400.f, 200.f, 200.f), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Blend", 400.f, 000.f, 400.f, 400.f), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_Distortion", 0.f, 600.f, 200.f, 200.f), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_DebugBuffer(L"Target_WorldPos", 200.f, 400.f, 200.f, 200.f), E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Albedo"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Normal"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_Depth"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_Defferd", L"Target_WorldPos"), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Light"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_MRT(L"MRT_LightAcc", L"Target_Specular"), E_FAIL);

@@ -43,8 +43,8 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80)
 		{
 			CSoundMgr::GetInstance()->StopAll();
-			Engine::CScene*		pScene = CStage::Create(m_pGraphicDev);
-			//Engine::CScene*		pScene = CField::Create(m_pGraphicDev);
+			//Engine::CScene*		pScene = CStage::Create(m_pGraphicDev);
+			Engine::CScene*		pScene = CField::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
 
 			FAILED_CHECK_RETURN(Engine::SetUp_Scene(pScene), E_FAIL);

@@ -251,14 +251,14 @@ void CRenderer::RenderState_Projection(PROJECTIONTYPE eProjType)
 
 void CRenderer::Render_Priority(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	for (auto& iter : m_RenderGroup[RENDER_PRIORITY])
 		iter->Render_GameObject();
 
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9 & pGraphicDev)
@@ -274,36 +274,37 @@ _bool   Compare_Z(CGameObject* pDest, CGameObject* pSour)
 
 void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	//pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	m_RenderGroup[RENDER_ALPHA].sort(Compare_Z);
 
 	for (auto& iter : m_RenderGroup[RENDER_ALPHA])
 		iter->Render_GameObject();
 
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	//pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	m_RenderGroup[RENDER_ALPHA].sort(Compare_Z);
 
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 		iter->Render_GameObject();
 
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 void CRenderer::Render_Blend(LPDIRECT3DDEVICE9 & pGraphicDev)
@@ -346,7 +347,7 @@ void CRenderer::Render_Distortion(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
 	Engine::Begin_MRT(L"MRT_Distortion");
 
-	//m_RenderGroup[RENDER_DISTORTION].sort(Compare_Z); //추가 
+	m_RenderGroup[RENDER_DISTORTION].sort(Compare_Z); //추가 
 
 	for (auto& iter : m_RenderGroup[RENDER_DISTORTION])
 		iter->Render_GameObject();
@@ -393,6 +394,9 @@ void CRenderer::Render_LightAcc(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	Engine::SetUp_OnShader(pEffect, L"Target_Normal", "g_NormalTexture");
 	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
+	Engine::SetUp_OnShader(pEffect, L"Target_WorldPos", "g_WorldTexture");
+
+	//pEffect->SetVector()
 
 	pEffect->Begin(NULL, 0);
 

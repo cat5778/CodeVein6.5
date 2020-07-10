@@ -30,6 +30,7 @@ public:
 private:
 	HRESULT					Add_Component(void);
 
+	void					Test(_float fDeltaTime);
 private:
 	Engine::CTransform*		m_pTransformCom = nullptr;
 	Engine::CTransform*		m_pTargetTransformCom = nullptr;
@@ -43,7 +44,9 @@ private:
 	_float					m_fRot=0.f;
 	_float					m_fLength = 1.0f;
 	wstring					m_wstrMeshName;
-
+	_float					m_fLighrPower = 1.0f;
+	_float					m_fLightPos = 0.f;
+	_float					m_fLightRange= 1.f;
 
 public:
 	static CSkySphere*		Create(LPDIRECT3DDEVICE9 pGraphicDev, _uint uiStageIdx);
