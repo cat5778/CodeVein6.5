@@ -48,7 +48,7 @@ private:
 	Engine::CCollider*		m_pColliderCom = nullptr;
 	Engine::CShader*		m_pShaderCom = nullptr;
 	wstring					m_wstrMeshName;
-	_float					m_fDissolveTime = 0.f;
+	_float					m_fDissolveTime = 1.7f;
 	_uint					m_iFlag = 0;
 	_bool					m_bColl = false;
 	_uint					m_uiPass = 0;

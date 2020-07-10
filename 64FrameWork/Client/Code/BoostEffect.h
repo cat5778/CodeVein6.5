@@ -17,7 +17,8 @@ END
 class CBoostEffect : public Engine::CGameObject
 {
 private:
-	explicit CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev,wstring wstrTexName,  wstring wstrAlphaTexName, _bool bRight);
+	explicit CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight);
+	explicit CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos, _bool bRight);
 	virtual ~CBoostEffect(void);
 
 public:
@@ -56,9 +57,13 @@ private:
 	_float					m_fScale[3];
 	_float					m_fFameTime=1.f;
 	_matrix					m_OldMatrix;
+	
 public:
 
 	static CBoostEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight = true);
+	static CBoostEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos ,_bool bRight = true);
+
+
 
 private:
 	virtual void Free(void) override;

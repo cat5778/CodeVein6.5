@@ -2,6 +2,11 @@
 
 float			g_fAlphaRatio;
 float			g_fTime;
+texture			g_BlendTexture;
+sampler BlendSampler = sampler_state
+{
+	texture = g_BlendTexture;
+};
 
 texture			g_DepthTexture;
 sampler DepthSampler = sampler_state
@@ -60,7 +65,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);
 	float2		vDepthUV = (float2)0.f;
-
+	Out.vColor.a = Out.vColor.r;
 	// -1 -> 0, 1 -> 1 (투영좌표인 x값이 텍스처 uv로 좌표 변환)
 
 	vDepthUV.x = (In.vProjPos.x / In.vProjPos.w) * 0.5f + 0.5f;
@@ -70,7 +75,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	float	vViewZ = tex2D(DepthSampler, vDepthUV).y * 1000.f;
 
-	Out.vColor.a = Out.vColor.a * saturate(vViewZ - In.vProjPos.w);
+	Out.vColor.a = Out.vColor.a * saturate(vViewZ - In.vProjPos.w)*g_fAlphaRatio;
 		//Out.vColor.a = (Out.vColor.x + Out.vColor.y + Out.vColor.z) / 3.f * Out.vColor.a;
 
 	return Out;
@@ -119,14 +124,17 @@ PS_OUT		Distortion (PS_IN In)
 
 
 	float2 Trans = In.vTexUV + g_fTime;
-	float4 Noise = tex2D(NoiseSampler, Trans);
+	float4 Noise = tex2D(BaseSampler, Trans);
 
 	//오리지날씬의 UV 를 흔들어 주기 위한 계산
 	// 0.05 이 값 부분이 커질수록 UV 편차가 더욱 심해집니다.
 	float2 UV = In.vTexUV + Noise.xy * 0.2f;
 
-	float4 Orig = tex2D(BaseSampler, UV);
-	Out.vColor = Out.vColor*Orig;
+	//float4 Orig = tex2D(BaseSampler, UV);
+	//Out.vColor = Out.vColor*Orig;
+
+	Out.vColor = tex2D(BlendSampler, UV);
+
 
 	return Out;
 
@@ -136,10 +144,16 @@ technique Default_Device
 {
 	pass
 	{
+		cullmode = none;
+		zenable = false;
+		zwriteEnable = false;
 		alphablendenable = true;
 		srcblend = srcalpha;
 		destblend = invsrcalpha;
-		cullmode = none;
+
+		//alphablendenable = true;
+		//srcblend = srcalpha;
+		//destblend = invsrcalpha;
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
 	}
@@ -147,10 +161,11 @@ technique Default_Device
 	{
 		alpharef = 0xc0;
 		cullmode = none;
+		zenable = false;
+		zwriteEnable = false;
 		alphablendenable = true;
 		srcblend = srcalpha;
 		destblend = invsrcalpha;
-		zwriteEnable = false;
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 InsertAlpha();
 	}
@@ -158,15 +173,14 @@ technique Default_Device
 	pass DistortionShader
 	{
 		alpharef = 0xc0;
-	cullmode = none;
+		zenable = false;
+		zwriteEnable = false;
+		alphablendenable = true;
+		srcblend = srcalpha;
+		destblend = invsrcalpha;
 
-	alphablendenable = true;
-	srcblend = srcalpha;
-	destblend = invsrcalpha;
-
-	zwriteEnable = false;
-	vertexshader = compile vs_3_0 VS_MAIN();
-	pixelshader = compile ps_3_0 Distortion();
+		vertexshader = compile vs_3_0 VS_MAIN();
+		pixelshader = compile ps_3_0 Distortion();
 	}
 
 };

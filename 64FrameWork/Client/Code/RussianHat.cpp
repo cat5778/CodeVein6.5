@@ -58,15 +58,15 @@ HRESULT CRussianHat::Ready_GameObject()
 	case LOAD_MONSTER:
 		break;
 	case LOAD_BATTLE:
+
 		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
 		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
 		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+		
 		////눈맵 플레이어바로앞
 		//m_pTransformCom->Set_Pos(-12.32f, 2.73f, -25.3241f);
 		//m_pNaviCom->Set_Index(76);// Base Init Idx 38 
 		//Load_Text(L"../../Resource/Data/NavMash/Temp5.txt");
-
-
 		break;
 
 		//보스 정위치

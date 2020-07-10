@@ -60,10 +60,11 @@ HRESULT CRussainHatHone::LateReady_GameObject()
 
 _int CRussainHatHone::Update_GameObject(const _float & fTimeDelta)
 {
-	if (m_fTime >= 1.f)
-		Dissolve(fTimeDelta);
+		
 	if (m_bIsColl)
-		return S_OK;
+	{
+		Dissolve(fTimeDelta);
+	}
 	else
 	{
 		m_fTime += fTimeDelta;
@@ -72,17 +73,25 @@ _int CRussainHatHone::Update_GameObject(const _float & fTimeDelta)
 		else
 		{
 			m_fScale = 80.f;
+			if (m_fTime >= 1.6f)
+			{
+				Dissolve(fTimeDelta);
+
+			}
 			Is_Coll();
 
 		}
 	}
 	m_pTransformCom->Set_Scale(0.001f*m_fScale, 0.001f*m_fScale, 0.001f*m_fScale);
+
 	//cout << m_fScale << endl;
 	//if (m_fTime >= 10.f)
 	//	m_bEnable = false;
 	//else
 	//	m_fTime += fTimeDelta;
 	//m_pTransformCom->Move_Pos(&(m_vDir*m_fSpeed*fTimeDelta));
+
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	m_pRendererCom->Add_RenderGroup(Engine::RENDER_NONALPHA, this);
 
@@ -105,7 +114,7 @@ void CRussainHatHone::Render_GameObject(void)
 
 	pEffect->Begin(&iPassMax, 0);
 
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(m_uiPass);
 
 	m_pMeshCom->Render_Meshes(pEffect);
 
@@ -201,6 +210,11 @@ HRESULT CRussainHatHone::SetUp_ConstantTable(LPD3DXEFFECT & pEffect)
 
 	pEffect->SetVector("g_vCamPos", &vCamPos);
 	pEffect->SetFloat("g_fPower", tMtrlInfo.Power);
+	pEffect->SetFloat("g_fTime", m_fDissolveTime);
+	pEffect->SetTexture("g_DissolveTexture", m_pNoiseTextureCom->Get_Texture());
+	pEffect->SetFloat("g_fRedColor", m_vColor.x);
+	pEffect->SetFloat("g_fGreenColor", m_vColor.y);
+	pEffect->SetFloat("g_fBlueColor", m_vColor.z);
 
 	return S_OK;
 }
@@ -217,16 +231,22 @@ _bool CRussainHatHone::Is_Coll()
 		{
 			dynamic_cast<CPlayer*>(Engine::Get_GameObject(L"GameLogic", L"Player"))
 				->Hurt(*m_pTargetTransformCom->Get_Info(Engine::INFO_POS), *m_pTransformCom->Get_Info(Engine::INFO_POS), 10.f);
+			
+			m_uiPass = 2;
 		}
-
-		
 	}
 	return true;
 }
 
 void CRussainHatHone::Dissolve(_float fTimeDelta)
-{
-	m_bEnable = false;
+{// 1.7~3.4 »ç¶óÁü
+	m_uiPass = 2;
+	m_fDissolveTime += fTimeDelta*2;
+	if (m_fDissolveTime >= 3.4f)
+		m_bEnable = false;
+
+
+	//m_bEnable = false;
 }
 
 HRESULT CRussainHatHone::Add_Component(void)
@@ -250,6 +270,10 @@ HRESULT CRussainHatHone::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Shader", pComponent);
 
+
+	pComponent = m_pNoiseTextureCom = dynamic_cast<Engine::CTexture*>(Engine::Clone(RESOURCE_STAGE, L"T_FX_ExternalRGBNoise01"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_pComponentMap[Engine::ID_STATIC].emplace(L"Com_Texture", pComponent);// º¯°æ
 
 #ifdef _DEBUG
 	Ready_SphereMesh();

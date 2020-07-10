@@ -1,3 +1,6 @@
+
+
+
 #ifndef Macro_h__
 #define Macro_h__
 
@@ -19,6 +22,8 @@
 #define FRONT		0x00000001
 #define RIGHT		0x00000002
 #define BACK		0x00000004
+
+
 #define LEFT		0x00000008
 
 #define RUN			0x00000001

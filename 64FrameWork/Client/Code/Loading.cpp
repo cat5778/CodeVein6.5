@@ -478,6 +478,43 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Effect/Texture/T_FX_POLY.tga"),
 		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"RussianHat_Shield_Splash_01",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_01.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"RussianHat_Shield_Splash_02",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_02.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"RussianHat_Shield_Splash_03",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_03.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"RussianHat_Shield_Splash_04",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_04.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"RussianHat_Shield_Splash_05",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_05.tga"),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"RussianHat_Shield_Splash_06",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_06.tga"),
+		E_FAIL);
+
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,

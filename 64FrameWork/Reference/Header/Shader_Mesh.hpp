@@ -3,6 +3,9 @@
 texture		g_NormalTexture;
 texture		g_DissolveTexture;
 float		g_fTime;
+float		g_fRedColor=1.f;
+float		g_fGreenColor=0.f;
+float		g_fBlueColor=0.f;
 sampler NormalSampler = sampler_state
 {
 	texture = g_NormalTexture;
@@ -33,6 +36,7 @@ struct VS_OUT
 	vector		vBinormal : BINORMAL;
 	float2		vTexUV : TEXCOORD0;
 	vector		vProjPos : TEXCOORD1;
+	vector		vWorldPos : TEXCOORD2;
 };
 
 // 버텍스 쉐이더 함수
@@ -54,7 +58,7 @@ VS_OUT		VS_MAIN(VS_IN In)
 	Out.vBinormal = normalize(mul(vector(In.vBinormal.xyz, 0.f), g_matWorld));
 	Out.vTexUV = In.vTexUV;
 	Out.vProjPos = Out.vPosition;
-
+	Out.vWorldPos = mul(vector(In.vPosition.xyz, 1.f), g_matWorld);
 	return Out;
 }
 
@@ -65,6 +69,8 @@ struct PS_IN // 픽셀 쉐이더 구조체에서 POSITION이란 Semantic은 사용할 수 없다.
 	vector			vNormal : NORMAL;
 	vector			vTangent : TANGENT;
 	vector			vBinormal : BINORMAL;
+	vector			vWorldPos : TEXCOORD2;
+
 };
 
 struct PS_OUT
@@ -72,6 +78,8 @@ struct PS_OUT
 	vector			vColor : COLOR0;
 	vector			vNormal : COLOR1;
 	vector			vDepth : COLOR2;
+	vector			vWorldPos : COLOR3;
+
 };
 
 PS_OUT		PS_MAIN(PS_IN In)
@@ -89,7 +97,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 		In.vProjPos.w * 0.001f,			// 뷰스페이스 상태의 z값을 텍스쳐의 uv로 변환
 		0.f,
 		0.f);
-
+	Out.vWorldPos = In.vWorldPos;
 	return Out;
 }
 
@@ -171,10 +179,10 @@ PS_OUT PS_Dissolve(PS_IN In)
 	float b = saturate(pow(multi1 + multi2, 20));
 	float c = pow(multi1 + multi2, 20);
 
-	float3 vColor = ( 1.0f, 0.f,0.f );
+	float3 vColor = (g_fRedColor, g_fGreenColor, g_fBlueColor);
 
 
-
+	float3 fWhite = (100.f, 100.f, 100.f);
 	float3 Ke;
 	if (c >= b)
 		Ke = (100.f, 1.f, 1.f);
@@ -186,8 +194,15 @@ PS_OUT PS_Dissolve(PS_IN In)
 
 	if (1.f >= Out.vColor.a)
 	{
-		Out.vColor.xyz = diffuse;
-		Out.vColor.yz = 0.f;
+		if (g_fGreenColor > 0.5f)
+		{
+			Out.vColor.xyz = diffuse;
+			Out.vColor.yz = 0.f;
+		}
+		else
+		{
+			Out.vColor.xyz = fWhite;
+		}
 	}
 
 
@@ -204,7 +219,7 @@ technique Default_Device
 		alphatestenable = true;
 		alphafunc = greater;
 		alpharef = 0xc0;
-		//cullmode = none;
+		cullmode = none;
 
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_MAIN();
@@ -213,9 +228,9 @@ technique Default_Device
 	
 	pass AlphaTesting
 	{
-		alphatestenable = true;
-		alphafunc = greater;
-		alpharef = 0xc0;
+		//alphatestenable = true;
+		//alphafunc = greater;
+		//alpharef = 0xc0;
 		//cullmode = none;
 		
 		vertexshader = compile vs_3_0 VS_MAIN();

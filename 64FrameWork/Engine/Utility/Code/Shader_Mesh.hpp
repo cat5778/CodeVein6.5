@@ -3,6 +3,9 @@
 texture		g_NormalTexture;
 texture		g_DissolveTexture;
 float		g_fTime;
+float		g_fRedColor=1.f;
+float		g_fGreenColor=0.f;
+float		g_fBlueColor=0.f;
 sampler NormalSampler = sampler_state
 {
 	texture = g_NormalTexture;
@@ -176,10 +179,10 @@ PS_OUT PS_Dissolve(PS_IN In)
 	float b = saturate(pow(multi1 + multi2, 20));
 	float c = pow(multi1 + multi2, 20);
 
-	float3 vColor = ( 1.0f, 0.f,0.f );
+	float3 vColor = (g_fRedColor, g_fGreenColor, g_fBlueColor);
 
 
-
+	float3 fWhite = (100.f, 100.f, 100.f);
 	float3 Ke;
 	if (c >= b)
 		Ke = (100.f, 1.f, 1.f);
@@ -191,8 +194,15 @@ PS_OUT PS_Dissolve(PS_IN In)
 
 	if (1.f >= Out.vColor.a)
 	{
-		Out.vColor.xyz = diffuse;
-		Out.vColor.yz = 0.f;
+		if (g_fGreenColor > 0.5f)
+		{
+			Out.vColor.xyz = diffuse;
+			Out.vColor.yz = 0.f;
+		}
+		else
+		{
+			Out.vColor.xyz = fWhite;
+		}
 	}
 
 
@@ -218,9 +228,9 @@ technique Default_Device
 	
 	pass AlphaTesting
 	{
-		alphatestenable = true;
-		alphafunc = greater;
-		alpharef = 0xc0;
+		//alphatestenable = true;
+		//alphafunc = greater;
+		//alpharef = 0xc0;
 		//cullmode = none;
 		
 		vertexshader = compile vs_3_0 VS_MAIN();

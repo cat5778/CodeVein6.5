@@ -65,7 +65,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	Out.vColor = tex2D(BaseSampler, In.vTexUV);
 	float2		vDepthUV = (float2)0.f;
-
+	Out.vColor.a = Out.vColor.r;
 	// -1 -> 0, 1 -> 1 (투영좌표인 x값이 텍스처 uv로 좌표 변환)
 
 	vDepthUV.x = (In.vProjPos.x / In.vProjPos.w) * 0.5f + 0.5f;
@@ -75,7 +75,7 @@ PS_OUT		PS_MAIN(PS_IN In)
 
 	float	vViewZ = tex2D(DepthSampler, vDepthUV).y * 1000.f;
 
-	Out.vColor.a = Out.vColor.a * saturate(vViewZ - In.vProjPos.w);
+	Out.vColor.a = Out.vColor.a * saturate(vViewZ - In.vProjPos.w)*g_fAlphaRatio;
 		//Out.vColor.a = (Out.vColor.x + Out.vColor.y + Out.vColor.z) / 3.f * Out.vColor.a;
 
 	return Out;
@@ -173,22 +173,14 @@ technique Default_Device
 	pass DistortionShader
 	{
 		alpharef = 0xc0;
-	zenable = false;
-	zwriteEnable = false;
-	alphablendenable = true;
-	srcblend = srcalpha;
-	destblend = invsrcalpha;
+		zenable = false;
+		zwriteEnable = false;
+		alphablendenable = true;
+		srcblend = srcalpha;
+		destblend = invsrcalpha;
 
-
-	//cullmode = none;
-
-	//alphablendenable = true;
-	//srcblend = srcalpha;
-	//destblend = invsrcalpha;
-
-	//zwriteEnable = false;
-	vertexshader = compile vs_3_0 VS_MAIN();
-	pixelshader = compile ps_3_0 Distortion();
+		vertexshader = compile vs_3_0 VS_MAIN();
+		pixelshader = compile ps_3_0 Distortion();
 	}
 
 };
