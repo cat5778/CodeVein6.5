@@ -34,9 +34,9 @@ HRESULT CSplashEffect::Ready_GameObject(void)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	
-	m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.01f;
-	m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.01f;
-	m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.01f;
+	m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.01f*m_vMultiScale.x;
+	m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.01f*m_vMultiScale.y;
+	m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.01f*m_vMultiScale.x;
 	m_pTransformCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	m_fFrameMax=m_pTextureCom->Get_ImageCnt();
 
@@ -88,7 +88,7 @@ _int CSplashEffect::Update_GameObject(const _float& fTimeDelta)
 		memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
 	}
 
-	Splash_Scale(fTimeDelta, 4.f);
+	Splash_Scale(fTimeDelta, 1.f);
 	
 
 	m_vOldScale = { m_vScale.x * m_vMultiScale.x,
@@ -222,7 +222,7 @@ HRESULT CSplashEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	if(!m_bVertical)
 		pEffect->SetFloat("g_fAlphaRatio", 1.f - (m_fSplashScale*0.5f));
 	else
-		pEffect->SetFloat("g_fAlphaRatio", 1.f - (0.f));
+		pEffect->SetFloat("g_fAlphaRatio", 1.f - (m_fSplashScale));
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
 	
@@ -236,14 +236,18 @@ void CSplashEffect::Splash_Scale(_float fTimeDelta, _float fMaxScale)
 {
 	if (fMaxScale >= m_fSplashScale)
 	{
-		m_fSplashScale += fTimeDelta*fMaxScale;
+		if(m_bVertical)
+			m_fSplashScale += fTimeDelta*fMaxScale*1.f;
+		else
+			m_fSplashScale += fTimeDelta*fMaxScale*2.f;
 		m_vMultiScale.x = m_fSplashScale;
 		m_vMultiScale.y = m_fSplashScale;
 	}
 	else
 	{
-		m_fSplashScale = 0.0f;
+		Set_Enable(false);
 	}
+
 
 /*
 	if (180.f >= m_fSplashScale)
@@ -288,13 +292,28 @@ void CSplashEffect::VerticalMove(_float fTimeDelta)
 		{
 			m_fVerticalTime += fTimeDelta*180.f;
 
-			m_fVerticalPos = sinf(D3DXToRadian(m_fVerticalTime))*4.f;
+			m_fVerticalPos = sinf(D3DXToRadian(m_fVerticalTime))*1.f;
 		}
 		else
 		{
 			m_fVerticalTime = 0.f;
 
 		}
+}
+
+void CSplashEffect::Set_Enable(bool bEnable)
+{
+	m_bEnable = bEnable;
+	if (bEnable)
+	{
+		m_fVerticalTime = 0.f;
+		m_fSplashScale = 0.f;
+	}
+	else
+	{
+	
+	}
+
 }
 
 

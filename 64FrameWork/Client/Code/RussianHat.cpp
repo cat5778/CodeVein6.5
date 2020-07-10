@@ -7,7 +7,7 @@
 #include "RussianHatHont.h"
 #include "IceSword.h"
 #include "BoostEffect.h"
-
+#include "SplashEffect.h"
 CRussianHat::CRussianHat(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrName,_uint uiIdx, _uint uiStageIdx )
 	: CDynamicObject(pGraphicDev,wstrName,uiIdx, uiStageIdx)
 {
@@ -49,6 +49,8 @@ HRESULT CRussianHat::Ready_GameObject()
 		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
 		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
 		Load_Text(L"../../Resource/Data/NavMash/AttachMapNav.txt");
+
+
 		break;
 	case LOAD_NOMAL3:
 		break;
@@ -110,6 +112,35 @@ HRESULT CRussianHat::LateReady_GameObject()
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianSword", pGameObject), E_FAIL);
 	m_pSword->Set_Equip(false);
 
+
+
+
+	_float fTestY = -2.f;
+	pGameObject =m_pSplashEffect[0]=  CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_01", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, fTestY, 0.f), false, true);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_01", pGameObject), E_FAIL);
+
+	pGameObject = m_pSplashEffect[1] = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_02", L"RussianHat_0", "RightHand", _vec2(2.f, 2.f), _vec3(0.f, fTestY, 0.f), false, true);
+	dynamic_cast<CSplashEffect*>(pGameObject)->Set_Distortion();
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_02", pGameObject), E_FAIL);
+
+	pGameObject = m_pSplashEffect[2] = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_03", L"RussianHat_0", "RightHand", _vec2(1.5f, 1.5f), _vec3(0.f, fTestY, 0.f), false, true);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_03", pGameObject), E_FAIL);
+
+
+	pGameObject = m_pSplashEffect[3] = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_05", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, 1.f+ fTestY, 0.f), false, true);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_05", pGameObject), E_FAIL);
+
+
+	pGameObject = m_pSplashEffect[4] = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_06", L"RussianHat_0", "RightHand", _vec2(2.f, 2.f), _vec3(0.f, fTestY, 0.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_06", pGameObject), E_FAIL);
+
+
+
 	return S_OK;
 }
 
@@ -122,7 +153,12 @@ _int CRussianHat::Update_GameObject(const _float & fTimeDelta)
 		else
 			m_fDSTime = 3.4f;
 	}
-	
+
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
+	{
+		for (int i = 0; i < 5; i++)
+			m_pSplashEffect[i]->Set_Enable(true);
+	}
 
 	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
 	//{
@@ -905,15 +941,19 @@ void CRussianHat::Tshield_JumpAttack(_float fTimeDelta)
 	if (m_eCurState == RUSSIAN_ATTACK_JUMP)
 	{
 		SetColliderEnable(0.5f, 0.6f);
-
+			
 		
 
 		if (Get_AniRatio() >= 0.65f)
 		{
 			m_eCurState = RUSSIAN_ATTACK2;
+			m_bIsSplash = false;
 		}
 		else
 		{
+			if(Get_AniRatio()>=0.4f)
+			SplashEffect();
+		
 
 			RotateToTarget(fTimeDelta, 0.f, 0.1f);
 			if(Get_AniRatio()>=0.05f&&Get_AniRatio() <= 0.5f)
@@ -1372,6 +1412,17 @@ void CRussianHat::BoostEffect(_float fTimeDelta)
 		m_fEffectRate += fTimeDelta;
 
 
+}
+
+void CRussianHat::SplashEffect()
+{
+	if (!m_bIsSplash)
+	{
+		for (int i = 0; i < 5; i++)
+			m_pSplashEffect[i]->Set_Enable(true);
+	
+		m_bIsSplash = true;
+	}
 }
 
 

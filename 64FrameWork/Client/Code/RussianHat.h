@@ -8,6 +8,9 @@ class CTexture;
 END
 class CGauge;
 class CIceSword;
+
+class CSplashEffect;
+
 class CRussianHat : public CDynamicObject
 {
 public:
@@ -66,7 +69,7 @@ private://Pattern
 	void					BoostJump_L(_float fTimeDelta);
 	void					BoostJump_E(_float fTimeDelta);
 	void					BoostEffect(_float fTimeDelta);
-
+	void					SplashEffect();
 	//패턴 추가할것 원거리 마법 ,얼음검 휘두르기 
 
 	//void					
@@ -91,6 +94,9 @@ private:
 	CIceSword*					m_pSword = nullptr;
 	_float						m_fEffectRate = 0.f;
 	_uint						m_uiEffectIdx= 0.f;
+	CSplashEffect*				m_pSplashEffect[5] = { nullptr, };
+	_bool						m_bIsSplash = false;
+
 private:
 	virtual void			Free(void) override;
 };

@@ -36,6 +36,9 @@ public:
 	void		Splash_Scale(_float fTimeDelta, _float fMaxScale);
 	void		Set_Distortion();
 	void		VerticalMove(_float fTimeDelta);
+	virtual void						Set_Enable(bool bEnable)override;
+
+
 private:
 	_bool		m_bIsDistortion = false;
 public:
@@ -45,8 +48,9 @@ public:
 	static CSplashEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale , _vec3 vPos, _bool bIsTracking , _bool bIsLoop = false);
 
 private:
-	_float		m_fSplashScale = 0.1f;
+	_float		m_fSplashScale = 0.f;
 	_vec3		m_vOldScale = { INIT_VEC3 };
+	_float		m_fMaxScale = 0.f;
 private:
 	virtual void Free(void) override;
 };

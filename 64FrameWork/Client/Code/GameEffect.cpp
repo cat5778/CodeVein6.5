@@ -20,8 +20,8 @@ CGameEffect::CGameEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wst
 CGameEffect::CGameEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale,_vec3 vPos, _bool bIsTracking, _bool bIsLoop)
 	: Engine::CGameObject(pGraphicDev), m_wstrTexName(wstrTexName), m_wstrParantName(wstrParentInstName),m_strBoneName(strBoneName), m_bIsParent(true), m_bIsTracking(bIsTracking),m_bIsLoop(bIsLoop),
 	m_vAddPos(vPos),m_vMultiScale(vScale)
-
 {
+
 }
 
 CGameEffect::~CGameEffect(void)
