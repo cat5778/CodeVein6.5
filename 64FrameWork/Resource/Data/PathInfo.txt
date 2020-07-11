@@ -448,6 +448,12 @@ StaticMesh
 SM_NormalGreatSwordB_ba01.X
 SM_NormalGreatSwordB_ba01
 ..\..\Resource\Mesh\StaticMesh\Base\Weapon\SM_NormalGreatSwordB_ba01\
+Effect
+Public
+StaticMesh
+SplashEffect.X
+SplashEffect
+..\..\Resource\Mesh\StaticMesh\Public\Effect\SplashEffect\
 Weapon
 Public
 StaticMesh

@@ -32,6 +32,7 @@ public:
 	virtual _int LateUpdate_Scene(const _float& fTimeDelta) override;
 	virtual void Render_Scene(void) override;
 
+
 private:
 	//HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag) { return S_OK; }
 	HRESULT		Ready_GameLogic_Layer(const _tchar* pLayerTag);

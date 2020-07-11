@@ -12,6 +12,7 @@ class CRenderer;
 class CCalculator;
 class CCollider;
 class CShader;
+class CTexture;
 END
 
 class CRussainHatHone : public Engine::CGameObject
@@ -35,6 +36,7 @@ private:
 private:
 	Engine::CTransform*		m_pTransformCom = nullptr;
 	Engine::CTransform*		m_pTargetTransformCom = nullptr;
+	Engine::CTexture*		m_pNoiseTextureCom = nullptr;
 	Engine::CRenderer*		m_pRendererCom = nullptr;
 	Engine::CCalculator*	m_pCalculatorCom = nullptr;
 	Engine::CStaticMesh*	m_pMeshCom = nullptr;
@@ -56,6 +58,9 @@ private:
 	_float					m_fTime = 0.f;
 	_float					m_fScale = 1.f;
 	_float					m_fAngle = 0.f;
+	_uint					m_uiPass = 0;
+	_float					m_fDissolveTime =1.7f;
+	_vec3					m_vColor = { 1.f,1.f,1.f};
 
 #ifdef _DEBUG
 	_matrix					m_matSphereWorld;		//

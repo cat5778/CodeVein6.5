@@ -12,7 +12,6 @@ class CRenderer;
 class CCalculator;
 class CCollider;
 class CShader;
-
 END
 
 class CIceSword : public Engine::CGameObject

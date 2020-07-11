@@ -16,7 +16,9 @@
 #include "Effect.h"
 #include "DistotionEffect.h"
 #include "BoostEffect.h"
-
+#include "BoostEffect.h"
+#include "GameEffect.h"
+#include "SplashEffect.h"
 //#include "SoundMgr.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -68,27 +70,27 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	Engine::Get_Light(1)->Range = 8.f + sinf(D3DXToRadian(m_fSin))*-0.4f;
 
 
-	if (CKeyMgr::GetInstance()->KeyPressing(KEY_DOWN))
-	{
-		m_fTest3 += 0.1f;
-		cout << m_fTest3 << endl; 
-		//Engine::Get_Light(3)->Diffuse = D3DXCOLOR(0.84f*m_fTest3, 0.72f*m_fTest3, 0.63f*m_fTest3, 0.f);
-		//Engine::Get_Light(6)->Diffuse = D3DXCOLOR(0.95f*m_fTest3, 0.5f*m_fTest3, 0.95f*m_fTest3, 0.f);
-		Engine::Get_Light(6)->Attenuation0 = 0.f;
-		Engine::Get_Light(6)->Attenuation1 = m_fTest3;
-		Engine::Get_Light(6)->Attenuation2 = 0.f;
-		Engine::Get_Light(6)->Position = _vec3(6.55f, 0.6f, 3.5);
-		Engine::Get_Light(6)->Range= 0.335f;
+	//if (CKeyMgr::GetInstance()->KeyPressing(KEY_DOWN))
+	//{
+	//	m_fTest3 += 0.1f;
+	//	cout << m_fTest3 << endl; 
+	//	//Engine::Get_Light(3)->Diffuse = D3DXCOLOR(0.84f*m_fTest3, 0.72f*m_fTest3, 0.63f*m_fTest3, 0.f);
+	//	//Engine::Get_Light(6)->Diffuse = D3DXCOLOR(0.95f*m_fTest3, 0.5f*m_fTest3, 0.95f*m_fTest3, 0.f);
+	//	Engine::Get_Light(6)->Attenuation0 = 0.f;
+	//	Engine::Get_Light(6)->Attenuation1 = m_fTest3;
+	//	Engine::Get_Light(6)->Attenuation2 = 0.f;
+	//	Engine::Get_Light(6)->Position = _vec3(6.55f, 0.6f, 3.5);
+	//	Engine::Get_Light(6)->Range= 0.335f;
 
-	}
-	if (CKeyMgr::GetInstance()->KeyDown(KEY_DOWN))
-	{
-	}
-	if (CKeyMgr::GetInstance()->KeyDown(KEY_LEFT))
-	{
-		//m_PTestGO->Set_Enable(m_bTest);
-		//m_bTest = !m_bTest;
-	}
+	//}
+	//if (CKeyMgr::GetInstance()->KeyDown(KEY_DOWN))
+	//{
+	//}
+	//if (CKeyMgr::GetInstance()->KeyDown(KEY_LEFT))
+	//{
+	//	//m_PTestGO->Set_Enable(m_bTest);
+	//	//m_bTest = !m_bTest;
+	//}
 
 
 	//m_fNeonSin += fTimeDelta * 10000.f;
@@ -208,15 +210,67 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
 
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"TC5RadialGradient09", L"RussianHat_0", "LeftHand", _vec2(3.f, 3.f), _vec3(0.f, 0.f, 0.f), false, true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SmokeTest", pGameObject), E_FAIL);
+
+		pGameObject = CGameEffect::Create(m_pGraphicDev, L"TC5RadialGradient09", _vec2(1.f, 1.f),_vec3(0.069f, 6.208f, -56.f),true);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SmokeTest", pGameObject), E_FAIL);
 
 
-		//pGameObject = m_PTestGO= CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f));
+		//_float fTestY = -1.f;
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_01", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, fTestY, 0.f), false, true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_01", pGameObject), E_FAIL);
+
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_02", L"RussianHat_0", "RightHand", _vec2(2.f, 2.f), _vec3(0.f, fTestY, 0.f), false, true);
+		//dynamic_cast<CSplashEffect*>(pGameObject)->Set_Distortion();
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_02", pGameObject), E_FAIL);
+
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_03", L"RussianHat_0", "RightHand", _vec2(1.5f, 1.5f), _vec3(0.f, fTestY, 0.f), false, true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_03", pGameObject), E_FAIL);
+
+
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_05", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, 1.f+ fTestY, 0.f), false, true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_05", pGameObject), E_FAIL);
+
+
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_06", L"RussianHat_0", "RightHand", _vec2(2.f, 2.f), _vec3(0.f, fTestY, 0.f));
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_06", pGameObject), E_FAIL); 
+
+
+
+		//pGameObject = CGameEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_06", L"RussianHat_0", "RightHand", _vec2(2.f, 2.f), _vec3(0.f, 0.f, 0.f), false, true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_06", pGameObject), E_FAIL);
+
+
+
+
+		//pGameObject = m_PTestGO = CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f),false);
 		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DSFire", pGameObject), E_FAIL);
 
-		//pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha",true);
+		//pGameObject = m_PTestGO = CDistortionEffect::Create(m_pGraphicDev, L"Fire2", L"T_FX_ExternalRGBNoise01", _vec3(0.069f, 6.208f, -56.f), true);
 		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fire", pGameObject), E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DSFire2", pGameObject), E_FAIL);
+
+
+		//
+		//pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", _vec3(0.069f, 6.208f, -56.f),true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireTest", pGameObject), E_FAIL);
+
+		//pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", _vec3(0.069f, 6.208f, -55.7f), false);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FireTest2", pGameObject), E_FAIL);
+
+
 
 	}
 
@@ -368,7 +422,7 @@ HRESULT CStage::Ready_LightInfo(void)
 		m_tLightInfo[0].Type = D3DLIGHT_POINT;
 		m_tLightInfo[0].Range = 1100.f;
 	}
-	m_tLightInfo[0].Diffuse = D3DXCOLOR(0.3, 0.24f, 0.18f, 0.0f);
+	m_tLightInfo[0].Diffuse = D3DXCOLOR(0.6, 0.48f, 0.36f, 0.0f);
 	//m_tLightInfo[0].Diffuse = D3DXCOLOR(0.8f, 0.8f, 1.0f, 0.35f);// ´«¸Ê
 	//m_tLightInfo[0].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//m_tLightInfo[0].Ambient = D3DXCOLOR(0.5f, 0.5f, 0.7f, 1.f);
@@ -382,7 +436,7 @@ HRESULT CStage::Ready_LightInfo(void)
 
 	//Æ÷Å» 
 	m_tLightInfo[1].Type = D3DLIGHT_POINT;
-	m_tLightInfo[1].Diffuse = D3DXCOLOR(0.15f, 0.255f, .3f, 0.f);
+	m_tLightInfo[1].Diffuse = D3DXCOLOR(0.3f, 0.51f, 0.6f, 0.f);
 	//m_tLightInfo[1].Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//m_tLightInfo[1].Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	m_tLightInfo[1].Range = 9.f;
@@ -394,7 +448,7 @@ HRESULT CStage::Ready_LightInfo(void)
 
 	//¹Ù Á¶¸í
 	m_tLightInfo[2].Type = D3DLIGHT_POINT;
-	m_tLightInfo[2].Diffuse = D3DXCOLOR(0.45f, 0.27f, 0.36f, 0.f);
+	m_tLightInfo[2].Diffuse = D3DXCOLOR(0.9f, 0.54f, 0.72f, 0.f);
 	//m_tLightInfo[2].Specular = D3DXCOLOR(1.f, 0.5f, 0.5f, 1.f);
 	//m_tLightInfo[2].Ambient = D3DXCOLOR(1.f, 0.6f, 0.6f, 1.f);
 	m_tLightInfo[2].Range = 8.8f;
@@ -438,7 +492,7 @@ HRESULT CStage::Ready_LightInfo(void)
 	m_tLightInfo[6].Diffuse = D3DXCOLOR(0.95f, 0.5f, 0.95f, 1.f);
 	m_tLightInfo[6].Specular = D3DXCOLOR(1.f, 0.6f, 1.f, 1.f);
 	m_tLightInfo[6].Ambient = D3DXCOLOR(1.f, 0.5f, 1.f, 1.f);
-	m_tLightInfo[6].Range = 0.335f;
+	m_tLightInfo[6].Range = 0.34f;
 	m_tLightInfo[6].Position = _vec3(6.55f, 0.6f, 3.5);
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &m_tLightInfo[6], 6), E_FAIL);
 

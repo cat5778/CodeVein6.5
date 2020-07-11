@@ -3,8 +3,8 @@
 
 #include "Export_Function.h"
 
-CDistortionEffect::CDistortionEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos)
-	: Engine::CGameObject(pGraphicDev), m_vPos(vPos),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName)
+CDistortionEffect::CDistortionEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos, _bool bIsDistortion)
+	: Engine::CGameObject(pGraphicDev), m_vPos(vPos),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName),m_bIsDistortion(bIsDistortion)
 {
 	m_wstrMaskTexName = L"FireMask2";
 }
@@ -17,9 +17,20 @@ CDistortionEffect::~CDistortionEffect(void)
 HRESULT CDistortionEffect::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.001f;
-	m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.001f;
-	m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.001f;
+	if (m_bIsDistortion)
+	{
+		m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.01f;
+		m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.01f;
+		m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.01f;
+
+	}
+	else
+	{
+		m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.001f;
+		m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.001f;
+		m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.001f;
+	}
+
 	m_pTransformCom->Set_Pos(&m_vPos);
 	m_fScale[0] = m_vScale.x;
 	m_fScale[1] = m_vScale.y;
@@ -74,8 +85,10 @@ _int CDistortionEffect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::CGameObject::Compute_ViewZ(&m_pTransformCom->m_vInfo[Engine::INFO_POS]);
 
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
-	//m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+	if(m_bIsDistortion)
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
+	else
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -160,7 +173,7 @@ HRESULT CDistortionEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 
 	//pEffect->SetFloat("g_frameTime", m_fFameTime);
 	//pEffect->SetFloatArray("scrollSpeeds", m_fScollTime, 3);
-	//pEffect->SetFloatArray("scales", m_fScale, 3);e
+	pEffect->SetFloatArray("scales", m_fScale, 3);
 
 	//pEffect->SetVector("scales", &m_vScale);
 	//m_pAlphaTextureCom->Set_Texture(pEffect, "g_DepthAlphaTexture", 0);
@@ -178,9 +191,14 @@ HRESULT CDistortionEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	return S_OK;
 }
 
-CDistortionEffect* CDistortionEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos)
+void CDistortionEffect::Set_OffDisTortion()
 {
-	CDistortionEffect*	pInstance = new CDistortionEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, vPos);
+	m_bIsDistortion = false;
+}
+
+CDistortionEffect* CDistortionEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos, _bool bIsDistortion)
+{
+	CDistortionEffect*	pInstance = new CDistortionEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, vPos, bIsDistortion);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 		Engine::Safe_Release(pInstance);

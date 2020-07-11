@@ -3,10 +3,15 @@
 
 #include "Export_Function.h"
 
-CBoostEffect::CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight, _bool bDistortion)
-	: Engine::CGameObject(pGraphicDev), m_bIsRight(bRight),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName),m_bIsDistortion(bDistortion)
+CBoostEffect::CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight)
+	: Engine::CGameObject(pGraphicDev), m_bIsRight(bRight),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName)
 {
 	m_wstrMaskTexName = L"FireMask2";
+}
+
+CBoostEffect::CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos, _bool bRight)
+	: Engine::CGameObject(pGraphicDev), m_bIsRight(bRight), m_wstrTexName(wstrTexName), m_wstrAlphaTexName(wstrAlphaTexName),m_vPos(vPos)
+{
 }
 
 CBoostEffect::~CBoostEffect(void)
@@ -16,16 +21,27 @@ CBoostEffect::~CBoostEffect(void)
 
 HRESULT CBoostEffect::Ready_GameObject(void)
 {
-	
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.01f;
-	m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.01f;
-	m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.01f;
+	if (!m_bIsRight)
+	{
+		m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.02f;
+		m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.02f;
+		m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.02f;
+	}
+	else
+	{
+		m_vScale.x = m_pTextureCom->Get_ImageInfo().Width*0.01f;
+		m_vScale.y = m_pTextureCom->Get_ImageInfo().Height*0.01f;
+		m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.01f;
+
+	}
 	m_pTransformCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
-	m_fFrameMax = 31;
+	m_fFrameMax = m_pTextureCom->Get_ImageCnt();
 	for (int i = 0; i < 3; i++)
 		m_fScollTime[i] = 0.f;
+
+
 
 
 	return S_OK;
@@ -53,7 +69,6 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 	{
 		Engine::CDynamicMesh*	pMonsterMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", L"RussianHat_0", L"Com_Mesh", Engine::ID_STATIC));
 		NULL_CHECK_RETURN(pMonsterMeshCom, 0);
-
 		const Engine::D3DXFRAME_DERIVED* pBone = pMonsterMeshCom->Get_FrameByName("Spine3_RightJet");
 		NULL_CHECK_RETURN(pBone, 0);
 
@@ -69,11 +84,13 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 
 	
 	}
+
 	_vec3 vScale= m_vScale * (1+(m_fFrameCnt*0.05f));
 	m_pTransformCom->Set_Scale(vScale.x, vScale.y, vScale.z);
 
 	m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 
+	//따라다니게하기
 	//m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
 	//m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
 	//memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
@@ -85,10 +102,9 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_fFrameCnt >= m_fFrameMax)
 	{
-		//m_bEnable = false;
-		m_fFrameCnt = 0;
-
-		//m_fFrameCnt = m_fFrameMax - 1.f;
+		m_bEnable = false;
+		m_fFrameCnt = m_fFrameMax - 1.f;
+		//m_fFrameCnt = 0.f;
 	}
 
 	Engine::CGameObject::Update_GameObject(fTimeDelta);
@@ -111,10 +127,10 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::CGameObject::Compute_ViewZ(&m_pTransformCom->m_vInfo[Engine::INFO_POS]);
 
-	if(m_bIsDistortion)
-		m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
-	else
+	if(m_bIsRight)
 		m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+	else
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
 
 	return 0;
 }
@@ -132,7 +148,7 @@ void CBoostEffect::Render_GameObject(void)
 
 	pEffect->Begin(&iPassMax, 0);
 
-	pEffect->BeginPass(1);
+	pEffect->BeginPass(0);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -186,27 +202,34 @@ HRESULT CBoostEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	pEffect->SetFloat("g_fAlphaRatio", 1.f- (m_fFrameCnt*0.03f));
+
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
+	
 	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
 
 
 	return S_OK;
 }
 
-void CBoostEffect::Set_Distortion()
+CBoostEffect* CBoostEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight)
 {
-	m_bIsDistortion = true;
-
-}
-
-CBoostEffect* CBoostEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight, _bool bDistortion)
-{
-	CBoostEffect*	pInstance = new CBoostEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, bRight,bDistortion);
+	CBoostEffect*	pInstance = new CBoostEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, bRight);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 		Engine::Safe_Release(pInstance);
 
 	return pInstance;
+}
+
+CBoostEffect * CBoostEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _vec3 vPos, _bool bRight)
+{
+	CBoostEffect*	pInstance = new CBoostEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, vPos,bRight);
+
+	if (FAILED(pInstance->Ready_GameObject()))
+		Engine::Safe_Release(pInstance);
+
+	return pInstance;
+
 }
 
 void CBoostEffect::Free(void)

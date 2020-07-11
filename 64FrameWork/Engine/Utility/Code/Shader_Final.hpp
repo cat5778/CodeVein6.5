@@ -34,7 +34,7 @@ PS_OUT      PS_MAIN(PS_IN In)
 	float2 Trans = In.vTexUV + 0.001f;
 
 	float4 Noise = tex2D(DistortionSampler, Trans);
-	float2 UV = In.vTexUV + Noise.xy * 0.15f;
+	float2 UV = In.vTexUV + Noise.xz * 0.15f;
 
 	Out.vColor = tex2D(BlendSampler, UV);
 
@@ -46,10 +46,10 @@ technique Default_Device
 	pass   Blend
 {
 
-	//zwriteEnable = false;
-	//alphablendenable = true;
-	//srcblend = srcalpha;
-	//destblend = invsrcalpha;
+	zwriteEnable = false;
+	alphablendenable = true;
+	srcblend = srcalpha;
+	destblend = invsrcalpha;
 	
 	vertexshader = NULL;
 	pixelshader = compile ps_3_0 PS_MAIN();

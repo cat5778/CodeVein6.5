@@ -179,6 +179,7 @@
     <ClInclude Include="..\Code\3DUI.h" />
     <ClInclude Include="..\Code\BackGround.h" />
     <ClInclude Include="..\Code\BoostEffect.h" />
+    <ClInclude Include="..\Code\ChargeEffect.h" />
     <ClInclude Include="..\Code\CocoonDevil.h" />
     <ClInclude Include="..\Code\ColliderManager.h" />
     <ClInclude Include="..\Code\Davis.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="..\Code\DynamicObject.h" />
     <ClInclude Include="..\Code\Effect.h" />
     <ClInclude Include="..\Code\Field.h" />
+    <ClInclude Include="..\Code\GameEffect.h" />
     <ClInclude Include="..\Code\Gauge.h" />
     <ClInclude Include="..\Code\Halberd.h" />
     <ClInclude Include="..\Code\IceSword.h" />
@@ -213,7 +215,9 @@
     <ClInclude Include="..\Code\ShopSub.h" />
     <ClInclude Include="..\Code\SkyBox.h" />
     <ClInclude Include="..\Code\SkySphere.h" />
+    <ClInclude Include="..\Code\SnowSpalshEffect.h" />
     <ClInclude Include="..\Code\SoundMgr.h" />
+    <ClInclude Include="..\Code\SplashEffect.h" />
     <ClInclude Include="..\Code\Stage.h" />
     <ClInclude Include="..\Code\StaticCamera.h" />
     <ClInclude Include="..\Code\StaticObject.h" />
@@ -236,6 +240,7 @@
     <ClCompile Include="..\Code\3DUI.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BoostEffect.cpp" />
+    <ClCompile Include="..\Code\ChargeEffect.cpp" />
     <ClCompile Include="..\Code\CocoonDevil.cpp" />
     <ClCompile Include="..\Code\ColliderManager.cpp" />
     <ClCompile Include="..\Code\Davis.cpp" />
@@ -245,6 +250,7 @@
     <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Field.cpp" />
+    <ClCompile Include="..\Code\GameEffect.cpp" />
     <ClCompile Include="..\Code\Gauge.cpp" />
     <ClCompile Include="..\Code\Halberd.cpp" />
     <ClCompile Include="..\Code\IceSword.cpp" />
@@ -270,7 +276,9 @@
     <ClCompile Include="..\Code\ShopSub.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\SkySphere.cpp" />
+    <ClCompile Include="..\Code\SnowSpalshEffect.cpp" />
     <ClCompile Include="..\Code\SoundMgr.cpp" />
+    <ClCompile Include="..\Code\SplashEffect.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\StaticObject.cpp" />

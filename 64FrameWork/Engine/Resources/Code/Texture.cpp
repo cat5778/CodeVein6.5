@@ -9,7 +9,7 @@ Engine::CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 Engine::CTexture::CTexture(const CTexture& rhs)
-	: CResources(rhs)
+	: CResources(rhs), m_uiImgCnt(rhs.m_uiImgCnt)
 {
 	_uint	iContainerSize = rhs.m_vecTexture.size();
 	m_vecTexture.reserve(iContainerSize);
