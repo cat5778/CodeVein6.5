@@ -1,16 +1,21 @@
 texture			g_NormalTexture;
-
 sampler NormalSampler = sampler_state		// 필터링을 하지 말아야 한다. 노말 벡터를 필터링하게 되면 명암 값이 어긋날 가능성이 있다.
 {
 	texture = g_NormalTexture;
 };
 
 texture			g_DepthTexture;
-
 sampler DepthSampler = sampler_state
 {
 	texture = g_DepthTexture;
 };
+
+texture			g_WorldTexture;
+sampler WorldSampler = sampler_state
+{
+	texture = g_WorldTexture;
+};
+
 
 
 vector		g_vLightDir;
@@ -62,15 +67,8 @@ PS_OUT		PS_MAIN_DIRECTIONAL(PS_IN In)
 	vector		vDepth = tex2D(DepthSampler, In.vTexUV);
 	float		vViewZ = vDepth.y * 1000.f;	// 뷰 스페이스 원래값 1000
 
-	vector		vPosition;
+	vector		vPosition = tex2D(WorldSampler, In.vTexUV);
 
-	vPosition.x = (In.vTexUV * 2.f - 1.f) * vViewZ;
-	vPosition.y = (In.vTexUV * -2.f + 1.f) * vViewZ;
-	vPosition.z = vDepth.x * vViewZ;
-	vPosition.w = vViewZ;
-
-	vPosition = mul(vPosition, g_matProjInv);
-	vPosition = mul(vPosition, g_matViewInv);
 
 	vector		vLook = normalize(g_vCamPos - vPosition);
 
@@ -90,17 +88,10 @@ PS_OUT		PS_MAIN_POINT(PS_IN In)
 	vNormal = vector(vNormal.xyz * 2.f - 1.f, 0.f);
 
 	vector		vDepth = tex2D(DepthSampler, In.vTexUV);
+
 	float		vViewZ = vDepth.y * 1000.f;	// 뷰 스페이스
 
-	vector		vPosition;
-
-	vPosition.x = (In.vTexUV * 2.f - 1.f) * vViewZ;
-	vPosition.y = (In.vTexUV * -2.f + 1.f) * vViewZ;
-	vPosition.z = vDepth.x * vViewZ;
-	vPosition.w = vViewZ;
-
-	vPosition = mul(vPosition, g_matProjInv);
-	vPosition = mul(vPosition, g_matViewInv);
+	vector		vPosition = tex2D(WorldSampler, In.vTexUV);
 
 	vector vDir = vPosition - g_vLightPos;
 
@@ -124,25 +115,27 @@ PS_OUT		PS_MAIN_POINT(PS_IN In)
 technique Default_Device
 {
 	pass	Directional
-{
-	alphablendenable = true;
-srcblend = one;
-destblend = one;
+	{
+		zwriteEnable = false;
 
-zwriteEnable = false;
-vertexshader = NULL;
-pixelshader = compile ps_3_0 PS_MAIN_DIRECTIONAL();
-}
+		alphablendenable = true;
+		srcblend = one;
+		destblend = one;
+		
+		zwriteEnable = false;
+		vertexshader = NULL;
+		pixelshader = compile ps_3_0 PS_MAIN_DIRECTIONAL();
+	}
 
-pass Point
-{
-	alphablendenable = true;
-srcblend = one;
-destblend = one;
-
-zwriteEnable = false;
-vertexshader = NULL;
-pixelshader = compile ps_3_0 PS_MAIN_POINT();
-}
+	pass Point
+	{
+		alphablendenable = true;
+		srcblend = one;
+		destblend = one;
+		
+		zwriteEnable = false;
+		vertexshader = NULL;
+		pixelshader = compile ps_3_0 PS_MAIN_POINT();
+	}
 
 };

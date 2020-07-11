@@ -59,6 +59,10 @@ private:
 
 	Engine::CGameObject*				m_PTestGO = nullptr;
 	_bool								m_bTest = false;
+
+
+
+
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

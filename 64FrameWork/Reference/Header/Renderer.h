@@ -18,7 +18,7 @@ public:
 
 public:
 	HRESULT		Ready_Renderer(LPDIRECT3DDEVICE9& pGraphicDev);
-	HRESULT		Ready_Renderer(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DVERTEXBUFFER9* _vb, LPDIRECT3DINDEXBUFFER9* _ib);
+	//HRESULT		Ready_Renderer(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DVERTEXBUFFER9* _vb, LPDIRECT3DINDEXBUFFER9* _ib);
 
 	void		Add_RenderGroup(RENDERID eGroup, CGameObject* pGameObject);
 	void		Render_GameObject(void);

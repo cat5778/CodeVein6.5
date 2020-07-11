@@ -17,7 +17,7 @@ END
 class CBoostEffect : public Engine::CGameObject
 {
 private:
-	explicit CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev,wstring wstrTexName,  wstring wstrAlphaTexName, _bool bRight);
+	explicit CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev,wstring wstrTexName,  wstring wstrAlphaTexName, _bool bRight, _bool bDistortion);
 	virtual ~CBoostEffect(void);
 
 public:
@@ -30,7 +30,7 @@ public:
 private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
-
+	void		Set_Distortion();
 private:
 	Engine::CRcTex*			m_pBufferCom = nullptr;
 	Engine::CTexture*		m_pTextureCom = nullptr;
@@ -56,9 +56,10 @@ private:
 	_float					m_fScale[3];
 	_float					m_fFameTime=1.f;
 	_matrix					m_OldMatrix;
+	_bool					m_bIsDistortion = false;
 public:
 
-	static CBoostEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight = true);
+	static CBoostEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight = true,_bool bDistortion=false);
 
 private:
 	virtual void Free(void) override;

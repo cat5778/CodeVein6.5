@@ -3,8 +3,8 @@
 
 #include "Export_Function.h"
 
-CBoostEffect::CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight)
-	: Engine::CGameObject(pGraphicDev), m_bIsRight(bRight),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName)
+CBoostEffect::CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight, _bool bDistortion)
+	: Engine::CGameObject(pGraphicDev), m_bIsRight(bRight),m_wstrTexName(wstrTexName),m_wstrAlphaTexName(wstrAlphaTexName),m_bIsDistortion(bDistortion)
 {
 	m_wstrMaskTexName = L"FireMask2";
 }
@@ -85,8 +85,10 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_fFrameCnt >= m_fFrameMax)
 	{
-		m_bEnable = false;
-		m_fFrameCnt = m_fFrameMax - 1.f;
+		//m_bEnable = false;
+		m_fFrameCnt = 0;
+
+		//m_fFrameCnt = m_fFrameMax - 1.f;
 	}
 
 	Engine::CGameObject::Update_GameObject(fTimeDelta);
@@ -109,7 +111,10 @@ _int CBoostEffect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::CGameObject::Compute_ViewZ(&m_pTransformCom->m_vInfo[Engine::INFO_POS]);
 
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
+	if(m_bIsDistortion)
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
+	else
+		m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -123,11 +128,11 @@ void CBoostEffect::Render_GameObject(void)
 
 	_uint	iPassMax = 0;
 
-	//SetUp_ConstantTable(pEffect);
+	SetUp_ConstantTable(pEffect);
 
 	pEffect->Begin(&iPassMax, 0);
 
-	pEffect->BeginPass(0);
+	pEffect->BeginPass(1);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -181,18 +186,22 @@ HRESULT CBoostEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	pEffect->SetMatrix("g_matProj", &matProj);
 
 	pEffect->SetFloat("g_fAlphaRatio", 1.f- (m_fFrameCnt*0.03f));
-
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
-	
 	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
 
 
 	return S_OK;
 }
 
-CBoostEffect* CBoostEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight)
+void CBoostEffect::Set_Distortion()
 {
-	CBoostEffect*	pInstance = new CBoostEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, bRight);
+	m_bIsDistortion = true;
+
+}
+
+CBoostEffect* CBoostEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrAlphaTexName, _bool bRight, _bool bDistortion)
+{
+	CBoostEffect*	pInstance = new CBoostEffect(pGraphicDev, wstrTexName, wstrAlphaTexName, bRight,bDistortion);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 		Engine::Safe_Release(pInstance);

@@ -96,6 +96,7 @@ HRESULT CRussianHat::Ready_GameObject()
 
 
 	return S_OK;
+
 }
 
 HRESULT CRussianHat::LateReady_GameObject()
@@ -124,12 +125,12 @@ _int CRussianHat::Update_GameObject(const _float & fTimeDelta)
 	}
 	
 
-	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
-	//{
-	//	m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
-	//	m_pNaviCom->Set_Index(148);// Base Init Idx 38 
+	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
+	{
+		m_pTransformCom->Set_Pos(13.6f, 6.4578f, -62.274f);
+		m_pNaviCom->Set_Index(148);// Base Init Idx 38 
 
-	//}
+	}
 	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM2))
 	//{
 	//	m_eCurState = RUSSIAN_ICEBLADE_N;
@@ -1247,21 +1248,20 @@ void CRussianHat::IceBlade(_float fTimeDelta)
 		{
 			RotateToTarget(fTimeDelta, 0.f, 0.19f);
 			SetColliderEnable(0.29f, 0.47f);
-		if (Get_AniRatio() < 0.29f&&Get_AniRatio()>0.2f)
-		{
-			m_pSword->Set_Enable(true);
+			if (Get_AniRatio() < 0.29f&&Get_AniRatio()>0.2f)
+			{
+				m_pSword->Set_Enable(true);
+				m_pSword->Set_Equip(true);
+				m_fAnimSpeed = 0.5f;
+			}	
+			if (Get_AniRatio() >= 0.29f)
+			{
+				m_fAnimSpeed = 1.25f;
+				m_pSword->Set_Coll(true);
+			}
 
-			m_pSword->Set_Equip(true);
-			m_fAnimSpeed = 0.5f;
-		}	
-		if (Get_AniRatio() >= 0.29f)
-		{
-
-			m_fAnimSpeed = 1.25f;
-			m_pSword->Set_Coll(true);
-		}
-		if (m_fAttackRange == 4.0f)
-			m_fAttackRange = 8.0f;
+			if (m_fAttackRange == 4.0f)
+				m_fAttackRange = 8.0f;
 		}
 
 
@@ -1357,12 +1357,13 @@ void CRussianHat::BoostEffect(_float fTimeDelta)
 		Engine::CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
 		
 		wstring wstrInstName = L"FireR_" + to_wstring(m_uiEffectIdx);
-		Engine::CGameObject* pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", true);
+		Engine::CGameObject* pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", true,true);
 		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
 		
 
 		wstrInstName = L"FireL_" + to_wstring(m_uiEffectIdx);
-		 pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", false);
+		 pGameObject = CBoostEffect::Create(m_pGraphicDev, L"Fire2", L"FireAlpha", false,false);
+
 		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
 
 		m_uiEffectIdx++;
