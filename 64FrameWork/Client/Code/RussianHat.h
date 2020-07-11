@@ -10,7 +10,7 @@ class CGauge;
 class CIceSword;
 
 class CSplashEffect;
-
+class CChargeEffect;
 class CRussianHat : public CDynamicObject
 {
 public:
@@ -71,7 +71,11 @@ private://Pattern
 	void					BoostEffect(_float fTimeDelta);
 	void					SplashEffect();
 	void					SnowSplashEffect(_float fTimeDelta, _float fLength = 1.f, _float fRateTime = 0.05f);
-	void					ChargeEffect(_float fTimeDelta, _float fRateTime);
+	void					On_ChargeEffect(_float fTimeDelta);
+	void					Off_ChargeEffect(_float fTimeDelta);
+	void					On_KetsugiEffect(_float fTimeDelta);
+	void					Off_KetsugiEffect(_float fTimeDelta);
+
 	//패턴 추가할것 원거리 마법 ,얼음검 휘두르기 
 
 	//void					
@@ -98,6 +102,9 @@ private:
 	_uint						m_uiEffectIdx= 0.f;
 	_bool						m_bIsSplash = false;
 	CSplashEffect*				m_pSplashEffect[5] = { nullptr, };
+	CChargeEffect*				m_pChargeEffect[3] = { nullptr, };
+	_bool						m_bIsCharge = false;
+
 
 private:
 	virtual void			Free(void) override;

@@ -142,8 +142,8 @@ _int CGameEffect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::CGameObject::Compute_ViewZ(&m_pTransformCom->m_vInfo[Engine::INFO_POS]);
 
-	//m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
-	m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
+	m_pRendererCom->Add_RenderGroup(Engine::RENDER_ALPHA, this);
+	//m_pRendererCom->Add_RenderGroup(Engine::RENDER_DISTORTION, this);
 
 	return 0;
 }

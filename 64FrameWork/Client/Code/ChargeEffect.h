@@ -17,7 +17,7 @@ END
 class CChargeEffect : public CGameEffect
 {
 private:
-	explicit CChargeEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale, _vec3 vPos,_bool bIsDistortion);
+	explicit CChargeEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale, _vec3 vPos, _bool bIsTraking,_bool bIsDistortion);
 	virtual ~CChargeEffect(void);
 
 public:
@@ -31,6 +31,7 @@ private:
 	virtual HRESULT		Add_Component(void)override;
 	virtual HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect)override;
 public:
+	void				Set_ChargeSpeed(_float fSpeed);
 	void				Charge_Scale(_float fTimeDelta, _float fMaxScale);
 	void				Set_Distortion();
 	void				VerticalMove(_float fTimeDelta);
@@ -42,7 +43,14 @@ private:
 	_bool		m_bIsDistortion = false;
 public:
 
-	static CChargeEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale = { 1.f,1.f }, _vec3 vPos = { 0.f,0.f,0.f }, _bool bIsDistortion = false);
+	static CChargeEffect*		Create(LPDIRECT3DDEVICE9 pGraphicDev, 
+												wstring wstrTexName,
+												wstring wstrParentInstName,
+												string strBoneName,
+												_vec2 vScale = { 1.f,1.f },
+												_vec3 vPos = { 0.f,0.f,0.f }, 
+												_bool bIsTraking=false, 
+												_bool bIsDistortion = false);
 
 private:
 	_float		m_fSplashScale = 0.f;
@@ -50,6 +58,8 @@ private:
 	_float		m_fMaxScale = 0.f;
 	_bool		m_bIsFinish = false;
 	_float		m_fEndTime = 0.f;
+	_float		m_fSCTimeSpeed = 1.f;
+	_bool		m_bIsStart = false;
 private:
 	virtual void Free(void) override;
 };

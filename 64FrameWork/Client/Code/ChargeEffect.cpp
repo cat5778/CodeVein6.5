@@ -5,10 +5,11 @@
 
 
 
-CChargeEffect::CChargeEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale, _vec3 vPos, _bool bIsDistortion)
+CChargeEffect::CChargeEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale, _vec3 vPos, _bool bIsTraking, _bool bIsDistortion)
 	: CGameEffect(pGraphicDev, wstrTexName, wstrParentInstName, strBoneName, vScale, vPos), m_bIsDistortion(bIsDistortion)
 {
 	m_fVerticalTime = 0.f;
+	m_bIsTracking=bIsTraking;
 }
 
 CChargeEffect::~CChargeEffect(void)
@@ -26,9 +27,6 @@ HRESULT CChargeEffect::Ready_GameObject(void)
 	m_vScale.z = m_pTextureCom->Get_ImageInfo().Width*0.01f*m_vMultiScale.x;
 	m_pTransformCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	m_fFrameMax=m_pTextureCom->Get_ImageCnt();
-
-
-
 
 
 	return S_OK;
@@ -50,7 +48,9 @@ HRESULT CChargeEffect::LateReady_GameObject(void)
 
 _int CChargeEffect::Update_GameObject(const _float& fTimeDelta)
 {
-	
+
+	if (!m_bIsStart)
+		return S_OK;
 	if (m_bIsParent&&nullptr == m_pParentBoneMatrix)
 	{
 		Engine::CDynamicMesh*	pMonsterMeshCom = dynamic_cast<Engine::CDynamicMesh*>(Engine::Get_Component(L"GameLogic", m_wstrParantName.c_str(), L"Com_Mesh", Engine::ID_STATIC));
@@ -69,8 +69,14 @@ _int CChargeEffect::Update_GameObject(const _float& fTimeDelta)
 		m_OldMatrix = (*m_pParentBoneMatrix * *m_pParentWorldMatrix);
 		memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
 	}
+	
+	Charge_Scale(fTimeDelta, 2.5f);
 
-	Charge_Scale(fTimeDelta, 3.f);
+	if (m_bIsTracking)
+	{
+		m_OldMatrix = (*m_pParentBoneMatrix * *m_pParentWorldMatrix);
+		memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
+	}
 
 	m_vOldScale = { m_vScale.x * m_vMultiScale.x,
 					m_vScale.y*m_vMultiScale.y,
@@ -78,7 +84,7 @@ _int CChargeEffect::Update_GameObject(const _float& fTimeDelta)
 
 	m_pTransformCom->Set_Scale(m_vOldScale.x, m_vOldScale.y, m_vOldScale.z);
 
-	m_pTransformCom->Set_Pos(m_vPos.x + m_vAddPos.x, m_vPos.y + m_vAddPos.y + m_vOldScale.y*0.5f , m_vPos.z + m_vAddPos.z);
+	m_pTransformCom->Set_Pos(m_vPos.x + m_vAddPos.x, m_vPos.y + m_vAddPos.y , m_vPos.z + m_vAddPos.z);
 
 	m_fScollTime[0]+= fTimeDelta;
 	m_fFrameCnt += m_fFrameMax * fTimeDelta;
@@ -181,10 +187,7 @@ HRESULT CChargeEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	pEffect->SetMatrix("g_matView", &matView);
 	pEffect->SetMatrix("g_matProj", &matProj);
 
-	if(m_bIsFinish)
-		pEffect->SetFloat("g_fAlphaRatio", 0.5f-m_fEndTime);
-	else
-		pEffect->SetFloat("g_fAlphaRatio", 1.f - (m_fSplashScale)*0.5f);
+	pEffect->SetFloat("g_fAlphaRatio", 1.f );
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
 	
@@ -195,11 +198,16 @@ HRESULT CChargeEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	return S_OK;
 }
 
+void CChargeEffect::Set_ChargeSpeed(_float fSpeed)
+{
+	m_fSCTimeSpeed = fSpeed;
+}
+
 void CChargeEffect::Charge_Scale(_float fTimeDelta, _float fMaxScale)
 {
 	if (fMaxScale >= m_fSplashScale)
 	{
-		m_fSplashScale += fTimeDelta*fMaxScale;
+		m_fSplashScale += fTimeDelta*m_fSCTimeSpeed;
 
 		m_vMultiScale.x = m_fSplashScale;
 		m_vMultiScale.y = m_fSplashScale;
@@ -234,11 +242,10 @@ void CChargeEffect::VerticalMove(_float fTimeDelta)
 void CChargeEffect::Set_Enable(bool bEnable)
 {
 	m_bEnable = bEnable;
+	m_bIsStart = bEnable;
 	if (bEnable)
 	{
-		m_fVerticalTime = 0.f;
-		m_fSplashScale = 0.f;
-		if (m_bIsParent)
+		if (!m_bIsTracking)
 		{
 			m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
 			m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
@@ -248,7 +255,9 @@ void CChargeEffect::Set_Enable(bool bEnable)
 	}
 	else
 	{
-	
+		m_fVerticalTime = 0.f;
+		m_fSplashScale = 0.f;
+
 	}
 
 }
@@ -256,6 +265,7 @@ void CChargeEffect::Set_Enable(bool bEnable)
 void CChargeEffect::Set_Enable(bool bEnable, _vec3 vAddPos)
 {
 	m_bEnable = bEnable;
+	m_bIsStart = bEnable;
 	if (bEnable)
 	{
 		m_fVerticalTime = 0.f;
@@ -263,13 +273,14 @@ void CChargeEffect::Set_Enable(bool bEnable, _vec3 vAddPos)
 		if (m_bIsParent)
 		{
 	
-			
-			m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
-			m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
-			memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
+			if (!m_bIsTracking)
+			{
+				m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
+				m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
+				memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
+			}
 			m_vAddPos = vAddPos;
-			m_vAddPos*=170.f;
-			m_vAddPos.y = -2.f;
+			m_vAddPos *= 25.f;
 		}
 
 	}
@@ -281,9 +292,9 @@ void CChargeEffect::Set_Enable(bool bEnable, _vec3 vAddPos)
 }
 
 
-CChargeEffect * CChargeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale, _vec3 vPos, _bool bIsDistortion)
+CChargeEffect * CChargeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale, _vec3 vPos, _bool bIsTraking, _bool bIsDistortion)
 {
-	CChargeEffect*	pInstance = new CChargeEffect(pGraphicDev, wstrTexName, wstrParentInstName, strBoneName, vScale, vPos, bIsDistortion);
+	CChargeEffect*	pInstance = new CChargeEffect(pGraphicDev, wstrTexName, wstrParentInstName, strBoneName, vScale, vPos, bIsTraking,bIsDistortion);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 		Engine::Safe_Release(pInstance);

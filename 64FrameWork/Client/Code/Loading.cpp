@@ -447,7 +447,13 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Effect/Texture/TC_Alpha/T_FX_GEZInk01.tga"),
 		E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"TC5RadialGradient09",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Texture/TC_Alpha/T_FX_TC5RadialGradient09.tga"),
+		E_FAIL);
+	
 	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
 		RESOURCE_STAGE,
 		L"Fire2",
@@ -526,6 +532,14 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/Effect/Shine/Shine%d.png", 16),
 		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"Ring",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Ring/Ring%d.png", 16),
+		E_FAIL);
+
+
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		RESOURCE_STAGE,

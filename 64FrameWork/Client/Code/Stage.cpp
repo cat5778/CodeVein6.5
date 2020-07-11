@@ -210,9 +210,14 @@ HRESULT CStage::Ready_GameLogic_Layer(const _tchar* pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shield", pGameObject), E_FAIL);
 
-		pGameObject = CGameEffect::Create(m_pGraphicDev, L"Shine", _vec2(1.f, 1.f),_vec3(0.069f, 6.208f, -56.f),true);
+		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"TC5RadialGradient09", L"RussianHat_0", "LeftHand", _vec2(3.f, 3.f), _vec3(0.f, 0.f, 0.f), false, true);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SmokeTest", pGameObject), E_FAIL);
+
+		pGameObject = CGameEffect::Create(m_pGraphicDev, L"TC5RadialGradient09", _vec2(1.f, 1.f),_vec3(0.069f, 6.208f, -56.f),true);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SmokeTest", pGameObject), E_FAIL);
+
 
 		//_float fTestY = -1.f;
 		//pGameObject = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_01", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, fTestY, 0.f), false, true);
