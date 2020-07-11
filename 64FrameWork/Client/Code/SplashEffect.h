@@ -23,20 +23,21 @@ private:
 	virtual ~CSplashEffect(void);
 
 public:
-	virtual HRESULT Ready_GameObject(void) override;
-	virtual HRESULT LateReady_GameObject(void);
+	virtual HRESULT		Ready_GameObject(void) override;
+	virtual HRESULT		LateReady_GameObject(void);
 
-	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-	virtual void Render_GameObject(void) override;
+	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
+	virtual void		Render_GameObject(void) override;
 
 private:
 	virtual HRESULT		Add_Component(void)override;
 	virtual HRESULT		SetUp_ConstantTable(LPD3DXEFFECT& pEffect)override;
 public:
-	void		Splash_Scale(_float fTimeDelta, _float fMaxScale);
-	void		Set_Distortion();
-	void		VerticalMove(_float fTimeDelta);
-	virtual void						Set_Enable(bool bEnable)override;
+	void				Splash_Scale(_float fTimeDelta, _float fMaxScale);
+	void				Set_Distortion();
+	void				VerticalMove(_float fTimeDelta);
+	virtual void		Set_Enable(bool bEnable)override;
+	void				Set_Enable(bool bEnable,_vec3 vAddPos);
 
 
 private:

@@ -8,6 +8,8 @@
 #include "IceSword.h"
 #include "BoostEffect.h"
 #include "SplashEffect.h"
+#include "SnowSpalshEffect.h"
+#include "ChargeEffect.h"
 CRussianHat::CRussianHat(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrName,_uint uiIdx, _uint uiStageIdx )
 	: CDynamicObject(pGraphicDev,wstrName,uiIdx, uiStageIdx)
 {
@@ -112,10 +114,9 @@ HRESULT CRussianHat::LateReady_GameObject()
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianSword", pGameObject), E_FAIL);
 	m_pSword->Set_Equip(false);
 
+	
 
-
-
-	_float fTestY = -2.f;
+	_float fTestY = -4.f;
 	pGameObject =m_pSplashEffect[0]=  CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_01", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, fTestY, 0.f), false, true);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_01", pGameObject), E_FAIL);
@@ -129,17 +130,22 @@ HRESULT CRussianHat::LateReady_GameObject()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_03", pGameObject), E_FAIL);
 
-
 	pGameObject = m_pSplashEffect[3] = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_05", L"RussianHat_0", "RightHand", _vec2(1.f, 1.f), _vec3(0.f, 1.f+ fTestY, 0.f), false, true);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_05", pGameObject), E_FAIL);
-
 
 	pGameObject = m_pSplashEffect[4] = CSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_06", L"RussianHat_0", "RightHand", _vec2(2.f, 2.f), _vec3(0.f, fTestY, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_06", pGameObject), E_FAIL);
 
+	
+	//pGameObject = CSnowSplashEffect::Create(m_pGraphicDev, L"Shine", L"RussianHat_0", "LeftHand", _vec2(1.f, 1.f),_vec3(INIT_VEC3),true);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_ChargeEffect", pGameObject), E_FAIL);
 
+	//pGameObject = m_pChargeEffect[1] = CSplashEffect::Create(m_pGraphicDev, L"Shine", L"RussianHat_0", "LeftHand", _vec2(2.f, 2.f), _vec3(0.f, fTestY, 0.f));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RussianHat_Shield_Splash_06", pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -156,9 +162,14 @@ _int CRussianHat::Update_GameObject(const _float & fTimeDelta)
 
 	if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
 	{
+		_vec3 vAddPos = Get_Look();
 		for (int i = 0; i < 5; i++)
-			m_pSplashEffect[i]->Set_Enable(true);
+			m_pSplashEffect[i]->Set_Enable(true, vAddPos);
 	}
+	ChargeEffect(fTimeDelta, 1.f);
+	/*if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM2))
+		m_pChargeEffect[0]->Set_Enable(true, Get_Look());
+*/
 
 	//if (CKeyMgr::GetInstance()->KeyDown(KEY_NUM3))
 	//{
@@ -416,7 +427,6 @@ void CRussianHat::StateMachine()
 		{
 			m_fAnimSpeed = 2.0f;
 			m_fRotSpeed = 5.0f;
-			m_fAttackRange = 20.f;
 			m_pMeshCom->Set_AnimationSet(27);
 			//m_pMeshCom->Set_AnimationSet(26);
 		}
@@ -745,8 +755,7 @@ void CRussianHat::TshieldAttack_Ready(_float fTimeDelta)
 
 		SetColliderEnable(0.4f, 0.5f);
 
-
-
+		
 
 		if (Get_AniRatio() >= 0.58f)
 		{
@@ -772,8 +781,12 @@ void CRussianHat::TshieldAttack(_float fTimeDelta)
 			m_eCurState = RUSSIAN_BATTLE_IDLE;
 		else
 		{
-			if(Get_AniRatio()<=0.3f)
-				BoostEffect(fTimeDelta);
+			if (Get_AniRatio() <= 0.3f)
+			{
+				//BoostEffect(fTimeDelta);
+				SnowSplashEffect(fTimeDelta, 100.f);
+			}
+
 			MoveAni(fTimeDelta, 0.0f, 0.1f, 30.0f, Get_Look());
 			MoveAni(fTimeDelta, 0.1f, 0.2f, 10.0f, Get_Look());
 			MoveAni(fTimeDelta, 0.2f, 0.3f, 30.0f, Get_Look());
@@ -793,7 +806,8 @@ void CRussianHat::Tshield_Whirlwind(_float fTimeDelta)
 			m_eCurState = RUSSIAN_BATTLE_IDLE;
 		else
 		{
-
+			if(Get_AniRatio()<=0.7f)
+				SnowSplashEffect(fTimeDelta, 100.f);
 			RotateToTarget(fTimeDelta, 0.0f, 0.2f);
 			MoveAni(fTimeDelta, 0.2f, 0.6f , 6.0f, Get_Look());
 		}
@@ -887,6 +901,8 @@ void CRussianHat::TshieldSlide_L(_float fTimeDelta)
 		}
 		else
 		{
+			SnowSplashEffect(fTimeDelta, 100.f, 0.05f);
+
 			BoostEffect(fTimeDelta);
 			MoveAni(fTimeDelta, 0.0f, 0.7f, 25.0f, Get_Look());
 			MoveAni(fTimeDelta, 0.7f, 0.8f, 15.0f, Get_Look());
@@ -1208,8 +1224,10 @@ void CRussianHat::BoostAttack_S(_float fTimeDelta)
 		if (Get_AniRatio() >= 0.7f)
 			m_eCurState = RUSSIAN_FIST_ATTACKBOOST1_L;
 		else
+		{
 			RotateToTarget(fTimeDelta, 0.05f, 0.45f);
-
+		
+		}
 	}
 }
 
@@ -1221,7 +1239,11 @@ void CRussianHat::BoostAttack_L(_float fTimeDelta)
 			m_eCurState = RUSSIAN_FIST_ATTACKBOOST1_A_E;
 		else
 		{
-			BoostEffect(fTimeDelta);
+			if (Get_AniRatio() <= 3.2f)
+			{
+				SnowSplashEffect(fTimeDelta, 200.f);
+				BoostEffect(fTimeDelta);
+			}
 			MoveAni(fTimeDelta, 0.0f,3.4f, 28.f, Get_Look());
 			MoveAni(fTimeDelta, 3.4f, 3.5f, 10.f, Get_Look());
 
@@ -1287,6 +1309,8 @@ void CRussianHat::IceBlade(_float fTimeDelta)
 		{
 			RotateToTarget(fTimeDelta, 0.f, 0.19f);
 			SetColliderEnable(0.29f, 0.47f);
+
+
 		if (Get_AniRatio() < 0.29f&&Get_AniRatio()>0.2f)
 		{
 			m_pSword->Set_Enable(true);
@@ -1418,11 +1442,52 @@ void CRussianHat::SplashEffect()
 {
 	if (!m_bIsSplash)
 	{
+		_vec3 vAddPos = Get_Look()*3.f;
 		for (int i = 0; i < 5; i++)
-			m_pSplashEffect[i]->Set_Enable(true);
+			m_pSplashEffect[i]->Set_Enable(true, vAddPos);
 	
 		m_bIsSplash = true;
 	}
+}
+
+void CRussianHat::SnowSplashEffect(_float fTimeDelta,_float fLength,_float fRateTime)
+{
+	if (m_fEffectRate >= fRateTime)
+	{
+		Engine::CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
+		_vec3 vAddPos = Get_Look()*3.f*fLength;
+		vAddPos.y = -2.f;
+		wstring wstrInstName = L"SnowSplash_" + to_wstring(m_uiEffectIdx);
+		Engine::CGameObject* pGameObject = CSnowSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_06",L"RussianHat_0","RightHand",_vec2(2.f,2.f), vAddPos);
+		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
+
+		wstrInstName = L"SnowSplashDistor_" + to_wstring(m_uiEffectIdx);
+		pGameObject = CSnowSplashEffect::Create(m_pGraphicDev, L"RussianHat_Shield_Splash_06", L"RussianHat_0", "RightHand", _vec2(1.5f, 1.5f), _vec3(INIT_VEC3),true);
+		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
+
+
+		m_uiEffectIdx++;
+		m_fEffectRate = 0.f;
+	}
+	else
+		m_fEffectRate += fTimeDelta;
+}
+
+void CRussianHat::ChargeEffect(_float fTimeDelta, _float fRateTime)
+{
+	if (m_fEffectRate >= fRateTime)
+	{
+		Engine::CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
+
+		Engine::CGameObject* pGameObject = CChargeEffect::Create(m_pGraphicDev, L"Shine", L"RussianHat_0", "LeftHand", _vec2(1.f, 1.f), _vec3(INIT_VEC3), true);
+		wstring wstrInstName = L"ChargeDistor_" + to_wstring(m_uiEffectIdx);
+		pLayer->Add_GameObject(wstrInstName.c_str(), pGameObject);
+		m_uiEffectIdx++;
+		m_fEffectRate = 0.f;
+	}
+	else
+		m_fEffectRate += fTimeDelta;
+
 }
 
 

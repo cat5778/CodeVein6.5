@@ -15,7 +15,7 @@ CSplashEffect::CSplashEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName,
 	: CGameEffect(pGraphicDev, wstrTexName, wstrParentInstName, strBoneName, vScale, vPos)
 {
 
-	m_fVerticalTime = 60.f;
+	m_fVerticalTime = 0.f;
 }
 
 CSplashEffect::CSplashEffect(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTexName, wstring wstrParentInstName, string strBoneName, _vec2 vScale,_vec3 vPos, _bool bIsTracking, _bool bIsLoop)
@@ -81,12 +81,6 @@ _int CSplashEffect::Update_GameObject(const _float& fTimeDelta)
 		m_OldMatrix = (*m_pParentBoneMatrix * *m_pParentWorldMatrix);
 		memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
 	}
-	if (m_bIsParent)
-	{
-		m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
-		m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
-		memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
-	}
 
 	Splash_Scale(fTimeDelta, 1.f);
 	
@@ -100,9 +94,6 @@ _int CSplashEffect::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->Set_Scale(m_vOldScale.x, m_vOldScale.y, m_vOldScale.z);
 	if(m_bVertical)
 		VerticalMove(fTimeDelta);
-
-
-	Test(fTimeDelta);
 
 
 	if (!m_bVertical)
@@ -222,11 +213,12 @@ HRESULT CSplashEffect::SetUp_ConstantTable(LPD3DXEFFECT& pEffect)
 	if(!m_bVertical)
 		pEffect->SetFloat("g_fAlphaRatio", 1.f - (m_fSplashScale*0.5f));
 	else
-		pEffect->SetFloat("g_fAlphaRatio", 1.f - (m_fSplashScale));
+		pEffect->SetFloat("g_fAlphaRatio", 1.f - (m_fSplashScale)*0.5f);
 
 	m_pTextureCom->Set_Texture(pEffect, "g_BaseTexture", _uint(m_fFrameCnt));
 	
 	Engine::SetUp_OnShader(pEffect, L"Target_Depth", "g_DepthTexture");
+
 
 
 	return S_OK;
@@ -237,9 +229,9 @@ void CSplashEffect::Splash_Scale(_float fTimeDelta, _float fMaxScale)
 	if (fMaxScale >= m_fSplashScale)
 	{
 		if(m_bVertical)
-			m_fSplashScale += fTimeDelta*fMaxScale*1.f;
+			m_fSplashScale += fTimeDelta*fMaxScale;
 		else
-			m_fSplashScale += fTimeDelta*fMaxScale*2.f;
+			m_fSplashScale += fTimeDelta*fMaxScale;
 		m_vMultiScale.x = m_fSplashScale;
 		m_vMultiScale.y = m_fSplashScale;
 	}
@@ -292,7 +284,7 @@ void CSplashEffect::VerticalMove(_float fTimeDelta)
 		{
 			m_fVerticalTime += fTimeDelta*180.f;
 
-			m_fVerticalPos = sinf(D3DXToRadian(m_fVerticalTime))*1.f;
+			m_fVerticalPos = sinf(D3DXToRadian(m_fVerticalTime));
 		}
 		else
 		{
@@ -308,10 +300,44 @@ void CSplashEffect::Set_Enable(bool bEnable)
 	{
 		m_fVerticalTime = 0.f;
 		m_fSplashScale = 0.f;
+		if (m_bIsParent)
+		{
+			m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
+			m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
+			memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
+		}
+
 	}
 	else
 	{
 	
+	}
+
+}
+
+void CSplashEffect::Set_Enable(bool bEnable, _vec3 vAddPos)
+{
+	m_bEnable = bEnable;
+	if (bEnable)
+	{
+		m_fVerticalTime = 0.f;
+		m_fSplashScale = 0.f;
+		if (m_bIsParent)
+		{
+	
+			
+			m_pTransformCom->Set_ParentMatrix(&(*m_pParentBoneMatrix * *m_pParentWorldMatrix));
+			m_pTransformCom->Get_WorldMatrix(&m_OldMatrix);
+			memcpy(m_vPos, &m_OldMatrix._41, sizeof(_vec3));
+			m_vAddPos = vAddPos;
+			m_vAddPos*=170.f;
+			m_vAddPos.y = -2.f;
+		}
+
+	}
+	else
+	{
+
 	}
 
 }

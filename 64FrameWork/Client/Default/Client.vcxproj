@@ -179,6 +179,7 @@
     <ClInclude Include="..\Code\3DUI.h" />
     <ClInclude Include="..\Code\BackGround.h" />
     <ClInclude Include="..\Code\BoostEffect.h" />
+    <ClInclude Include="..\Code\ChargeEffect.h" />
     <ClInclude Include="..\Code\CocoonDevil.h" />
     <ClInclude Include="..\Code\ColliderManager.h" />
     <ClInclude Include="..\Code\Davis.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="..\Code\ShopSub.h" />
     <ClInclude Include="..\Code\SkyBox.h" />
     <ClInclude Include="..\Code\SkySphere.h" />
+    <ClInclude Include="..\Code\SnowSpalshEffect.h" />
     <ClInclude Include="..\Code\SoundMgr.h" />
     <ClInclude Include="..\Code\SplashEffect.h" />
     <ClInclude Include="..\Code\Stage.h" />
@@ -238,6 +240,7 @@
     <ClCompile Include="..\Code\3DUI.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BoostEffect.cpp" />
+    <ClCompile Include="..\Code\ChargeEffect.cpp" />
     <ClCompile Include="..\Code\CocoonDevil.cpp" />
     <ClCompile Include="..\Code\ColliderManager.cpp" />
     <ClCompile Include="..\Code\Davis.cpp" />
@@ -273,6 +276,7 @@
     <ClCompile Include="..\Code\ShopSub.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\SkySphere.cpp" />
+    <ClCompile Include="..\Code\SnowSpalshEffect.cpp" />
     <ClCompile Include="..\Code\SoundMgr.cpp" />
     <ClCompile Include="..\Code\SplashEffect.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />

@@ -70,6 +70,8 @@ private://Pattern
 	void					BoostJump_E(_float fTimeDelta);
 	void					BoostEffect(_float fTimeDelta);
 	void					SplashEffect();
+	void					SnowSplashEffect(_float fTimeDelta, _float fLength = 1.f, _float fRateTime = 0.05f);
+	void					ChargeEffect(_float fTimeDelta, _float fRateTime);
 	//패턴 추가할것 원거리 마법 ,얼음검 휘두르기 
 
 	//void					
@@ -94,8 +96,8 @@ private:
 	CIceSword*					m_pSword = nullptr;
 	_float						m_fEffectRate = 0.f;
 	_uint						m_uiEffectIdx= 0.f;
-	CSplashEffect*				m_pSplashEffect[5] = { nullptr, };
 	_bool						m_bIsSplash = false;
+	CSplashEffect*				m_pSplashEffect[5] = { nullptr, };
 
 private:
 	virtual void			Free(void) override;

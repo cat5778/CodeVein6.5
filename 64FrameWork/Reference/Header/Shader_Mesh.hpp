@@ -236,7 +236,7 @@ technique Default_Device
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_ALPHA();
 	}
-	pass Dissolve 
+	pass DS
 	{
 		alphatestenable = true;
 		alphafunc = greater;
@@ -245,7 +245,17 @@ technique Default_Device
 	
 		vertexshader = compile vs_3_0 VS_MAIN();
 		pixelshader = compile ps_3_0 PS_DS();
-	
 	}
+	pass Dissolve
+	{
+		alphatestenable = true;
+	alphafunc = greater;
+	alpharef = 0xc0;
+	cullmode = none;
+
+	vertexshader = compile vs_3_0 VS_MAIN();
+	pixelshader = compile ps_3_0 PS_DS();
+	}
+
 
 };

@@ -193,6 +193,12 @@
     <Filter Include="02. GameObejct\02. Public\06. GameEffect\SplashEffect">
       <UniqueIdentifier>{3c420b8f-5f33-459c-84d3-6b46d52d35a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObejct\02. Public\06. GameEffect\SnowSplashEffect">
+      <UniqueIdentifier>{314808a7-1862-4fad-8179-33abff087f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObejct\02. Public\06. GameEffect\ChargeEffect">
+      <UniqueIdentifier>{48303239-31e4-43dc-9b65-f908534cb581}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -366,6 +372,12 @@
     <ClInclude Include="..\Code\SplashEffect.h">
       <Filter>02. GameObejct\02. Public\06. GameEffect\SplashEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\SnowSpalshEffect.h">
+      <Filter>02. GameObejct\02. Public\06. GameEffect\SnowSplashEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\ChargeEffect.h">
+      <Filter>02. GameObejct\02. Public\06. GameEffect\ChargeEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -535,6 +547,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\SplashEffect.cpp">
       <Filter>02. GameObejct\02. Public\06. GameEffect\SplashEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SnowSpalshEffect.cpp">
+      <Filter>02. GameObejct\02. Public\06. GameEffect\SnowSplashEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChargeEffect.cpp">
+      <Filter>02. GameObejct\02. Public\06. GameEffect\ChargeEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

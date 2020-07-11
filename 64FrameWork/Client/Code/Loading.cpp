@@ -514,8 +514,18 @@ _bool CLoading::Loading_Basic()
 		Engine::TEX_NORMAL,
 		L"../../Resource/Texture/RussianHatEffect/T_FX_Enemy_RussianHatKnight_Shield_Splash_06.tga"),
 		E_FAIL);
-
-
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"Smoke",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Smoke/Smoke%d.png",64),
+		E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Texture(m_pGraphicDev,
+		RESOURCE_STAGE,
+		L"Shine",
+		Engine::TEX_NORMAL,
+		L"../../Resource/Texture/Effect/Shine/Shine%d.png", 16),
+		E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Meshes(m_pGraphicDev,
 		RESOURCE_STAGE,
